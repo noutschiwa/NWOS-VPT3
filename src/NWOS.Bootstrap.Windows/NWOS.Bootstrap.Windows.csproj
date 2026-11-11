@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>NWOS.Bootstrap.Windows</RootNamespace>
     <OutputType>Exe</OutputType>
-    <PublishAot>true</PublishAot>
+    <PublishAot>false</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
     <PublishTrimmed>true</PublishTrimmed>
     <!--

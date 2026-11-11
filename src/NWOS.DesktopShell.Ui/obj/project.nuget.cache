@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yWM1TK4VBr4=",
+  "dgSpecHash": "08BfA2lNRTU=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell.Ui\\NWOS.DesktopShell.Ui.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell.Ui\\NWOS.DesktopShell.Ui.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",

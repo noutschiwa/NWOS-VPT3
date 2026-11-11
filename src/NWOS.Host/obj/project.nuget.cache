@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FAoUV+VKnjw=",
+  "dgSpecHash": "hJj0j/5Lh/Y=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Host\\NWOS.Host.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.Host\\NWOS.Host.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
@@ -36,8 +36,11 @@
     "C:\\Users\\noahj\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.33\\microsoft.netcore.app.ref.8.0.33.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.33\\microsoft.netcore.app.runtime.win-x64.8.0.33.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.33\\microsoft.windowsdesktop.app.ref.8.0.33.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.33\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.33.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.33\\microsoft.aspnetcore.app.ref.8.0.33.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.33\\microsoft.aspnetcore.app.runtime.win-x64.8.0.33.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.33\\microsoft.netcore.app.host.win-x64.8.0.33.nupkg.sha512"
   ],
   "logs": []

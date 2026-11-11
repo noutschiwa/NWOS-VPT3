@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uMUTDV3u0XU=",
+  "dgSpecHash": "ir9+eJaZnnM=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Widgets.Tests\\NWOS.Widgets.Tests.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\tests\\NWOS.Widgets.Tests\\NWOS.Widgets.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.codecoverage\\17.9.0\\microsoft.codecoverage.17.9.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.net.test.sdk\\17.9.0\\microsoft.net.test.sdk.17.9.0.nupkg.sha512",

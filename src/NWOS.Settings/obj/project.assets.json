@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj",
+      "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj",
       "projectName": "NWOS.Settings",
-      "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj",
+      "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj",
       "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-      "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\obj\\",
+      "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"

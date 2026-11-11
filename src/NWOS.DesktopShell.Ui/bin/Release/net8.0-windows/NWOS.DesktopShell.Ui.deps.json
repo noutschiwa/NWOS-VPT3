@@ -9,6 +9,7 @@
       "NWOS.DesktopShell.Ui/1.0.0": {
         "dependencies": {
           "NWOS.Contracts": "1.0.0",
+          "NWOS.DesktopShell": "1.0.0",
           "NWOS.Ipc": "1.0.0"
         },
         "runtime": {
@@ -373,11 +374,37 @@
           }
         }
       },
+      "NWOS.Alice/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.Alice.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NWOS.Alya/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.Settings": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.Alya.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "NWOS.Cardinal/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Hosting": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "NWOS.Contracts": "1.0.0"
+          "NWOS.Alice": "1.0.0",
+          "NWOS.Alya": "1.0.0",
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.Marc": "1.0.0"
         },
         "runtime": {
           "NWOS.Cardinal.dll": {
@@ -394,6 +421,18 @@
           }
         }
       },
+      "NWOS.DesktopShell/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.Settings": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.DesktopShell.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "NWOS.Ipc/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
@@ -402,6 +441,25 @@
         },
         "runtime": {
           "NWOS.Ipc.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NWOS.Marc/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.Marc.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NWOS.Settings/1.0.0": {
+        "runtime": {
+          "NWOS.Settings.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -604,6 +662,16 @@
       "path": "microsoft.extensions.primitives/8.0.0",
       "hashPath": "microsoft.extensions.primitives.8.0.0.nupkg.sha512"
     },
+    "NWOS.Alice/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.Alya/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "NWOS.Cardinal/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -614,7 +682,22 @@
       "serviceable": false,
       "sha512": ""
     },
+    "NWOS.DesktopShell/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "NWOS.Ipc/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.Marc/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.Settings/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

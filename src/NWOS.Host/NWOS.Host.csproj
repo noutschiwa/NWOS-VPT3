@@ -5,7 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>NWOS.Host</RootNamespace>
+
     <OutputType>Exe</OutputType>
+    <SelfContained>true</SelfContained>
+
     <UserSecretsId>nwos-host</UserSecretsId>
   </PropertyGroup>
 
@@ -25,17 +28,6 @@
     <ProjectReference Include="..\NWOS.Alya\NWOS.Alya.csproj" />
     <ProjectReference Include="..\NWOS.SystemCenter\NWOS.SystemCenter.csproj" />
     <ProjectReference Include="..\NWOS.Ipc\NWOS.Ipc.csproj" />
-    <!-- NWOS.SystemCenter.Windows und NWOS.WindowsIntegration bewusst NICHT
-         hier referenziert: der Host bleibt dadurch plattformneutral testbar.
-         Die echten Windows-Implementierungen (WMI, Registry, Shell-
-         Registrierung) werden von NWOS.Bootstrap.Windows verdrahtet, das
-         diesen Host über HostComposition.RunAsync(args, windowsExtensions)
-         wiederverwendet. Ohne dieses Bootstrap-Projekt (z. B. direkter Start
-         von NWOS.Host) läuft SystemCenterModule mit
-         statusProvider/autostartManager = null - getestetes, transparentes
-         Fallback-Verhalten statt Fake-Daten (siehe NWOS.SystemCenter.Tests).
-         NWOS.Ipc dagegen IST plattformneutral (System.IO.Pipes) und wird
-         deshalb hier direkt referenziert, nicht erst im Bootstrap-Projekt. -->
   </ItemGroup>
 
 </Project>

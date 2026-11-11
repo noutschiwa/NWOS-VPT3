@@ -915,11 +915,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\NWOS\\NWOS-main\\tests\\NWOS.SystemCenter.Tests\\NWOS.SystemCenter.Tests.csproj",
+      "projectUniqueName": "C:\\NWOS\\NWOS\\tests\\NWOS.SystemCenter.Tests\\NWOS.SystemCenter.Tests.csproj",
       "projectName": "NWOS.SystemCenter.Tests",
-      "projectPath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.SystemCenter.Tests\\NWOS.SystemCenter.Tests.csproj",
+      "projectPath": "C:\\NWOS\\NWOS\\tests\\NWOS.SystemCenter.Tests\\NWOS.SystemCenter.Tests.csproj",
       "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-      "outputPath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.SystemCenter.Tests\\obj\\",
+      "outputPath": "C:\\NWOS\\NWOS\\tests\\NWOS.SystemCenter.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -935,11 +935,11 @@
           "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
             },
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj"
             }
           }
         }

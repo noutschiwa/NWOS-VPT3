@@ -13,3 +13,19 @@ C:\NWOS instalation\nwos\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.dll
 C:\NWOS instalation\nwos\src\NWOS.Alice\obj\Release\net8.0\refint\NWOS.Alice.dll
 C:\NWOS instalation\nwos\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.pdb
 C:\NWOS instalation\nwos\src\NWOS.Alice\obj\Release\net8.0\ref\NWOS.Alice.dll
+C:\NWOS\NWOS\src\NWOS.Alice\bin\Release\net8.0\NWOS.Alice.deps.json
+C:\NWOS\NWOS\src\NWOS.Alice\bin\Release\net8.0\NWOS.Alice.dll
+C:\NWOS\NWOS\src\NWOS.Alice\bin\Release\net8.0\NWOS.Alice.pdb
+C:\NWOS\NWOS\src\NWOS.Alice\bin\Release\net8.0\NWOS.Contracts.dll
+C:\NWOS\NWOS\src\NWOS.Alice\bin\Release\net8.0\NWOS.Contracts.pdb
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.csproj.AssemblyReference.cache
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.GeneratedMSBuildEditorConfig.editorconfig
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.AssemblyInfoInputs.cache
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.AssemblyInfo.cs
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.csproj.CoreCompileInputs.cache
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.sourcelink.json
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.csproj.Up2Date
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.dll
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\refint\NWOS.Alice.dll
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.pdb
+C:\NWOS\NWOS\src\NWOS.Alice\obj\Release\net8.0\ref\NWOS.Alice.dll

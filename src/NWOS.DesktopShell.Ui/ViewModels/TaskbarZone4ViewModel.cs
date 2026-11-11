@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using NWOS.DesktopShell;
@@ -46,15 +47,23 @@ namespace NWOS.DesktopShell.Ui
 
         public async Task UpdateSystemMetricsAsync()
         {
-            string result = await _ipcClient.SendRequestAsync("nwos.systemcenter", "metrics.get", "status");
-            if (!string.IsNullOrEmpty(result))
+            try
             {
-                SystemStatusText = result;
+                string result = await _ipcClient.SendRequestAsync("nwos.systemcenter", "metrics.get", "status");
+                if (!string.IsNullOrEmpty(result))
+                {
+                    SystemStatusText = result;
+                }
+            }
+            catch (Exception)
+            {
+                // Fallback-Wert setzen, damit die UI bei Verbindungsproblemen stabil bleibt
+                SystemStatusText = "Offline / Host nicht erreichbar";
             }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propertyName) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

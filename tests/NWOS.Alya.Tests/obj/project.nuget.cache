@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vpAjXSRXK90=",
+  "dgSpecHash": "ZjeDzQTKnNs=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Alya.Tests\\NWOS.Alya.Tests.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\tests\\NWOS.Alya.Tests\\NWOS.Alya.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.codecoverage\\17.9.0\\microsoft.codecoverage.17.9.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.net.test.sdk\\17.9.0\\microsoft.net.test.sdk.17.9.0.nupkg.sha512",

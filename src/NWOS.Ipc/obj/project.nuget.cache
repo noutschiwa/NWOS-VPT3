@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FI6BDGGpd/Y=",
+  "dgSpecHash": "pOUvsbvvENA=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Ipc\\NWOS.Ipc.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.Ipc\\NWOS.Ipc.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",

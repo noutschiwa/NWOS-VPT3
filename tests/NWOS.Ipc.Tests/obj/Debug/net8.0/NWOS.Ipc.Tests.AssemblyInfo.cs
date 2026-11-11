@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Ipc.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bfaede5819bc498dc1393262ac2accc00a1d3829")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Ipc.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Ipc.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -10,7 +10,10 @@
         "dependencies": {
           "Microsoft.Extensions.Hosting": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "NWOS.Contracts": "1.0.0"
+          "NWOS.Alice": "1.0.0",
+          "NWOS.Alya": "1.0.0",
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.Marc": "1.0.0"
         },
         "runtime": {
           "NWOS.Cardinal.dll": {}
@@ -397,9 +400,51 @@
           }
         }
       },
+      "NWOS.Alice/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.Alice.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NWOS.Alya/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.Settings": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.Alya.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "NWOS.Contracts/1.0.0": {
         "runtime": {
           "NWOS.Contracts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NWOS.Marc/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.Marc.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NWOS.Settings/1.0.0": {
+        "runtime": {
+          "NWOS.Settings.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -609,7 +654,27 @@
       "path": "system.diagnostics.eventlog/8.0.0",
       "hashPath": "system.diagnostics.eventlog.8.0.0.nupkg.sha512"
     },
+    "NWOS.Alice/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.Alya/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "NWOS.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.Marc/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.Settings/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

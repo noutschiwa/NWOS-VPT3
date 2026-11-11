@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\NWOS\\NWOS-main\\tests\\NWOS.Alice.Tests\\NWOS.Alice.Tests.csproj": {}
+    "C:\\NWOS\\NWOS\\tests\\NWOS.Alice.Tests\\NWOS.Alice.Tests.csproj": {}
   },
   "projects": {
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj",
         "projectName": "NWOS.Alice",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -27,8 +27,8 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               }
             }
           }
@@ -83,14 +83,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
         "projectName": "NWOS.Contracts",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -158,14 +158,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\tests\\NWOS.Alice.Tests\\NWOS.Alice.Tests.csproj": {
+    "C:\\NWOS\\NWOS\\tests\\NWOS.Alice.Tests\\NWOS.Alice.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Alice.Tests\\NWOS.Alice.Tests.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\tests\\NWOS.Alice.Tests\\NWOS.Alice.Tests.csproj",
         "projectName": "NWOS.Alice.Tests",
-        "projectPath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Alice.Tests\\NWOS.Alice.Tests.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\tests\\NWOS.Alice.Tests\\NWOS.Alice.Tests.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Alice.Tests\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\tests\\NWOS.Alice.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -181,11 +181,11 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj"
               },
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               }
             }
           }

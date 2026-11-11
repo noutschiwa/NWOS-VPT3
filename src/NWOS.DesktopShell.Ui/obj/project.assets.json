@@ -1895,11 +1895,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell.Ui\\NWOS.DesktopShell.Ui.csproj",
+      "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell.Ui\\NWOS.DesktopShell.Ui.csproj",
       "projectName": "NWOS.DesktopShell.Ui",
-      "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell.Ui\\NWOS.DesktopShell.Ui.csproj",
+      "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell.Ui\\NWOS.DesktopShell.Ui.csproj",
       "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-      "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell.Ui\\obj\\",
+      "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell.Ui\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1915,14 +1915,14 @@
           "framework": "net8.0-windows7.0",
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
             },
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell\\NWOS.DesktopShell.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell\\NWOS.DesktopShell.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell\\NWOS.DesktopShell.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell\\NWOS.DesktopShell.csproj"
             },
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.Ipc\\NWOS.Ipc.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Ipc\\NWOS.Ipc.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.Ipc\\NWOS.Ipc.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Ipc\\NWOS.Ipc.csproj"
             }
           }
         }

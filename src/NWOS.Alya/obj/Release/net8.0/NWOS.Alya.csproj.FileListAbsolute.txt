@@ -15,3 +15,21 @@ C:\NWOS instalation\nwos\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.dll
 C:\NWOS instalation\nwos\src\NWOS.Alya\obj\Release\net8.0\refint\NWOS.Alya.dll
 C:\NWOS instalation\nwos\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.pdb
 C:\NWOS instalation\nwos\src\NWOS.Alya\obj\Release\net8.0\ref\NWOS.Alya.dll
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.Alya.deps.json
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.Alya.dll
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.Alya.pdb
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.Contracts.dll
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.Settings.dll
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.Contracts.pdb
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.Settings.pdb
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.csproj.AssemblyReference.cache
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.GeneratedMSBuildEditorConfig.editorconfig
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.AssemblyInfoInputs.cache
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.AssemblyInfo.cs
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.csproj.CoreCompileInputs.cache
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.sourcelink.json
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.csproj.Up2Date
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.dll
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\refint\NWOS.Alya.dll
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.pdb
+C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\ref\NWOS.Alya.dll

@@ -1,5 +1,8 @@
+using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Input;
@@ -12,12 +15,6 @@ namespace NWOS.DesktopShell.Ui;
 public sealed record WidgetTypeItem(string WidgetTypeId, string DisplayName);
 public sealed record SearchResultItem(string Path, string DisplayName);
 
-/// <summary>
-/// Reine Darstellung: sämtliche Daten (Icon-Sichtbarkeit, Boxen, Widgets,
-/// Suchindex) liegen im laufenden Cardinal-Prozess und werden per IPC
-/// abgefragt/geändert (Abschnitt 7). Ist Cardinal nicht erreichbar, zeigt das
-/// Fenster das im Titel an und bleibt bedienbar, statt abzustürzen (Abschnitt 36).
-/// </summary>
 public partial class MainWindow : Window
 {
     private const string DesktopShellId = "nwos.desktopshell";
@@ -28,17 +25,29 @@ public partial class MainWindow : Window
     private readonly ObservableCollection<BoxViewModel> _boxes = new();
     private readonly ObservableCollection<WidgetViewModel> _widgets = new();
 
-    // Widget-Aktualisierung nur bei sichtbarem, nicht minimiertem Fenster
-    // (Performance-Grundsatz, Abschnitt 35).
     private readonly DispatcherTimer _widgetRefreshTimer = new() { Interval = TimeSpan.FromSeconds(1) };
     private bool _refreshingWidgets;
     private int _lastIndexCount;
 
+    // 1. Parameterloser Konstruktor für den automatischen Start durch WPF (StartupUri)
+    public MainWindow() : this(new CardinalClient())
+    {
+    }
+
+    // 2. Kombinierter Konstruktor mit Dependency-Injection, Event-Bindungen und Positions-Logik
     public MainWindow(CardinalClient cardinal)
     {
         InitializeComponent();
         _cardinal = cardinal;
 
+        // Bildschirmposition und Größe setzen (am unteren Bildschirmrand andocken)
+        Width = SystemParameters.PrimaryScreenWidth;
+        Height = 45;
+        Left = 0;
+        Top = SystemParameters.PrimaryScreenHeight - Height;
+        WindowStartupLocation = WindowStartupLocation.Manual;
+
+        // ItemsSources zuweisen
         IconsItemsControl.ItemsSource = _icons;
         BoxesItemsControl.ItemsSource = _boxes;
         WidgetsItemsControl.ItemsSource = _widgets;
@@ -53,27 +62,56 @@ public partial class MainWindow : Window
         Loaded += async (_, _) => await InitializeAsync();
     }
 
+private void AlyaButton_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("Alya KI-Kern wird angesprochen...", "NWOS Alya", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private void MasterButton_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("Master-Workspace aktiv.", "NWOS System", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private void AudioButton_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("Audio-Steuerung geöffnet.", "NWOS Audio", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private void MonitorButton_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("System-Monitor (Background Monitor) aufgerufen.", "NWOS Monitor", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    private void InfoButton_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("NWOS System Shell v1.0\nKernel: Verbunden & Stabil", "Über NWOS", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+    }
     private void UpdateConnectionState()
     {
         Title = _cardinal.LastError is null
-            ? "NWOS Desktop Shell — mit Cardinal verbunden"
-            : $"NWOS Desktop Shell — NICHT verbunden ({_cardinal.LastError})";
+            ? "NWOS System Shell — mit Cardinal verbunden"
+            : $"NWOS System Shell — NICHT verbunden ({_cardinal.LastError})";
     }
 
     private async Task InitializeAsync()
     {
-        await LoadIconsAsync();
-        await LoadBoxesAsync();
-        await LoadWidgetsAsync();
+        try
+        {
+            await LoadIconsAsync();
+            await LoadBoxesAsync();
+            await LoadWidgetsAsync();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Initialisierungsfehler: {ex.Message}", "NWOS Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
         UpdateConnectionState();
 
         if (_widgets.Count > 0) _widgetRefreshTimer.Start();
 
-        // Suchindex im Hintergrund aufbauen, damit das Fenster nicht wartet (Abschnitt 35).
         _ = RebuildSearchIndexAsync();
     }
-
-    // --- Laden ---------------------------------------------------------------
 
     private async Task LoadIconsAsync()
     {
@@ -87,8 +125,6 @@ public partial class MainWindow : Window
             }
         }
 
-        // Die Einträge des echten Desktop-Ordners sind reine Darstellungsdaten
-        // und werden lokal gelesen; nur der Sichtbarkeitszustand kommt aus Cardinal.
         var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         List<string> entries;
         try { entries = Directory.EnumerateFileSystemEntries(desktop).OrderBy(p => p).ToList(); }
@@ -97,7 +133,6 @@ public partial class MainWindow : Window
         _icons.Clear();
         foreach (var path in entries)
         {
-            // Stabile ID (Pfad), damit der gespeicherte Zustand nach Neustarts passt.
             var iconId = path.ToLowerInvariant();
             _icons.Add(new IconViewModel(iconId, Path.GetFileNameWithoutExtension(path), path,
                 states.GetValueOrDefault(iconId, true)));
@@ -143,7 +178,7 @@ public partial class MainWindow : Window
 
     private async Task RefreshWidgetsAsync()
     {
-        if (_refreshingWidgets) return; // keine überlappenden Abfragen aufstauen
+        if (_refreshingWidgets) return;
         _refreshingWidgets = true;
         try
         {
@@ -174,27 +209,26 @@ public partial class MainWindow : Window
 
     private async Task RebuildSearchIndexAsync()
     {
-        var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        using var doc = await _cardinal.CallAsync(DesktopShellId, "search.rebuildIndex",
-            new { rootDirectory = desktop }, PermissionScope.FileSystemWrite);
-        if (doc is not null) _lastIndexCount = doc.RootElement.GetProperty("entryCount").GetInt32();
+        try
+        {
+            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            using var doc = await _cardinal.CallAsync(DesktopShellId, "search.rebuildIndex",
+                new { rootDirectory = desktop }, PermissionScope.FileSystemWrite);
+            if (doc is not null) _lastIndexCount = doc.RootElement.GetProperty("entryCount").GetInt32();
+        }
+        catch (Exception) { /* Ignoriert falls Cardinal beim Indexieren kurz nicht erreichbar ist */ }
     }
-
-    // --- Icons (Abschnitt 16) -------------------------------------------------
 
     private async void Icon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ClickCount != 2) return;
         if (sender is not FrameworkElement { DataContext: IconViewModel iconVm }) return;
 
-        // Bewusst Doppelklick = Ein-/Ausblenden (Abschnitt 16), nicht "Öffnen".
         using var doc = await _cardinal.CallAsync(DesktopShellId, "icon.toggleVisibility",
             new { iconId = iconVm.IconId }, PermissionScope.FileSystemWrite);
         if (doc is not null) iconVm.IsVisible = doc.RootElement.GetProperty("isVisible").GetBoolean();
         UpdateConnectionState();
     }
-
-    // --- Boxen (Abschnitt 17/18) ----------------------------------------------
 
     private async void CreateBox_Click(object sender, RoutedEventArgs e)
     {
@@ -232,8 +266,6 @@ public partial class MainWindow : Window
         UpdateConnectionState();
     }
 
-    // --- Widgets (Abschnitt 21) -----------------------------------------------
-
     private async void CreateWidget_Click(object sender, RoutedEventArgs e)
     {
         if (WidgetTypeComboBox.SelectedItem is not WidgetTypeItem type)
@@ -254,7 +286,10 @@ public partial class MainWindow : Window
         UpdateConnectionState();
     }
 
-    // --- Suche (Abschnitt 20) ---------------------------------------------------
+    private void WorkspaceButton_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("Workspace WS1 aktiv.", "NWOS Workspace", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
 
     private async void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
@@ -267,7 +302,7 @@ public partial class MainWindow : Window
         }
 
         using var doc = await _cardinal.CallAsync(DesktopShellId, "search.global", new { query }, PermissionScope.FileSystemRead);
-        if (doc is null || SearchBox.Text != query) return; // veraltete Antwort verwerfen
+        if (doc is null || SearchBox.Text != query) return;
 
         var results = doc.RootElement.EnumerateArray()
             .Select(r => new SearchResultItem(r.GetProperty("path").GetString()!, r.GetProperty("displayName").GetString()!))
@@ -282,4 +317,17 @@ public partial class MainWindow : Window
         MessageBox.Show($"Suchindex neu aufgebaut ({_lastIndexCount} Einträge, Desktop-Ordner).",
             "NWOS", MessageBoxButton.OK, MessageBoxImage.Information);
     }
-}
+
+    private void AppIconButton_Click(object sender, RoutedEventArgs e)
+    {
+        // Statt 'dynamic app' verwenden wir 'object appObj' oder casten direkt
+        if (sender is FrameworkElement { DataContext: object appObj })
+        {
+            // Wir holen den Namen per Reflection oder über das bekannte ViewModel
+            var nameProperty = appObj.GetType().GetProperty("Name");
+            var appName = nameProperty?.GetValue(appObj)?.ToString() ?? "Unbekannt";
+
+            MessageBox.Show($"App / Datei geöffnet: {appName}", "NWOS App-Hub", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+   }

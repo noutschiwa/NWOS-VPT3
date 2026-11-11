@@ -20,3 +20,15 @@ C:\NWOS\NWOS-main\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.dll
 C:\NWOS\NWOS-main\src\NWOS.Settings\obj\Debug\net8.0\refint\NWOS.Settings.dll
 C:\NWOS\NWOS-main\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.pdb
 C:\NWOS\NWOS-main\src\NWOS.Settings\obj\Debug\net8.0\ref\NWOS.Settings.dll
+C:\NWOS\NWOS\src\NWOS.Settings\bin\Debug\net8.0\NWOS.Settings.deps.json
+C:\NWOS\NWOS\src\NWOS.Settings\bin\Debug\net8.0\NWOS.Settings.dll
+C:\NWOS\NWOS\src\NWOS.Settings\bin\Debug\net8.0\NWOS.Settings.pdb
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.GeneratedMSBuildEditorConfig.editorconfig
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.AssemblyInfoInputs.cache
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.AssemblyInfo.cs
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.csproj.CoreCompileInputs.cache
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.sourcelink.json
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.dll
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\refint\NWOS.Settings.dll
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\NWOS.Settings.pdb
+C:\NWOS\NWOS\src\NWOS.Settings\obj\Debug\net8.0\ref\NWOS.Settings.dll

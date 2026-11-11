@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "l2R3iSPdqq8=",
+  "dgSpecHash": "/wCEWVzzUlA=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.33\\microsoft.netcore.app.ref.8.0.33.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.33\\microsoft.windowsdesktop.app.ref.8.0.33.nupkg.sha512",

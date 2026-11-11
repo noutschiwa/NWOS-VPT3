@@ -154,11 +154,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.SystemCenter.Windows\\NWOS.SystemCenter.Windows.csproj",
+      "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter.Windows\\NWOS.SystemCenter.Windows.csproj",
       "projectName": "NWOS.SystemCenter.Windows",
-      "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.SystemCenter.Windows\\NWOS.SystemCenter.Windows.csproj",
+      "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter.Windows\\NWOS.SystemCenter.Windows.csproj",
       "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-      "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.SystemCenter.Windows\\obj\\",
+      "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter.Windows\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -174,8 +174,8 @@
           "framework": "net8.0-windows7.0",
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj"
             }
           }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj": {}
+    "C:\\NWOS\\NWOS\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj": {}
   },
   "projects": {
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj",
         "projectName": "NWOS.ConfigSetup",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.ConfigSetup\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.ConfigSetup\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -27,8 +27,8 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               }
             }
           }
@@ -83,14 +83,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
         "projectName": "NWOS.Contracts",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"

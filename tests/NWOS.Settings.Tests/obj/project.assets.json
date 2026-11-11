@@ -896,11 +896,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Settings.Tests\\NWOS.Settings.Tests.csproj",
+      "projectUniqueName": "C:\\NWOS\\NWOS\\tests\\NWOS.Settings.Tests\\NWOS.Settings.Tests.csproj",
       "projectName": "NWOS.Settings.Tests",
-      "projectPath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Settings.Tests\\NWOS.Settings.Tests.csproj",
+      "projectPath": "C:\\NWOS\\NWOS\\tests\\NWOS.Settings.Tests\\NWOS.Settings.Tests.csproj",
       "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-      "outputPath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Settings.Tests\\obj\\",
+      "outputPath": "C:\\NWOS\\NWOS\\tests\\NWOS.Settings.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -916,8 +916,8 @@
           "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj"
             }
           }
         }

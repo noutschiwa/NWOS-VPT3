@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\NWOS\\NWOS-main\\tests\\NWOS.Cardinal.Tests\\NWOS.Cardinal.Tests.csproj": {}
+    "C:\\NWOS\\NWOS\\tests\\NWOS.Cardinal.Tests\\NWOS.Cardinal.Tests.csproj": {}
   },
   "projects": {
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj",
         "projectName": "NWOS.Alice",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -27,8 +27,8 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               }
             }
           }
@@ -83,14 +83,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Alya\\NWOS.Alya.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alya\\NWOS.Alya.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj",
         "projectName": "NWOS.Alya",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alya\\NWOS.Alya.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alya\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -106,11 +106,11 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               },
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj"
               }
             }
           }
@@ -165,14 +165,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj",
         "projectName": "NWOS.Cardinal",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Cardinal\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -188,17 +188,17 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alice\\NWOS.Alice.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj"
               },
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Alya\\NWOS.Alya.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Alya\\NWOS.Alya.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj"
               },
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               },
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Marc\\NWOS.Marc.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Marc\\NWOS.Marc.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Marc\\NWOS.Marc.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Marc\\NWOS.Marc.csproj"
               }
             }
           }
@@ -279,14 +279,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
         "projectName": "NWOS.Contracts",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -354,14 +354,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Marc\\NWOS.Marc.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Marc\\NWOS.Marc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Marc\\NWOS.Marc.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Marc\\NWOS.Marc.csproj",
         "projectName": "NWOS.Marc",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Marc\\NWOS.Marc.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Marc\\NWOS.Marc.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Marc\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Marc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -377,8 +377,8 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               }
             }
           }
@@ -433,14 +433,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
+    "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj",
         "projectName": "NWOS.Settings",
-        "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -508,14 +508,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS-main\\tests\\NWOS.Cardinal.Tests\\NWOS.Cardinal.Tests.csproj": {
+    "C:\\NWOS\\NWOS\\tests\\NWOS.Cardinal.Tests\\NWOS.Cardinal.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Cardinal.Tests\\NWOS.Cardinal.Tests.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\tests\\NWOS.Cardinal.Tests\\NWOS.Cardinal.Tests.csproj",
         "projectName": "NWOS.Cardinal.Tests",
-        "projectPath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Cardinal.Tests\\NWOS.Cardinal.Tests.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\tests\\NWOS.Cardinal.Tests\\NWOS.Cardinal.Tests.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS-main\\tests\\NWOS.Cardinal.Tests\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\tests\\NWOS.Cardinal.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -531,11 +531,11 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj"
               },
-              "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               }
             }
           }

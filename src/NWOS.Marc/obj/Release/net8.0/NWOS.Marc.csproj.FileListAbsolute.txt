@@ -13,3 +13,19 @@ C:\NWOS instalation\nwos\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.dll
 C:\NWOS instalation\nwos\src\NWOS.Marc\obj\Release\net8.0\refint\NWOS.Marc.dll
 C:\NWOS instalation\nwos\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.pdb
 C:\NWOS instalation\nwos\src\NWOS.Marc\obj\Release\net8.0\ref\NWOS.Marc.dll
+C:\NWOS\NWOS\src\NWOS.Marc\bin\Release\net8.0\NWOS.Marc.deps.json
+C:\NWOS\NWOS\src\NWOS.Marc\bin\Release\net8.0\NWOS.Marc.dll
+C:\NWOS\NWOS\src\NWOS.Marc\bin\Release\net8.0\NWOS.Marc.pdb
+C:\NWOS\NWOS\src\NWOS.Marc\bin\Release\net8.0\NWOS.Contracts.dll
+C:\NWOS\NWOS\src\NWOS.Marc\bin\Release\net8.0\NWOS.Contracts.pdb
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.csproj.AssemblyReference.cache
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.GeneratedMSBuildEditorConfig.editorconfig
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.AssemblyInfoInputs.cache
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.AssemblyInfo.cs
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.csproj.CoreCompileInputs.cache
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.sourcelink.json
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.csproj.Up2Date
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.dll
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\refint\NWOS.Marc.dll
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.pdb
+C:\NWOS\NWOS\src\NWOS.Marc\obj\Release\net8.0\ref\NWOS.Marc.dll

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rtdjnld/OUY=",
+  "dgSpecHash": "VDVOoK5RHBU=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\src\\NWOS.SystemCenter.Windows\\NWOS.SystemCenter.Windows.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter.Windows\\NWOS.SystemCenter.Windows.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\system.codedom\\8.0.0\\system.codedom.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\system.management\\8.0.0\\system.management.8.0.0.nupkg.sha512",

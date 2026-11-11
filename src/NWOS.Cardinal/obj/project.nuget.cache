@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lJ6eHpw49MU=",
+  "dgSpecHash": "uN6BySm4dJw=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\8.0.33\\microsoft.dotnet.ilcompiler.8.0.33.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",

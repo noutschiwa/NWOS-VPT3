@@ -9,43 +9,53 @@ namespace NWOS.DesktopShell.Ui
 {
     public sealed class CardinalClient
     {
-        private const string PipeName = "NWOS.Cardinal.Pipe";
+        private const string PipeName = "NWOS_Cardinal_Pipe";
         public string? LastError { get; private set; }
 
         public async Task<JsonDocument?> CallAsync(string targetService, string action, object payload, PermissionScope scope)
         {
-            try
+            int retries = 3;
+            while (retries > 0)
             {
-                using var clientStream = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
-                await clientStream.ConnectAsync(1500); // 1,5 Sekunden Timeout
-
-                using var writer = new StreamWriter(clientStream);
-                using var reader = new StreamReader(clientStream);
-
-                var request = new
+                try
                 {
-                    Service = targetService,
-                    Action = action,
-                    Scope = scope.ToString(),
-                    Payload = JsonSerializer.Serialize(payload)
-                };
+                    using var clientStream = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+                    await clientStream.ConnectAsync(2000); // 2 Sekunden Timeout pro Versuch
 
-                string jsonRequest = JsonSerializer.Serialize(request);
-                await writer.WriteLineAsync(jsonRequest);
-                await writer.FlushAsync();
+                    using var writer = new StreamWriter(clientStream);
+                    using var reader = new StreamReader(clientStream);
 
-                string? jsonResponse = await reader.ReadLineAsync();
-                LastError = null;
+                    var request = new
+                    {
+                        Service = targetService,
+                        Action = action,
+                        Scope = scope.ToString(),
+                        Payload = JsonSerializer.Serialize(payload)
+                    };
 
-                if (string.IsNullOrEmpty(jsonResponse)) return null;
+                    string jsonRequest = JsonSerializer.Serialize(request);
+                    await writer.WriteLineAsync(jsonRequest);
+                    await writer.FlushAsync();
 
-                return JsonDocument.Parse(jsonResponse);
+                    string? jsonResponse = await reader.ReadLineAsync();
+                    LastError = null;
+
+                    if (string.IsNullOrEmpty(jsonResponse)) return null;
+
+                    return JsonDocument.Parse(jsonResponse);
+                }
+                catch (Exception ex)
+                {
+                    retries--;
+                    if (retries == 0)
+                    {
+                        LastError = ex.Message;
+                        return null;
+                    }
+                    await Task.Delay(400); // Kurz warten vor dem nächsten Verbindungsversuch
+                }
             }
-            catch (Exception ex)
-            {
-                LastError = ex.Message;
-                return null;
-            }
+            return null;
         }
     }
 }

@@ -48,11 +48,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell\\NWOS.DesktopShell.csproj",
+      "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell\\NWOS.DesktopShell.csproj",
       "projectName": "NWOS.DesktopShell",
-      "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell\\NWOS.DesktopShell.csproj",
+      "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell\\NWOS.DesktopShell.csproj",
       "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-      "outputPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.DesktopShell\\obj\\",
+      "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.DesktopShell\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -68,11 +68,11 @@
           "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
             },
-            "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Settings\\NWOS.Settings.csproj"
+            "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj"
             }
           }
         }

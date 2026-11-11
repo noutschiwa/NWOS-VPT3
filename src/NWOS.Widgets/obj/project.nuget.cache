@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OCBRkgjmIfk=",
+  "dgSpecHash": "9n2IQQRDQQ8=",
   "success": true,
-  "projectFilePath": "C:\\NWOS\\NWOS-main\\src\\NWOS.Widgets\\NWOS.Widgets.csproj",
+  "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.Widgets\\NWOS.Widgets.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.33\\microsoft.netcore.app.ref.8.0.33.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.33\\microsoft.windowsdesktop.app.ref.8.0.33.nupkg.sha512",
