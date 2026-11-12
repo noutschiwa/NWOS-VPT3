@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "uN6BySm4dJw=",
+  "dgSpecHash": "GGQYoE84/Wc=",
   "success": true,
   "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\8.0.33\\microsoft.dotnet.ilcompiler.8.0.33.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\8.0.34\\microsoft.dotnet.ilcompiler.8.0.34.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.configuration.binder\\8.0.0\\microsoft.extensions.configuration.binder.8.0.0.nupkg.sha512",
@@ -32,15 +32,15 @@
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.options.configurationextensions\\8.0.0\\microsoft.extensions.options.configurationextensions.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
-    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.33\\microsoft.net.illink.tasks.8.0.33.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.34\\microsoft.net.illink.tasks.8.0.34.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\system.diagnostics.diagnosticsource\\8.0.0\\system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\system.diagnostics.eventlog\\8.0.0\\system.diagnostics.eventlog.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
     "C:\\Users\\noahj\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512",
-    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.33\\microsoft.netcore.app.ref.8.0.33.nupkg.sha512",
-    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.33\\microsoft.windowsdesktop.app.ref.8.0.33.nupkg.sha512",
-    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.33\\microsoft.aspnetcore.app.ref.8.0.33.nupkg.sha512",
-    "C:\\Users\\noahj\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\8.0.33\\runtime.win-x64.microsoft.dotnet.ilcompiler.8.0.33.nupkg.sha512"
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.34\\microsoft.netcore.app.ref.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.34\\microsoft.windowsdesktop.app.ref.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.34\\microsoft.aspnetcore.app.ref.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\8.0.34\\runtime.win-x64.microsoft.dotnet.ilcompiler.8.0.34.nupkg.sha512"
   ],
   "logs": []
 }

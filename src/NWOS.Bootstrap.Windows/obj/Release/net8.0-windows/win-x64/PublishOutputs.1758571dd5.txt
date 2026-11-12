@@ -1,6 +1,5 @@
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.exe
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.exe
-C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.deps.json
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.runtimeconfig.json
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.runtimeconfig.json
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\Microsoft.DiaSymReader.Native.amd64.dll
@@ -13,7 +12,7 @@ C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\createdump.exe
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\hostfxr.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\hostpolicy.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\mscordaccore.dll
-C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\mscordaccore_amd64_amd64_8.0.3326.52219.dll
+C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\mscordaccore_amd64_amd64_8.0.3426.52217.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\mscordbi.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\mscorrc.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\msquic.dll

@@ -214,7 +214,6 @@ C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\creat
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\hostfxr.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\hostpolicy.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\mscordaccore.dll
-C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\mscordaccore_amd64_amd64_8.0.3326.52219.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\mscordbi.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\mscorrc.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\msquic.dll
@@ -259,3 +258,4 @@ C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Release\net8.0-windows\win-x64\NWOS.
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Release\net8.0-windows\win-x64\NWOS.Bootstrap.Windows.genruntimeconfig.cache
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Release\net8.0-windows\win-x64\ref\NWOS.Bootstrap.Windows.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\NWOS.Bootstrap.Windows.exe
+C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\mscordaccore_amd64_amd64_8.0.3426.52217.dll
