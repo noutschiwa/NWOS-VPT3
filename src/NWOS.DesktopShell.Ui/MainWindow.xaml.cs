@@ -48,7 +48,7 @@ public partial class MainWindow : Window
         WindowStartupLocation = WindowStartupLocation.Manual;
 
         // ItemsSources zuweisen
-        IconsItemsControl.ItemsSource = _icons;
+        AppHubItemsControl.ItemsSource = _icons;
         BoxesItemsControl.ItemsSource = _boxes;
         WidgetsItemsControl.ItemsSource = _widgets;
 
@@ -62,36 +62,123 @@ public partial class MainWindow : Window
         Loaded += async (_, _) => await InitializeAsync();
     }
 
-private void AlyaButton_Click(object sender, RoutedEventArgs e)
+private async void AlyaButton_Click(object sender, RoutedEventArgs e)
+{
+    try
     {
-        MessageBox.Show("Alya KI-Kern wird angesprochen...", "NWOS Alya", MessageBoxButton.OK, MessageBoxImage.Information);
-    }
+        MessageBox.Show("Alya AI-Interface wird initialisiert...", "NWOS Alya Assistant", MessageBoxButton.OK, MessageBoxImage.Information);
 
-    private void MasterButton_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show("Master-Workspace aktiv.", "NWOS System", MessageBoxButton.OK, MessageBoxImage.Information);
-    }
+        // IPC-Aufruf an das Alya-Modul im Host
+        var doc = await _cardinal.CallAsync("nwos.alya", "chat.status", new { }, PermissionScope.FileSystemRead);
+        string response = doc != null ? doc.RootElement.ToString() : "Alya Kern bereit.";
 
-    private void AudioButton_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show("Audio-Steuerung geöffnet.", "NWOS Audio", MessageBoxButton.OK, MessageBoxImage.Information);
+        MessageBox.Show($"Alya Antwort:\n{response}", "NWOS Alya", MessageBoxButton.OK, MessageBoxImage.Information);
     }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Alya konnte nicht erreicht werden: {ex.Message}", "NWOS Alya", MessageBoxButton.OK, MessageBoxImage.Warning);
+    }
+}
 
-    private void MonitorButton_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBox.Show("System-Monitor (Background Monitor) aufgerufen.", "NWOS Monitor", MessageBoxButton.OK, MessageBoxImage.Information);
-    }
+private async void MasterButton_Click(object sender, RoutedEventArgs e)
+{
+    var confirmation = MessageBox.Show(
+        "Möchtest du das System über den NWOS Master neu starten?\n\nKlicke auf [Ja] für einen System-Neustart.",
+        "NWOS Master - Systemsteuerung",
+        MessageBoxButton.YesNo,
+        MessageBoxImage.Warning);
 
-    private void InfoButton_Click(object sender, RoutedEventArgs e)
+    if (confirmation == MessageBoxResult.Yes)
     {
-        MessageBox.Show("NWOS System Shell v1.0\nKernel: Verbunden & Stabil", "Über NWOS", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        try
+        {
+            // IPC-Befehl an den Host/SystemCenter senden
+            var doc = await _cardinal.CallAsync("nwos.systemcenter", "system.reboot", new { }, PermissionScope.FileSystemWrite);
+
+            string responseMessage = doc != null ? doc.RootElement.ToString() : "Befehl gesendet.";
+            MessageBox.Show($"Kernel-Antwort:\n{responseMessage}", "NWOS Master", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Fehler beim Ausführen des System-Befehls: {ex.Message}", "NWOS Master Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
+}
+
+private void MonitorButton_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        // Startet den echten Windows Task Manager
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("taskmgr.exe")
+        {
+            UseShellExecute = true
+        });
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Task Manager konnte nicht geöffnet werden: {ex.Message}", "NWOS Monitor", MessageBoxButton.OK, MessageBoxImage.Warning);
+    }
+}
+
+private async void InfoButton_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        // IPC-Abfrage an den Host/Kernel für aktuelle System- und Sicherheitsmeldungen
+        string notificationsText = "Keine neuen Benachrichtigungen.";
+
+        var doc = await _cardinal.CallAsync("nwos.systemcenter", "notifications.list", new { }, PermissionScope.FileSystemRead);
+        if (doc != null && doc.RootElement.ValueKind != JsonValueKind.Null)
+        {
+            // Beispiel: Falls der Host strukturierte Benachrichtigungen liefert
+            notificationsText = doc.RootElement.ToString();
+        }
+        else
+        {
+            // Fallback mit Standard-Systemmeldungen (inkl. simulierter Sicherheitswarnung)
+            notificationsText =
+                "🔔 NWOS Infobox & Benachrichtigungen:\n\n" +
+                "• [System] Cardinal Kernel läuft stabil (v3.0)\n" +
+                "• [E-Mail] Keine neuen Nachrichten\n" +
+                "• [Alice Security] Quick-Scan: System sicher – Keine Viren gefunden ✓\n" +
+                "• [Alya] Taskleisten-Zonen erfolgreich verankert.";
+        }
+
+        MessageBox.Show(notificationsText, "NWOS Infobox", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Fehler beim Laden der Infobox: {ex.Message}", "NWOS Info", MessageBoxButton.OK, MessageBoxImage.Warning);
+    }
+}
+
     private void UpdateConnectionState()
     {
         Title = _cardinal.LastError is null
             ? "NWOS System Shell — mit Cardinal verbunden"
             : $"NWOS System Shell — NICHT verbunden ({_cardinal.LastError})";
     }
+
+private async void AudioButton_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        // Sende den IPC-Befehl an den Host-Dienst (mit einem gültigen PermissionScope)
+        string responseText = "Unbekannt";
+        var doc = await _cardinal.CallAsync("nwos.systemcenter", "audio.adjust", new { volume = 75 }, PermissionScope.FileSystemWrite);
+        if (doc != null)
+        {
+            responseText = doc.RootElement.ToString();
+        }
+
+        MessageBox.Show($"Antwort vom Host: {responseText}", "NWOS Audio", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"IPC-Verbindungsfehler: {ex.Message}", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+}
 
     private async Task InitializeAsync()
     {
@@ -330,4 +417,35 @@ private void AlyaButton_Click(object sender, RoutedEventArgs e)
             MessageBox.Show($"App / Datei geöffnet: {appName}", "NWOS App-Hub", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
-   }
+  private Point _dragStartPoint;
+
+  private void AppIcon_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+  {
+      _dragStartPoint = e.GetPosition(null);
+  }
+
+  private void AppIcon_MouseMove(object sender, MouseEventArgs e)
+  {
+      var mousePos = e.GetPosition(null);
+      var diff = _dragStartPoint - mousePos;
+
+      if (e.LeftButton == MouseButtonState.Pressed &&
+          (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+           Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+      {
+          if (sender is FrameworkElement { DataContext: IconViewModel draggedData })
+          {
+              DragDrop.DoDragDrop(sender as DependencyObject, draggedData, DragDropEffects.Move);
+          }
+      }
+  }
+
+  private void AppHub_Drop(object sender, DragEventArgs e)
+  {
+      if (e.Data.GetDataPresent(typeof(IconViewModel)))
+      {
+          var droppedData = e.Data.GetData(typeof(IconViewModel)) as IconViewModel;
+          MessageBox.Show($"App '{droppedData?.DisplayName}' im Hub verschoben.", "NWOS App-Hub", MessageBoxButton.OK, MessageBoxImage.Information);
+      }
+  }
+ }

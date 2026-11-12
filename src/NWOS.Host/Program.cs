@@ -6,14 +6,20 @@ namespace NWOS.Host
     public class Program
     {
         public static async Task Main(string[] args)
-    {
-        Console.WriteLine("[NWOS Host] Starte System-Host-Komponente...");
+        {
+            Console.WriteLine("[Cardinal] Starte NWOS-Komponente...");
 
-        // Cardinal Server & IPC-Dienste initialisieren
-        // Hier greift die Steuerung für den Hintergrundbetrieb
-
-        Console.WriteLine("[NWOS Host] Host läuft stabil. Warte auf UI-Verbindungen...");
-        await Task.Delay(-1);
-    }
+            try
+            {
+                // Übergabe an die zentrale Host-Komposition, die Cardinal Kernel,
+                // IPC-Dienste und Module (Alya, Alice, Marc etc.) initialisiert.
+                await HostComposition.RunAsync(args);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Cardinal] Schwerwiegender Fehler im Host: {ex.Message}");
+                Environment.ExitCode = 1;
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace NWOS.DesktopShell.Ui
                 try
                 {
                     using var clientStream = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
-                    await clientStream.ConnectAsync(2000); // 2 Sekunden Timeout pro Versuch
+                    await clientStream.ConnectAsync(2000);
 
                     using var writer = new StreamWriter(clientStream);
                     using var reader = new StreamReader(clientStream);
@@ -52,7 +52,7 @@ namespace NWOS.DesktopShell.Ui
                         LastError = ex.Message;
                         return null;
                     }
-                    await Task.Delay(400); // Kurz warten vor dem nächsten Verbindungsversuch
+                    await Task.Delay(400);
                 }
             }
             return null;

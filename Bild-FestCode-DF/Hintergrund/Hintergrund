@@ -1,52 +1,101 @@
+using System;
+using System.IO;
+using System.Diagnostics;
+using System.Threading.Tasks;
+
 namespace NWOS.Bootstrap.Windows
 {
     public class SystemBootstrapper
     {
+        private const string BackgroundExe =
+        @"C:\NWOS\NWOS\Bilder-NWOS\Hintergrund-Wasserzeichen\NWOS-Logo-Standart Hintergund.png";
+
         public async Task InitializeSystemAsync()
     {
         bool isSystemBooting = true;
 
         if (isSystemBooting)
         {
-            // 1. Visuellen Start-Hintergrund aus dem Bild-FestCode / Bilder-Bereich triggern
-            TriggerStartupBackground();
-
-            // 2. Alya & Kern-Dienste im Hintergrund starten (Bereinigen, Reparieren, Aktualisieren)
+            // 1. Alya und Kerndienste starten
             await RunAlyaMaintenanceProtocolAsync();
         }
 
-        // 3. Warten auf Login
+        // 2. Auf Benutzer-Login warten
         bool loginAccessGranted = await WaitForUserLoginAsync();
 
         if (loginAccessGranted)
         {
-            // 4. Startup-Protokoll für den aktiven Desktop ausführen
+            // 3. Hintergrundbild setzen
+            await TriggerStartupBackgroundAsync();
+
+            // 4. Desktop-Startup-Protokoll
             GiveStartupProtocol();
         }
     }
 
-        private void TriggerStartupBackground()
+        private async Task TriggerStartupBackgroundAsync()
+    {
+        try
         {
-            // Hier wird das native Hintergrund-Tool oder der Aufruf aus Bild-FestCode-DF angestoßen
-            System.Diagnostics.Process.Start(@"C:\NWOS instalation\nwos\Bild-FestCode-DF\Hintergrund\Hintergrund.exe");
+            if (!File.Exists(BackgroundExe))
+            {
+                Console.WriteLine(
+                        "NWOS ERROR: Hintergrund.exe wurde nicht gefunden!");
+
+                return;
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = BackgroundExe,
+                        WorkingDirectory = Path.GetDirectoryName(BackgroundExe),
+                        UseShellExecute = true
+            };
+
+            using Process process = Process.Start(startInfo);
+
+            if (process == null)
+            {
+                Console.WriteLine(
+                        "NWOS ERROR: Hintergrundprozess konnte nicht gestartet werden.");
+
+                return;
+            }
+
+            await process.WaitForExitAsync();
+
+            if (process.ExitCode == 0)
+            {
+                Console.WriteLine(
+                        "NWOS: Hintergrundbild erfolgreich verarbeitet.");
+            }
+            else
+            {
+                Console.WriteLine(
+                        $"NWOS ERROR: Hintergrundprozess beendet mit Code {process.ExitCode}.");
+            }
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine(
+                    $"NWOS BACKGROUND ERROR: {ex.Message}");
+        }
+    }
 
         private async Task RunAlyaMaintenanceProtocolAsync()
     {
-        // Alyas Aufgaben während des Ladebildschirms abarbeiten lassen
         await Task.Delay(2000);
     }
 
         private async Task<bool> WaitForUserLoginAsync()
     {
-        // Logik für den Login-Screen, der über der Animation auftaucht
         return await Task.FromResult(true);
     }
 
         private void GiveStartupProtocol()
         {
-            // Das Startup-Protokoll nach erfolgreichem Login (z.B. Alice & Marc aktivieren)
-            System.Console.WriteLine("Startup-Protokoll erfolgreich ausgeführt. Willkommen in NWOS!");
+            Console.WriteLine(
+                    "Startup-Protokoll erfolgreich ausgeführt. Willkommen in NWOS!");
         }
     }
 }

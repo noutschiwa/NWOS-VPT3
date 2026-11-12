@@ -7,7 +7,7 @@
     <RootNamespace>NWOS.Host</RootNamespace>
 
     <OutputType>Exe</OutputType>
-    <SelfContained>true</SelfContained>
+    <IsAotCompatible>true</IsAotCompatible>
 
     <UserSecretsId>nwos-host</UserSecretsId>
   </PropertyGroup>

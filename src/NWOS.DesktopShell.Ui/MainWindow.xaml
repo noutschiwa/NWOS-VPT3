@@ -33,20 +33,24 @@
             <ListBox x:Name="SearchResultsList" Width="0" Height="0" Visibility="Collapsed"/>
         </StackPanel>
 
-        <!-- ZONE 3: App-Hub (Zentrum) -->
+        <!-- ZONE 3: App-Hub (Zentrum mit Drag & Drop) -->
         <Grid Grid.Column="2">
-            <ItemsControl x:Name="IconsItemsControl" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ItemsControl x:Name="AppHubItemsControl" AllowDrop="True" Drop="AppHub_Drop" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
+                        <StackPanel Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button Content="{Binding Name}"
-                                Click="AppIconButton_Click"
                                 Style="{StaticResource TaskbarButtonStyle}"
-                                Margin="4,0"/>
+                                Width="36" Height="36" Margin="2,0"
+                                AllowDrop="True"
+                                PreviewMouseLeftButtonDown="AppIcon_PreviewMouseLeftButtonDown"
+                                MouseMove="AppIcon_MouseMove"
+                                Drop="AppHub_Drop"
+                                Click="AppIconButton_Click" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
