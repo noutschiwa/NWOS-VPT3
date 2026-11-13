@@ -194,3 +194,5 @@ C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Debug\net8.0-windows\refint\NWOS.Deskt
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Debug\net8.0-windows\NWOS.DesktopShell.Ui.pdb
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Debug\net8.0-windows\NWOS.DesktopShell.Ui.genruntimeconfig.cache
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Debug\net8.0-windows\ref\NWOS.DesktopShell.Ui.dll
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Debug\net8.0-windows\NWOS.Core.dll
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Debug\net8.0-windows\NWOS.Core.pdb

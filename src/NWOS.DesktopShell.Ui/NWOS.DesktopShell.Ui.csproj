@@ -19,6 +19,7 @@
     <ProjectReference Include="..\NWOS.Contracts\NWOS.Contracts.csproj" />
     <ProjectReference Include="..\NWOS.Ipc\NWOS.Ipc.csproj" />
     <ProjectReference Include="..\NWOS.DesktopShell\NWOS.DesktopShell.csproj" />
+    <ProjectReference Include="..\NWOS.Core\NWOS.Core.csproj" />
   </ItemGroup>
 
 </Project>

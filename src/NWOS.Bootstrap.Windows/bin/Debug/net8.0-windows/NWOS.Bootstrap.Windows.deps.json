@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "NWOS.Bootstrap.Windows/1.0.0": {
         "dependencies": {
+          "NWOS.Core": "1.0.0",
           "NWOS.Host": "1.0.0",
           "NWOS.SystemCenter.Windows": "1.0.0",
           "NWOS.WindowsIntegration": "1.0.0"
@@ -482,6 +483,17 @@
           }
         }
       },
+      "NWOS.Core/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "NWOS.DesktopShell/1.0.0": {
         "dependencies": {
           "NWOS.Contracts": "1.0.0",
@@ -833,6 +845,11 @@
       "sha512": ""
     },
     "NWOS.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

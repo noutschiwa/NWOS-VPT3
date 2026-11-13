@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Host")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d6f2f998fb70ef8ba07effb686175881684c380")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86c0f6d518679b3fb454a7da93576824d1bd440e")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Host")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Host")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

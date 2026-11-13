@@ -9,6 +9,7 @@
       "NWOS.DesktopShell.Ui/1.0.0": {
         "dependencies": {
           "NWOS.Contracts": "1.0.0",
+          "NWOS.Core": "1.0.0",
           "NWOS.DesktopShell": "1.0.0",
           "NWOS.Ipc": "1.0.0"
         },
@@ -421,6 +422,17 @@
           }
         }
       },
+      "NWOS.Core/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "NWOS.DesktopShell/1.0.0": {
         "dependencies": {
           "NWOS.Contracts": "1.0.0",
@@ -678,6 +690,11 @@
       "sha512": ""
     },
     "NWOS.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

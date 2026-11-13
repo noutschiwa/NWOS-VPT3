@@ -1,0 +1,16 @@
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.AssemblyInfoInputs.cache
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.AssemblyInfo.cs
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.csproj.CoreCompileInputs.cache
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.sourcelink.json
+C:\NWOS\NWOS\src\NWOS.Core\bin\Debug\net8.0\NWOS.Core.deps.json
+C:\NWOS\NWOS\src\NWOS.Core\bin\Debug\net8.0\NWOS.Core.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Debug\net8.0\NWOS.Core.pdb
+C:\NWOS\NWOS\src\NWOS.Core\bin\Debug\net8.0\NWOS.Contracts.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Debug\net8.0\NWOS.Contracts.pdb
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.csproj.AssemblyReference.cache
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.csproj.Up2Date
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.dll
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\refint\NWOS.Core.dll
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\NWOS.Core.pdb
+C:\NWOS\NWOS\src\NWOS.Core\obj\Debug\net8.0\ref\NWOS.Core.dll

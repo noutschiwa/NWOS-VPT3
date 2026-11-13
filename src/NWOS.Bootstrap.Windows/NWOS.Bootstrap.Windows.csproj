@@ -24,6 +24,7 @@
     <ProjectReference Include="..\NWOS.Host\NWOS.Host.csproj" />
     <ProjectReference Include="..\NWOS.SystemCenter.Windows\NWOS.SystemCenter.Windows.csproj" />
     <ProjectReference Include="..\NWOS.WindowsIntegration\NWOS.WindowsIntegration.csproj" />
+    <ProjectReference Include="..\NWOS.Core\NWOS.Core.csproj" />
   </ItemGroup>
 
 </Project>

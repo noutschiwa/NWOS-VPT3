@@ -239,3 +239,5 @@ C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Debug\net8.0-windows\refint\NWOS.Boo
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Debug\net8.0-windows\NWOS.Bootstrap.Windows.pdb
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Debug\net8.0-windows\NWOS.Bootstrap.Windows.genruntimeconfig.cache
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Debug\net8.0-windows\ref\NWOS.Bootstrap.Windows.dll
+C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Core.dll
+C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Core.pdb

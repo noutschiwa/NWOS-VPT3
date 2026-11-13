@@ -259,3 +259,5 @@ C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Release\net8.0-windows\win-x64\NWOS.
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Release\net8.0-windows\win-x64\ref\NWOS.Bootstrap.Windows.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\NWOS.Bootstrap.Windows.exe
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\mscordaccore_amd64_amd64_8.0.3426.52217.dll
+C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\NWOS.Core.dll
+C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Release\net8.0-windows\win-x64\NWOS.Core.pdb
