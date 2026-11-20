@@ -1,0 +1,38 @@
+<UserControl x:Class="NWOS.DesktopShell.Ui.Button.WorkspaceFlyout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="WorkspaceContainer"
+             MouseEnter="WorkspaceContainer_MouseEnter"
+             MouseLeave="WorkspaceContainer_MouseLeave"
+             d:DesignHeight="100" d:DesignWidth="100">
+    <Grid>
+        <!-- Der Haupt-WS1-Button in der Taskleiste -->
+        <Button x:Name="Ws1Button" Content="WS1" Style="{StaticResource TaskbarButtonStyle}" Width="36" Height="36"/>
+
+        <!-- Das hochfahrende Flyout-Fenster -->
+        <Popup x:Name="WorkspacePopup" PlacementTarget="{Binding ElementName=Ws1Button}" Placement="Top" IsOpen="False" StaysOpen="True">
+            <Border Background="#CC1E1E1E" BorderBrush="#333333" BorderThickness="1" CornerRadius="6" Padding="6" Width="90">
+                <StackPanel Orientation="Vertical">
+                    <!-- Aktiver Desktop 1 (Hier) -->
+                    <Button Content="1 (Hier)"
+                            Style="{StaticResource TaskbarButtonStyle}"
+                            Background="#007ACC"
+                            Foreground="White"
+                            Margin="0,0,0,4" Height="30"
+                            Click="Desktop1_Click"/>
+
+                    <!-- Plus-Button für neuen Desktop -->
+                    <Button Content="+"
+                            Style="{StaticResource TaskbarButtonStyle}"
+                            Background="#333333"
+                            Foreground="White"
+                            Height="30"
+                            Click="AddDesktop_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

@@ -198,8 +198,8 @@ C:\NWOS\NWOS-main\tests\NWOS.Settings.Tests\obj\Debug\net8.0\refint\NWOS.Setting
 C:\NWOS\NWOS-main\tests\NWOS.Settings.Tests\obj\Debug\net8.0\NWOS.Settings.Tests.pdb
 C:\NWOS\NWOS-main\tests\NWOS.Settings.Tests\obj\Debug\net8.0\NWOS.Settings.Tests.genruntimeconfig.cache
 C:\NWOS\NWOS-main\tests\NWOS.Settings.Tests\obj\Debug\net8.0\ref\NWOS.Settings.Tests.dll
-C:\NWOS\NWOS\tests\NWOS.Settings.Tests\bin\Debug\net8.0\testhost.exe
 C:\NWOS\NWOS\tests\NWOS.Settings.Tests\bin\Debug\net8.0\testhost.dll
+C:\NWOS\NWOS\tests\NWOS.Settings.Tests\bin\Debug\net8.0\testhost.exe
 C:\NWOS\NWOS\tests\NWOS.Settings.Tests\bin\Debug\net8.0\xunit.runner.visualstudio.testadapter.dll
 C:\NWOS\NWOS\tests\NWOS.Settings.Tests\bin\Debug\net8.0\xunit.runner.reporters.netcoreapp10.dll
 C:\NWOS\NWOS\tests\NWOS.Settings.Tests\bin\Debug\net8.0\xunit.runner.utility.netcoreapp10.dll

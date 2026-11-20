@@ -2030,6 +2030,7 @@
         "net8.0-windows"
       ],
       "sources": {
+        "C:\\Users\\noahj\\AppData\\Roaming\\Godot\\mono\\summer_offline_packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

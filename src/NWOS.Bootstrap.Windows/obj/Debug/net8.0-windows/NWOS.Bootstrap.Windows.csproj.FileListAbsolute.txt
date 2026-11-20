@@ -204,6 +204,7 @@ C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Alya.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Cardinal.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.ConfigSetup.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Contracts.dll
+C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Core.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.DesktopShell.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Host.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Ipc.dll
@@ -216,6 +217,7 @@ C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.WindowsInt
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Host.pdb
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.SystemCenter.Windows.pdb
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.WindowsIntegration.pdb
+C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Core.pdb
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Alice.pdb
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Alya.pdb
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Cardinal.pdb
@@ -239,5 +241,3 @@ C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Debug\net8.0-windows\refint\NWOS.Boo
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Debug\net8.0-windows\NWOS.Bootstrap.Windows.pdb
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Debug\net8.0-windows\NWOS.Bootstrap.Windows.genruntimeconfig.cache
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\obj\Debug\net8.0-windows\ref\NWOS.Bootstrap.Windows.dll
-C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Core.dll
-C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Core.pdb

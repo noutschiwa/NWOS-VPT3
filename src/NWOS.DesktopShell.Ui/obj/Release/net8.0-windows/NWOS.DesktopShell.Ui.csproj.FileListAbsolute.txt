@@ -121,3 +121,13 @@ C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.DesktopShe
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\ref\NWOS.DesktopShell.Ui.dll
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Release\net8.0-windows\NWOS.Core.dll
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Release\net8.0-windows\NWOS.Core.pdb
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\Audio-Button\AudioFlyout.baml
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\Info-Button\InfoFlyout.baml
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\Master-Button\MasterFlyout.baml
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\WS-Button\WorkspaceFlyout.baml
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\Audio-Button\AudioFlyout.g.cs
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\Info-Button\InfoFlyout.g.cs
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\Master-Button\MasterFlyout.g.cs
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\WS-Button\WorkspaceFlyout.g.cs
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.DesktopShell.Ui_MarkupCompile.lref
