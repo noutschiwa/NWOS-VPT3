@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NWOS.Contracts\NWOS.Contracts.csproj" />
+    <ProjectReference Include="..\NWOS.Ipc\NWOS.Ipc.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

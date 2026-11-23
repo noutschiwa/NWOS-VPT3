@@ -724,7 +724,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "NWOS.Contracts": "1.0.0"
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.Ipc": "1.0.0"
         },
         "compile": {
           "bin/placeholder/NWOS.Core.dll": {}

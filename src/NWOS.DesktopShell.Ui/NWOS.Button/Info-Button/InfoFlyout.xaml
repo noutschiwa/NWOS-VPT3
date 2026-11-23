@@ -4,50 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             x:Name="InfoContainer"
-             MouseEnter="InfoContainer_MouseEnter"
-             MouseLeave="InfoContainer_MouseLeave"
-             d:DesignHeight="100" d:DesignWidth="100">
-    <Grid>
-        <!-- Der Info-Button in der Taskleiste -->
-        <Button x:Name="InfoButton" Content="Info" Style="{StaticResource TaskbarButtonStyle}" Width="40" Height="36"/>
+             d:DesignHeight="45" d:DesignWidth="45">
 
-        <!-- Das hochfahrende vertikale Benachrichtigungs-Fenster -->
-        <Popup x:Name="InfoPopup" PlacementTarget="{Binding ElementName=InfoButton}" Placement="Top" IsOpen="False" StaysOpen="True">
-            <Border Background="#CC1E1E1E" BorderBrush="#333333" BorderThickness="1" CornerRadius="8" Padding="10" Width="240">
-                <StackPanel Orientation="Vertical">
+    <Grid x:Name="InfoContainer">
+        <!-- Taskleisten-Button -->
+        <ToggleButton x:Name="InfoToggleButton"
+                      Content="🔔"
+                      Width="36" Height="36"
+                      Background="Transparent"
+                      Foreground="#F3F4F6"
+                      BorderThickness="0"
+                      Cursor="Hand" />
 
-                    <!-- Kopfzeile mit Titel und Aktionen -->
-                    <Grid Margin="0,0,0,8">
-                        <TextBlock Text="Benachrichtigungen" Foreground="#FFFFFF" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
-                        <Button Content="Alle löschen" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" Foreground="#007ACC" FontSize="10" Click="ClearNotifications_Click"/>
-                    </Grid>
+        <!-- Benachrichtigungs-Feed Popup -->
+        <Popup x:Name="InfoPopup"
+               IsOpen="{Binding IsChecked, ElementName=InfoToggleButton, Mode=TwoWay}"
+               PlacementTarget="{Binding ElementName=InfoToggleButton}"
+               Placement="Top"
+               VerticalOffset="-6"
+               StaysOpen="False"
+               AllowsTransparency="True"
+               PopupAnimation="Fade">
 
-                    <Separator Background="#444444" Margin="0,0,0,8"/>
-
-                    <!-- Scrollbare Liste der Benachrichtigungen -->
-                    <ScrollViewer MaxHeight="220" VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="NotificationListPanel">
-                            <!-- Beispiel-Benachrichtigung 1 -->
-                            <Border Background="#2A2A2A" CornerRadius="4" Padding="6" Margin="0,0,0,6">
-                                <StackPanel>
-                                    <TextBlock Text="System Kernel stabil" Foreground="#FFFFFF" FontSize="11" FontWeight="SemiBold"/>
-                                    <TextBlock Text="Alle IPC-Endpunkte antworten fehlerfrei." Foreground="#AAAAAA" FontSize="10" TextWrapping="Wrap" Margin="0,2,0,0"/>
-                                    <TextBlock Text="Vor 2 Min." Foreground="#666666" FontSize="9" HorizontalAlignment="Right" Margin="0,4,0,0"/>
-                                </StackPanel>
-                            </Border>
-
-                            <!-- Beispiel-Benachrichtigung 2 -->
-                            <Border Background="#2A2A2A" CornerRadius="4" Padding="6" Margin="0,0,0,6">
-                                <StackPanel>
-                                    <TextBlock Text="Alya KI-Assistent" Foreground="#FFFFFF" FontSize="11" FontWeight="SemiBold"/>
-                                    <TextBlock Text="Chat-Sitzung erfolgreich initialisiert." Foreground="#AAAAAA" FontSize="10" TextWrapping="Wrap" Margin="0,2,0,0"/>
-                                    <TextBlock Text="Vor 15 Min." Foreground="#666666" FontSize="9" HorizontalAlignment="Right" Margin="0,4,0,0"/>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
-                    </ScrollViewer>
-
+            <Border Background="#1E1E24"
+                    BorderBrush="#333742"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="14"
+                    Width="280">
+                <!-- Deinen bestehenden Benachrichtigungs-Feed hier einfügen -->
+                <StackPanel>
+                    <TextBlock Text="Benachrichtigungen"
+                               Foreground="#F3F4F6"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,10" />
+                    <!-- Deine bestehende Liste / Feed-Items -->
                 </StackPanel>
             </Border>
         </Popup>

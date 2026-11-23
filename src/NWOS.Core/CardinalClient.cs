@@ -1,61 +1,40 @@
-using System;
-using System.IO;
-using System.IO.Pipes;
 using System.Text.Json;
-using System.Threading.Tasks;
 using NWOS.Contracts;
+using NWOS.Ipc;
 
 namespace NWOS.DesktopShell.Ui
 {
     public sealed class CardinalClient
     {
-        private const string PipeName = "NWOS_Cardinal_Pipe";
+        private readonly IpcClient _ipcClient = new();
         public string? LastError { get; private set; }
 
         public async Task<JsonDocument?> CallAsync(string targetService, string action, object payload, PermissionScope scope)
         {
-            int retries = 3;
-            while (retries > 0)
+            try
             {
-                try
+                var message = ModuleMessage.Create(
+                    IpcDefaults.ExternalCallerIdentity,
+                    targetService,
+                    action,
+                    JsonSerializer.Serialize(payload),
+                    scope);
+
+                ModuleMessageResult result = await _ipcClient.SendAsync(message, CancellationToken.None);
+                if (result.Outcome != ModuleMessageOutcome.Delivered || result.Response is null)
                 {
-                    using var clientStream = new NamedPipeClientStream(".", PipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
-                    await clientStream.ConnectAsync(2000);
-
-                    using var writer = new StreamWriter(clientStream);
-                    using var reader = new StreamReader(clientStream);
-
-                    var request = new
-                    {
-                        Service = targetService,
-                        Action = action,
-                        Scope = scope.ToString(),
-                        Payload = JsonSerializer.Serialize(payload)
-                    };
-
-                    string jsonRequest = JsonSerializer.Serialize(request);
-                    await writer.WriteLineAsync(jsonRequest);
-                    await writer.FlushAsync();
-
-                    string? jsonResponse = await reader.ReadLineAsync();
-                    LastError = null;
-
-                    if (string.IsNullOrEmpty(jsonResponse)) return null;
-
-                    return JsonDocument.Parse(jsonResponse);
+                    LastError = result.Reason ?? $"Cardinal meldete {result.Outcome}.";
+                    return null;
                 }
-                catch (Exception ex)
-                {
-                    retries--;
-                    if (retries == 0)
-                    {
-                        LastError = ex.Message;
-                        return null;
-                    }
-                    await Task.Delay(400);
-                }
+
+                LastError = null;
+                return JsonDocument.Parse(result.Response.PayloadJson);
             }
-            return null;
+            catch (Exception ex)
+            {
+                LastError = ex.Message;
+                return null;
+            }
         }
     }
 }

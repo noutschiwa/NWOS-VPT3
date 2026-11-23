@@ -14,3 +14,15 @@ C:\NWOS\NWOS\src\NWOS.Core\obj\Release\net8.0\NWOS.Core.dll
 C:\NWOS\NWOS\src\NWOS.Core\obj\Release\net8.0\refint\NWOS.Core.dll
 C:\NWOS\NWOS\src\NWOS.Core\obj\Release\net8.0\NWOS.Core.pdb
 C:\NWOS\NWOS\src\NWOS.Core\obj\Release\net8.0\ref\NWOS.Core.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Alice.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Alya.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Cardinal.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Ipc.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Marc.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Settings.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Ipc.pdb
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Alice.pdb
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Alya.pdb
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Cardinal.pdb
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Marc.pdb
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Settings.pdb

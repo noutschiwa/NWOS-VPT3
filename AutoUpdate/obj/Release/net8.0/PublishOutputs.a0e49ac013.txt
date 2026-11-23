@@ -1,0 +1,5 @@
+C:\Users\noahj\AppData\Local\Programs\NWOS\AutoUpdate\NWOS.AutoUpdate.exe
+C:\Users\noahj\AppData\Local\Programs\NWOS\AutoUpdate\NWOS.AutoUpdate.dll
+C:\Users\noahj\AppData\Local\Programs\NWOS\AutoUpdate\NWOS.AutoUpdate.deps.json
+C:\Users\noahj\AppData\Local\Programs\NWOS\AutoUpdate\NWOS.AutoUpdate.runtimeconfig.json
+C:\Users\noahj\AppData\Local\Programs\NWOS\AutoUpdate\NWOS.AutoUpdate.pdb

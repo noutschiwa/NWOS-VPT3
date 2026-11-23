@@ -19,6 +19,7 @@ namespace NWOS.Alice;
 ///   - "alice.quarantine"       { "filePath": string }
 ///   - "alice.restore"          { "quarantineId": string }
 ///   - "alice.listQuarantined"  (kein Payload nötig)
+///   - "alice.manualScan"       (manueller Scan des überwachten Ordners)
 /// </summary>
 public sealed class AliceModule : IModule, IDisposable
 {
@@ -167,6 +168,8 @@ public sealed class AliceModule : IModule, IDisposable
 
             "alice.listQuarantined" => _quarantine.AllQuarantined,
 
+            "alice.manualScan" => await RunManualScanAsync(cancellationToken),
+
             _ => throw new NotSupportedException($"Unbekannter MessageType '{message.MessageType}' für {ModuleId}."),
         };
 
@@ -185,5 +188,90 @@ public sealed class AliceModule : IModule, IDisposable
         var quarantineId = root.GetProperty("quarantineId").GetString()!;
         await _quarantine.RestoreAsync(quarantineId, cancellationToken);
         return new { restored = true, quarantineId };
+    }
+
+    private async Task<object> RunManualScanAsync(CancellationToken cancellationToken)
+    {
+        var scannedFiles = 0;
+        var detectedThreats = 0;
+        var quarantinedFiles = 0;
+
+        foreach (var filePath in EnumerateFilesSafe(_watchedDirectory))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            scannedFiles++;
+
+            foreach (var threatEvent in _heuristics.EvaluateFileCreatedOrChanged(filePath))
+            {
+                detectedThreats++;
+                var autoAction = AutoQuarantineRuleIds.Contains(threatEvent.RuleId);
+                await _auditLog.AppendAsync(threatEvent with { AutoActionTaken = autoAction }, cancellationToken);
+
+                if (!autoAction)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    await _quarantine.QuarantineAsync(filePath, cancellationToken);
+                    quarantinedFiles++;
+                }
+                catch (IOException)
+                {
+                    // Gesperrte oder bereits verschobene Datei bleibt als Fund protokolliert.
+                }
+            }
+        }
+
+        return new
+        {
+            scannedFiles,
+            detectedThreats,
+            quarantinedFiles,
+            watchedDirectory = _watchedDirectory,
+        };
+    }
+
+    private static IEnumerable<string> EnumerateFilesSafe(string rootDirectory)
+    {
+        if (!Directory.Exists(rootDirectory))
+        {
+            yield break;
+        }
+
+        var pending = new Stack<string>();
+        pending.Push(rootDirectory);
+
+        while (pending.Count > 0)
+        {
+            var directory = pending.Pop();
+            string[] files;
+            string[] subdirectories;
+
+            try
+            {
+                files = Directory.GetFiles(directory);
+                subdirectories = Directory.GetDirectories(directory);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                continue;
+            }
+            catch (IOException)
+            {
+                continue;
+            }
+
+            foreach (var file in files)
+            {
+                yield return file;
+            }
+
+            foreach (var subdirectory in subdirectories)
+            {
+                pending.Push(subdirectory);
+            }
+        }
     }
 }

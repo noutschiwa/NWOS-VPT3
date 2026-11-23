@@ -485,7 +485,8 @@
       },
       "NWOS.Core/1.0.0": {
         "dependencies": {
-          "NWOS.Contracts": "1.0.0"
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.Ipc": "1.0.0"
         },
         "runtime": {
           "NWOS.Core.dll": {

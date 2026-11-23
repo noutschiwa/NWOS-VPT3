@@ -384,6 +384,9 @@
             "projectReferences": {
               "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
                 "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              },
+              "C:\\NWOS\\NWOS\\src\\NWOS.Ipc\\NWOS.Ipc.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Ipc\\NWOS.Ipc.csproj"
               }
             }
           }

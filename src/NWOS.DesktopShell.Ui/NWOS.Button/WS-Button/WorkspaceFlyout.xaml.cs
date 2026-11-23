@@ -21,16 +21,38 @@ namespace NWOS.DesktopShell.Ui.Button
             WorkspacePopup.IsOpen = false;
         }
 
-        private void Desktop1_Click(object sender, RoutedEventArgs e)
+        private void PreviousDesktop_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Bereits auf Desktop 1 (Hier) aktiv.", "NWOS Workspaces", MessageBoxButton.OK, MessageBoxImage.Information);
-            WorkspacePopup.IsOpen = false;
+            ExecuteDesktopAction(VirtualDesktopController.SwitchToPreviousDesktop, "Zum vorherigen Desktop gewechselt.");
         }
 
         private void AddDesktop_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Neuer virtueller Desktop wird erstellt...", "NWOS Workspaces", MessageBoxButton.OK, MessageBoxImage.Information);
-            WorkspacePopup.IsOpen = false;
+            ExecuteDesktopAction(VirtualDesktopController.CreateDesktop, "Neuer virtueller Desktop erstellt.");
+        }
+
+        private void NextDesktop_Click(object sender, RoutedEventArgs e)
+        {
+            ExecuteDesktopAction(VirtualDesktopController.SwitchToNextDesktop, "Zum nächsten Desktop gewechselt.");
+        }
+
+        private void CloseCurrentDesktop_Click(object sender, RoutedEventArgs e)
+        {
+            ExecuteDesktopAction(VirtualDesktopController.CloseCurrentDesktop,
+                "Aktueller virtueller Desktop geschlossen; geöffnete Fenster wurden von Windows verschoben.");
+        }
+
+        private void ExecuteDesktopAction(Action action, string successMessage)
+        {
+            try
+            {
+                action();
+                WorkspaceStatusTextBlock.Text = successMessage;
+            }
+            catch (Exception ex)
+            {
+                WorkspaceStatusTextBlock.Text = $"Aktion nicht verfügbar: {ex.Message}";
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.exe
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.exe
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.runtimeconfig.json
+C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\Bilder-NWOS\Hintergrund-Wasserzeichen\NWOS-Logo-Standart Hintergund.png
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.runtimeconfig.json
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\Microsoft.DiaSymReader.Native.amd64.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\System.IO.Compression.Native.dll

@@ -1,0 +1,15 @@
+C:\NWOS\NWOS\AutoUpdate\bin\Debug\net8.0\NWOS.AutoUpdate.exe
+C:\NWOS\NWOS\AutoUpdate\bin\Debug\net8.0\NWOS.AutoUpdate.deps.json
+C:\NWOS\NWOS\AutoUpdate\bin\Debug\net8.0\NWOS.AutoUpdate.runtimeconfig.json
+C:\NWOS\NWOS\AutoUpdate\bin\Debug\net8.0\NWOS.AutoUpdate.dll
+C:\NWOS\NWOS\AutoUpdate\bin\Debug\net8.0\NWOS.AutoUpdate.pdb
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\NWOS.AutoUpdate.GeneratedMSBuildEditorConfig.editorconfig
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\NWOS.AutoUpdate.AssemblyInfoInputs.cache
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\NWOS.AutoUpdate.AssemblyInfo.cs
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\NWOS.AutoUpdate.csproj.CoreCompileInputs.cache
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\NWOS.AutoUpdate.sourcelink.json
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\NWOS.AutoUpdate.dll
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\refint\NWOS.AutoUpdate.dll
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\NWOS.AutoUpdate.pdb
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\NWOS.AutoUpdate.genruntimeconfig.cache
+C:\NWOS\NWOS\AutoUpdate\obj\Debug\net8.0\ref\NWOS.AutoUpdate.dll

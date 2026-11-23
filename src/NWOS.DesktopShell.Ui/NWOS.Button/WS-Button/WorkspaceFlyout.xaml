@@ -4,33 +4,66 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             x:Name="WorkspaceContainer"
-             MouseEnter="WorkspaceContainer_MouseEnter"
-             MouseLeave="WorkspaceContainer_MouseLeave"
-             d:DesignHeight="100" d:DesignWidth="100">
-    <Grid>
-        <!-- Der Haupt-WS1-Button in der Taskleiste -->
-        <Button x:Name="Ws1Button" Content="WS1" Style="{StaticResource TaskbarButtonStyle}" Width="36" Height="36"/>
+             d:DesignHeight="45" d:DesignWidth="55">
 
-        <!-- Das hochfahrende Flyout-Fenster -->
-        <Popup x:Name="WorkspacePopup" PlacementTarget="{Binding ElementName=Ws1Button}" Placement="Top" IsOpen="False" StaysOpen="True">
-            <Border Background="#CC1E1E1E" BorderBrush="#333333" BorderThickness="1" CornerRadius="6" Padding="6" Width="90">
-                <StackPanel Orientation="Vertical">
-                    <!-- Aktiver Desktop 1 (Hier) -->
-                    <Button Content="1 (Hier)"
-                            Style="{StaticResource TaskbarButtonStyle}"
-                            Background="#007ACC"
-                            Foreground="White"
-                            Margin="0,0,0,4" Height="30"
-                            Click="Desktop1_Click"/>
+    <Grid x:Name="WorkspaceContainer">
+        <!-- Taskleisten-Button -->
+        <ToggleButton x:Name="WorkspaceToggleButton"
+                      Content="WS"
+                      Padding="8,0"
+                      Height="36"
+                      Background="Transparent"
+                      Foreground="#F3F4F6"
+                      FontWeight="SemiBold"
+                      BorderThickness="0"
+                      Cursor="Hand" />
 
-                    <!-- Plus-Button für neuen Desktop -->
-                    <Button Content="+"
+        <!-- Workspace-Switcher Popup -->
+        <Popup x:Name="WorkspacePopup"
+               IsOpen="{Binding IsChecked, ElementName=WorkspaceToggleButton, Mode=TwoWay}"
+               PlacementTarget="{Binding ElementName=WorkspaceToggleButton}"
+               Placement="Top"
+               VerticalOffset="-6"
+               StaysOpen="False"
+               AllowsTransparency="True"
+               PopupAnimation="Fade">
+
+            <Border Background="#1E1E24"
+                    BorderBrush="#333742"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="14"
+                    Width="260">
+                <StackPanel>
+                    <TextBlock Text="Arbeitsbereiche"
+                               Foreground="#F3F4F6"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,10" />
+                    <TextBlock Text="Steuert die virtuellen Windows-Desktops"
+                               Foreground="#9CA3AF"
+                               FontSize="11"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,10" />
+                    <Button Content="◀ Vorheriger Desktop"
+                            Click="PreviousDesktop_Click"
+                            Style="{StaticResource TaskbarButtonStyle}" />
+                    <Button Content="Nächster Desktop ▶"
+                            Click="NextDesktop_Click"
+                            Style="{StaticResource TaskbarButtonStyle}" />
+                    <Button Content="＋ Neuer Desktop"
+                            Click="AddDesktop_Click"
                             Style="{StaticResource TaskbarButtonStyle}"
-                            Background="#333333"
-                            Foreground="White"
-                            Height="30"
-                            Click="AddDesktop_Click"/>
+                            Margin="2,8,2,0" />
+                    <Separator Margin="4,10" />
+                    <Button Content="Aktuellen Desktop schließen"
+                            Click="CloseCurrentDesktop_Click"
+                            Style="{StaticResource TaskbarButtonStyle}" />
+                    <TextBlock x:Name="WorkspaceStatusTextBlock"
+                               Foreground="#9CA3AF"
+                               FontSize="10"
+                               Margin="4,10,4,0"
+                               TextWrapping="Wrap" />
                 </StackPanel>
             </Border>
         </Popup>

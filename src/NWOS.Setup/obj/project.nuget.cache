@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "dgSpecHash": "EA5o2VbE8fo=",
+  "success": true,
+  "projectFilePath": "C:\\NWOS\\NWOS\\src\\NWOS.Setup\\NWOS.Setup.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\8.0.34\\microsoft.dotnet.ilcompiler.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.34\\microsoft.net.illink.tasks.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\8.0.34\\runtime.win-x64.microsoft.dotnet.ilcompiler.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.34\\microsoft.netcore.app.ref.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.34\\microsoft.netcore.app.runtime.win-x64.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.34\\microsoft.windowsdesktop.app.ref.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.34\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.34\\microsoft.aspnetcore.app.ref.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.34\\microsoft.aspnetcore.app.runtime.win-x64.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\8.0.34\\runtime.win-x64.microsoft.dotnet.ilcompiler.8.0.34.nupkg.sha512",
+    "C:\\Users\\noahj\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.34\\microsoft.netcore.app.host.win-x64.8.0.34.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -77,7 +77,7 @@ class Program
 
             Console.WriteLine("\n Installation erfolgreich abgeschlossen!");
         }
-        -catch (Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine($"\n Fehler bei der Installation: {ex.Message}");
         }

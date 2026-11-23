@@ -31,7 +31,8 @@ param(
     [switch]$NoLaunch,
     [switch]$Quiet,
     [switch]$RunTests,
-    [switch]$OfferShellRegistration
+    [switch]$OfferShellRegistration,
+    [string]$VersionCommit
 )
 
 $ErrorActionPreference = 'Stop'
@@ -115,6 +116,7 @@ Write-Step 'Baue und installiere NWOS (kann einige Minuten dauern)'
 New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
 Publish-Project 'src\NWOS.Bootstrap.Windows\NWOS.Bootstrap.Windows.csproj' (Join-Path $InstallDir 'Cardinal')
 Publish-Project 'src\NWOS.DesktopShell.Ui\NWOS.DesktopShell.Ui.csproj' (Join-Path $InstallDir 'Ui')
+Publish-Project 'AutoUpdate\NWOS.AutoUpdate.csproj' (Join-Path $InstallDir 'AutoUpdate')
 
 # --- 5. Konfiguration ------------------------------------------------------------------
 Write-Step 'Konfiguration'
@@ -150,12 +152,21 @@ if (Test-Path $configPath) {
     Write-Host "  Konfiguration geschrieben: $configPath"
 }
 
+if ([string]::IsNullOrWhiteSpace($VersionCommit) -and (Get-Command git -ErrorAction SilentlyContinue)) {
+    $VersionCommit = (& git -C $SourceRoot rev-parse HEAD 2>$null).Trim()
+}
+if (-not [string]::IsNullOrWhiteSpace($VersionCommit)) {
+    [System.IO.File]::WriteAllText((Join-Path $DataDir 'autoupdate.commit'), $VersionCommit.Trim(), (New-Object System.Text.UTF8Encoding($false)))
+    Write-Host "  Update-Version gespeichert: $($VersionCommit.Substring(0, [Math]::Min(12, $VersionCommit.Length)))"
+}
+
 # --- 6. Starter und Verknuepfungen -------------------------------------------------------
 Write-Step 'Erstelle Starter und Verknuepfungen'
 $launcher = Join-Path $InstallDir 'Start-NWOS.bat'
 @(
     '@echo off',
-    'rem Startet Cardinal (minimiert, falls noch nicht aktiv) und danach die Oberflaeche.',
+    'rem Prueft zuerst auf Updates und startet danach Cardinal und die Oberflaeche.',
+    'if exist "%~dp0AutoUpdate\NWOS.AutoUpdate.exe" "%~dp0AutoUpdate\NWOS.AutoUpdate.exe"',
     'tasklist /fi "imagename eq NWOS.Bootstrap.Windows.exe" | find /i "NWOS.Bootstrap.Windows" >nul || start "" /min "%~dp0Cardinal\NWOS.Bootstrap.Windows.exe"',
     'timeout /t 3 /nobreak >nul',
     'start "" "%~dp0Ui\NWOS.DesktopShell.Ui.exe"'
@@ -170,8 +181,7 @@ Write-Host '  Verknuepfungen: Desktop und Startmenue.'
 
 # --- 7. Autostart ------------------------------------------------------------------------
 if (-not $NoAutostart -and (Ask-YesNo 'NWOS-Kern (Cardinal, inkl. Alice-Schutz) bei der Anmeldung automatisch starten?')) {
-    $exe = Join-Path $InstallDir 'Cardinal\NWOS.Bootstrap.Windows.exe'
-    $runValue = 'cmd.exe /c start "" /min "' + $exe + '"'
+    $runValue = 'cmd.exe /c start "" /min "' + $launcher + '"'
     Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run' -Name 'NWOS' -Value $runValue
     Write-Host '  Autostart eingerichtet (nur fuer diesen Benutzer).'
 }

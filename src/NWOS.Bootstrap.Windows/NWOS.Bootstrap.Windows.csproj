@@ -27,4 +27,11 @@
     <ProjectReference Include="..\NWOS.Core\NWOS.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\CGUI\Bilder-NWOS\Hintergrund-Wasserzeichen\NWOS-Logo-Standart Hintergund.png">
+      <Link>Bilder-NWOS\Hintergrund-Wasserzeichen\NWOS-Logo-Standart Hintergund.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

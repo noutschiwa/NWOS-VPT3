@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Alya")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b98a724e9a752cd7c7afa3bc683acde3cde41294")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37b82b5c9aafb84659b86b81abf2cae326a159af")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Alya")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Alya")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

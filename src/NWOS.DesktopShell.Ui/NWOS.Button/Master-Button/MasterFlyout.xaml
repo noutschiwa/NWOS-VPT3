@@ -4,39 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             x:Name="MasterContainer"
-             MouseEnter="MasterContainer_MouseEnter"
-             MouseLeave="MasterContainer_MouseLeave"
-             d:DesignHeight="100" d:DesignWidth="100">
-    <Grid>
-        <!-- Der zentrale Master-Button in der Taskleiste -->
-        <Button x:Name="MasterButton" Content="Master" Style="{StaticResource TaskbarButtonStyle}" Width="60" Height="36" Background="#2B2B2B" Foreground="White" FontWeight="Bold"/>
+             d:DesignHeight="45" d:DesignWidth="45">
 
-        <!-- Das große, zentrale Master-Control-Center-Fenster -->
-        <Popup x:Name="MasterPopup" PlacementTarget="{Binding ElementName=MasterButton}" Placement="Top" HorizontalOffset="-110" IsOpen="False" StaysOpen="True">
-            <Border Background="#DD1E1E1E" BorderBrush="#444444" BorderThickness="1" CornerRadius="10" Padding="16" Width="280">
-                <StackPanel Orientation="Vertical">
+    <Grid x:Name="MasterContainer">
+        <!-- Taskleisten-Button -->
+        <ToggleButton x:Name="MasterToggleButton"
+                      Content="☰"
+                      Width="36" Height="36"
+                      Background="Transparent"
+                      Foreground="#F3F4F6"
+                      BorderThickness="0"
+                      Cursor="Hand" />
 
-                    <!-- Kopfzeile -->
-                    <TextBlock Text="NWOS Master Control" Foreground="#FFFFFF" FontSize="14" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-                    <Separator Background="#444444" Margin="0,0,0,12"/>
+        <!-- Master-Menü Popup -->
+        <Popup x:Name="MasterPopup"
+               IsOpen="{Binding IsChecked, ElementName=MasterToggleButton, Mode=TwoWay}"
+               PlacementTarget="{Binding ElementName=MasterToggleButton}"
+               Placement="Top"
+               VerticalOffset="-6"
+               StaysOpen="False"
+               AllowsTransparency="True"
+               PopupAnimation="Fade">
 
-                    <!-- Einstellungen-Sektion -->
-                    <TextBlock Text="System-Konfiguration" Foreground="#AAAAAA" FontSize="11" Margin="0,0,0,6"/>
-                    <UniformGrid Columns="2" Height="36" Margin="0,0,0,14">
-                        <Button Content="PC-Einstellungen" Style="{StaticResource TaskbarButtonStyle}" Background="#333333" Foreground="White" Margin="3" Click="PcSettings_Click"/>
-                        <Button Content="NWOS Settings" Style="{StaticResource TaskbarButtonStyle}" Background="#333333" Foreground="White" Margin="3" Click="NwosSettings_Click"/>
-                    </UniformGrid>
-
-                    <Separator Background="#444444" Margin="0,0,0,12"/>
-
-                    <!-- Power-Optionen (Neustart & Herunterfahren) -->
-                    <TextBlock Text="Power &amp; Sitzung" Foreground="#AAAAAA" FontSize="11" Margin="0,0,0,6"/>
-                    <UniformGrid Columns="2" Height="40" Margin="0,0,0,4">
-                        <Button Content="Neustart" Style="{StaticResource TaskbarButtonStyle}" Background="#B8860B" Foreground="White" FontWeight="SemiBold" Margin="3" Click="Restart_Click"/>
-                        <Button Content="Herunterfahren" Style="{StaticResource TaskbarButtonStyle}" Background="#8B0000" Foreground="White" FontWeight="SemiBold" Margin="3" Click="Shutdown_Click"/>
-                    </UniformGrid>
-
+            <Border Background="#1E1E24"
+                    BorderBrush="#333742"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="14"
+                    Width="250">
+                <!-- Deinen bestehenden Master-Inhalt (z. B. Systemaktionen, Energieoptionen) hier einfügen -->
+                <StackPanel>
+                    <TextBlock Text="NWOS Master-Menü"
+                               Foreground="#F3F4F6"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,10" />
+                    <!-- Deine bestehenden Buttons / Listen -->
                 </StackPanel>
             </Border>
         </Popup>

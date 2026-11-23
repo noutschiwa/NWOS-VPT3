@@ -19,7 +19,10 @@ namespace NWOS.Bootstrap.Windows
         // Schritt 3: Desktop-Shell / Taskbar-Overlay als AppBar registrieren
         Console.WriteLine("[NWOS Core] Initialisiere Taskleisten-Overlay (Bereiche 1-5)...");
 
-        // Schritt 4: Automatisierter Login- & Begrüßungs-Trigger
+        // Schritt 4: Das mit NWOS ausgelieferte Hintergrundbild anwenden.
+        BackgroundWallpaper.Apply();
+
+        // Schritt 5: Automatisierter Login- & Begrüßungs-Trigger
         await TriggerWelcomeProtocolAsync();
 
         Console.WriteLine("[NWOS Core] NWOS läuft stabil im Live-Modus.");

@@ -4,51 +4,119 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             x:Name="AudioContainer"
-             MouseEnter="AudioContainer_MouseEnter"
-             MouseLeave="AudioContainer_MouseLeave"
-             d:DesignHeight="100" d:DesignWidth="100">
-    <Grid>
-        <!-- Der Audio-Button in der Taskleiste -->
-        <Button x:Name="AudioButton" Content="Audio" Style="{StaticResource TaskbarButtonStyle}" Width="45" Height="36"/>
+             d:DesignHeight="45" d:DesignWidth="45">
 
-        <!-- Das hochfahrende vertikale Audio-Fenster -->
-        <Popup x:Name="AudioPopup" PlacementTarget="{Binding ElementName=AudioButton}" Placement="Top" IsOpen="False" StaysOpen="True">
-            <Border Background="#CC1E1E1E" BorderBrush="#333333" BorderThickness="1" CornerRadius="8" Padding="10" Width="220">
+    <Grid x:Name="AudioContainer">
+        <!-- Taskleisten-Button (klickbasiert) -->
+        <ToggleButton x:Name="AudioToggleButton"
+                      Content="🔊"
+                      Width="36" Height="36"
+                      Background="Transparent"
+                      Foreground="#F3F4F6"
+                      BorderThickness="0"
+                      Cursor="Hand" />
+
+        <!-- Audio-Flyout Popup (bleibt offen, bis außerhalb geklickt wird) -->
+        <Popup x:Name="AudioPopup"
+               IsOpen="{Binding IsChecked, ElementName=AudioToggleButton, Mode=TwoWay}"
+               PlacementTarget="{Binding ElementName=AudioToggleButton}"
+               Placement="Top"
+               VerticalOffset="-6"
+               StaysOpen="False"
+               AllowsTransparency="True"
+               PopupAnimation="Fade"
+               Opened="AudioPopup_Opened">
+
+            <Border Background="#1E1E24"
+                    BorderBrush="#333742"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="14"
+                    Width="270">
                 <StackPanel Orientation="Vertical">
 
-                    <!-- Oberster Bereich: Geräteschalter (Mikro, Speaker, Cam) -->
-                    <TextBlock Text="Gerätesteuerung" Foreground="#AAAAAA" FontSize="11" Margin="0,0,0,6"/>
+                    <!-- 1. Systemlautstärke (mit Windows Core Audio verbunden) -->
+                    <TextBlock Text="Systemlautstärke"
+                               Foreground="#F3F4F6"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,8" />
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="38" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="MuteButton"
+                                Grid.Column="0"
+                                Content="🔊"
+                                Width="28" Height="28"
+                                Background="Transparent"
+                                Foreground="#F3F4F6"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Click="MuteButton_Click" />
+
+                        <Slider x:Name="VolumeSlider"
+                                Grid.Column="1"
+                                Minimum="0"
+                                Maximum="100"
+                                VerticalAlignment="Center"
+                                Margin="8,0"
+                                IsMoveToPointEnabled="True"
+                                ValueChanged="VolumeSlider_ValueChanged" />
+
+                        <TextBlock x:Name="VolumePercentText"
+                                   Grid.Column="2"
+                                   Text="50%"
+                                   Foreground="#9CA3AF"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center" />
+                    </Grid>
+
+                    <Separator Background="#333742" Margin="0,0,0,10" />
+
+                    <!-- 2. Gerätesteuerung (Mikro, Speaker, Cam) -->
+                    <TextBlock Text="Gerätesteuerung"
+                               Foreground="#9CA3AF"
+                               FontSize="11"
+                               Margin="0,0,0,6" />
+
                     <UniformGrid Columns="3" Height="30" Margin="0,0,0,10">
-                        <Button Content="Mic" Style="{StaticResource TaskbarButtonStyle}" Background="#333333" Foreground="White" Margin="2" Click="ToggleMic_Click"/>
-                        <Button Content="Spk" Style="{StaticResource TaskbarButtonStyle}" Background="#333333" Foreground="White" Margin="2" Click="ToggleSpeaker_Click"/>
-                        <Button Content="Cam" Style="{StaticResource TaskbarButtonStyle}" Background="#333333" Foreground="White" Margin="2" Click="ToggleCam_Click"/>
+                        <Button Content="Mic"
+                                Style="{StaticResource TaskbarButtonStyle}"
+                                Background="#2D323E"
+                                Foreground="White"
+                                Margin="2"
+                                Click="ToggleMic_Click" />
+                        <Button Content="Spk"
+                                Style="{StaticResource TaskbarButtonStyle}"
+                                Background="#2D323E"
+                                Foreground="White"
+                                Margin="2"
+                                Click="ToggleSpeaker_Click" />
+                        <Button Content="Cam"
+                                Style="{StaticResource TaskbarButtonStyle}"
+                                Background="#2D323E"
+                                Foreground="White"
+                                Margin="2"
+                                Click="ToggleCam_Click" />
                     </UniformGrid>
 
-                    <Separator Background="#444444" Margin="0,0,0,10"/>
+                    <Separator Background="#333742" Margin="0,0,0,10" />
 
-                    <!-- Mittlerer/Unteren Bereich: App-Lautstärke-Liste -->
-                    <TextBlock Text="App-Lautstärke" Foreground="#AAAAAA" FontSize="11" Margin="0,0,0,6"/>
-
+                    <!-- 3. App-Lautstärke-Liste -->
+                    <TextBlock Text="App-Lautstärke"
+                                                   Foreground="#9CA3AF"
+                                                   FontSize="11"
+                                                   Margin="0,0,0,6" />
                     <ScrollViewer MaxHeight="180" VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="AppAudioListPanel">
-                            <!-- Beispiel-Eintrag für eine offene App -->
-                            <Border Background="#2A2A2A" CornerRadius="4" Padding="6" Margin="0,0,0,6">
-                                <StackPanel>
-                                    <TextBlock Text="NWOS DesktopShell" Foreground="White" FontSize="12" FontWeight="SemiBold"/>
-                                    <Slider Minimum="0" Maximum="100" Value="80" Margin="0,4,0,0"/>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Background="#2A2A2A" CornerRadius="4" Padding="6" Margin="0,0,0,6">
-                                <StackPanel>
-                                    <TextBlock Text="Alice Assistant" Foreground="White" FontSize="12" FontWeight="SemiBold"/>
-                                    <Slider Minimum="0" Maximum="100" Value="60" Margin="0,4,0,0"/>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
+                        <StackPanel x:Name="AppAudioListPanel" />
                     </ScrollViewer>
-
                 </StackPanel>
             </Border>
         </Popup>
