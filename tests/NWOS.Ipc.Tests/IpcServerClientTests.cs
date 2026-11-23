@@ -22,6 +22,26 @@ internal sealed class RecordingMessenger : IModuleMessenger
 }
 
 [SupportedOSPlatform("windows")]
+internal sealed class ControlledMessenger : IModuleMessenger
+{
+    public TaskCompletionSource<bool> SlowRequestStarted { get; } =
+        new(TaskCreationOptions.RunContinuationsAsynchronously);
+    public TaskCompletionSource<bool> ReleaseSlowRequest { get; } =
+        new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    public async Task<ModuleMessageResult> SendAsync(ModuleMessage message, CancellationToken cancellationToken)
+    {
+        if (message.MessageType == "slow")
+        {
+            SlowRequestStarted.TrySetResult(true);
+            await ReleaseSlowRequest.Task;
+        }
+
+        return new ModuleMessageResult(ModuleMessageOutcome.Delivered, null, null);
+    }
+}
+
+[SupportedOSPlatform("windows")]
 public class IpcServerClientTests
 {
     // Jeder Test nutzt einen eigenen, zufälligen Pipe-Namen, damit parallel
@@ -117,6 +137,98 @@ public class IpcServerClientTests
 
         Assert.Equal(ModuleMessageOutcome.ModuleFailure, result.Outcome);
         Assert.Contains("Cardinal", result.Reason);
+    }
+
+    [Fact]
+    public async Task Client_connects_when_server_starts_during_connection_retry_window()
+    {
+        var pipeName = UniquePipeName();
+        var server = new IpcServer(new RecordingMessenger(), pipeName);
+        using var serverCts = new CancellationTokenSource();
+        var serverTask = Task.Run(async () =>
+        {
+            await Task.Delay(700);
+            await server.RunAsync(serverCts.Token);
+        });
+        var client = new IpcClient(
+            pipeName: pipeName,
+            connectTimeout: TimeSpan.FromSeconds(3));
+
+        try
+        {
+            var result = await client.SendAsync(
+                ModuleMessage.Create("test-caller", "nwos.alice", "alice.manualScan", "{}", PermissionScope.None),
+                CancellationToken.None);
+
+            Assert.Equal(ModuleMessageOutcome.Delivered, result.Outcome);
+        }
+        finally
+        {
+            serverCts.Cancel();
+            await SafeAwaitAsync(serverTask);
+        }
+    }
+
+    [Fact]
+    public async Task Slow_request_does_not_block_another_system_shell_request()
+    {
+        var pipeName = UniquePipeName();
+        var messenger = new ControlledMessenger();
+        var server = new IpcServer(messenger, pipeName);
+        using var serverCts = new CancellationTokenSource();
+        var serverTask = server.RunAsync(serverCts.Token);
+        var client = new IpcClient(pipeName: pipeName);
+
+        try
+        {
+            var slowRequest = client.SendAsync(
+                ModuleMessage.Create("test-caller", "nwos.alice", "slow", "{}", PermissionScope.None),
+                CancellationToken.None);
+            await messenger.SlowRequestStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+
+            var fastResult = await client.SendAsync(
+                    ModuleMessage.Create("test-caller", "nwos.desktopshell", "fast", "{}", PermissionScope.None),
+                    CancellationToken.None)
+                .WaitAsync(TimeSpan.FromSeconds(2));
+
+            Assert.Equal(ModuleMessageOutcome.Delivered, fastResult.Outcome);
+            messenger.ReleaseSlowRequest.TrySetResult(true);
+            Assert.Equal(ModuleMessageOutcome.Delivered, (await slowRequest).Outcome);
+        }
+        finally
+        {
+            messenger.ReleaseSlowRequest.TrySetResult(true);
+            serverCts.Cancel();
+            await SafeAwaitAsync(serverTask);
+        }
+    }
+
+    [Fact]
+    public async Task Client_returns_ModuleFailure_when_response_exceeds_request_timeout()
+    {
+        var pipeName = UniquePipeName();
+        var messenger = new ControlledMessenger();
+        var server = new IpcServer(messenger, pipeName);
+        using var serverCts = new CancellationTokenSource();
+        var serverTask = server.RunAsync(serverCts.Token);
+        var client = new IpcClient(pipeName: pipeName);
+
+        try
+        {
+            var result = await client.SendAsync(
+                ModuleMessage.Create("test-caller", "nwos.alice", "slow", "{}", PermissionScope.None),
+                CancellationToken.None,
+                TimeSpan.FromMilliseconds(200));
+
+            Assert.Equal(ModuleMessageOutcome.ModuleFailure, result.Outcome);
+            Assert.Contains("Zeitüberschreitung", result.Reason);
+        }
+        finally
+        {
+            messenger.ReleaseSlowRequest.TrySetResult(true);
+            serverCts.Cancel();
+            await SafeAwaitAsync(serverTask);
+        }
     }
 
     private static async Task SafeAwaitAsync(Task task)

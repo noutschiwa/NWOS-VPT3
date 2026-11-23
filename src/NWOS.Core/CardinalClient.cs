@@ -9,7 +9,12 @@ namespace NWOS.DesktopShell.Ui
         private readonly IpcClient _ipcClient = new();
         public string? LastError { get; private set; }
 
-        public async Task<JsonDocument?> CallAsync(string targetService, string action, object payload, PermissionScope scope)
+        public async Task<JsonDocument?> CallAsync(
+            string targetService,
+            string action,
+            object payload,
+            PermissionScope scope,
+            CancellationToken cancellationToken = default)
         {
             try
             {
@@ -20,7 +25,10 @@ namespace NWOS.DesktopShell.Ui
                     JsonSerializer.Serialize(payload),
                     scope);
 
-                ModuleMessageResult result = await _ipcClient.SendAsync(message, CancellationToken.None);
+                var requestTimeout = action == "alice.manualScan"
+                    ? TimeSpan.FromMinutes(10)
+                    : TimeSpan.FromSeconds(30);
+                ModuleMessageResult result = await _ipcClient.SendAsync(message, cancellationToken, requestTimeout);
                 if (result.Outcome != ModuleMessageOutcome.Delivered || result.Response is null)
                 {
                     LastError = result.Reason ?? $"Cardinal meldete {result.Outcome}.";

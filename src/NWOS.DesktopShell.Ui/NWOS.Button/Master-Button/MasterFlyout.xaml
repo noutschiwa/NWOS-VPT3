@@ -4,44 +4,168 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="45" d:DesignWidth="45">
-
-    <Grid x:Name="MasterContainer">
-        <!-- Taskleisten-Button -->
+             Width="64"
+             Height="45"
+             d:DesignHeight="45"
+             d:DesignWidth="64">
+    <Grid>
         <ToggleButton x:Name="MasterToggleButton"
-                      Content="☰"
-                      Width="36" Height="36"
+                      Width="64"
+                      Height="45"
+                      Padding="0"
                       Background="Transparent"
-                      Foreground="#F3F4F6"
                       BorderThickness="0"
-                      Cursor="Hand" />
+                      Cursor="Hand"
+                      ToolTip="NWOS-Startmenü"
+                      Click="MasterToggleButton_Click">
+            <Image Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Button Logo.jpeg"
+                   Stretch="UniformToFill"
+                   RenderOptions.BitmapScalingMode="HighQuality" />
+        </ToggleButton>
 
-        <!-- Master-Menü Popup -->
         <Popup x:Name="MasterPopup"
-               IsOpen="{Binding IsChecked, ElementName=MasterToggleButton, Mode=TwoWay}"
-               PlacementTarget="{Binding ElementName=MasterToggleButton}"
-               Placement="Top"
-               VerticalOffset="-6"
-               StaysOpen="False"
+               Placement="Absolute"
+               HorizontalOffset="0"
+               VerticalOffset="0"
+               StaysOpen="True"
                AllowsTransparency="True"
-               PopupAnimation="Fade">
+               PopupAnimation="None">
+            <Canvas x:Name="OverlayRoot"
+                    Background="Transparent"
+                    ClipToBounds="True"
+                    PreviewKeyDown="OverlayRoot_PreviewKeyDown">
+                <Image x:Name="MasterBackgroundImage"
+                       Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Master-Background.jpeg"
+                       Stretch="UniformToFill"
+                       IsHitTestVisible="False"
+                       ClipToBounds="True" />
 
-            <Border Background="#1E1E24"
-                    BorderBrush="#333742"
-                    BorderThickness="1"
-                    CornerRadius="10"
-                    Padding="14"
-                    Width="250">
-                <!-- Deinen bestehenden Master-Inhalt (z. B. Systemaktionen, Energieoptionen) hier einfügen -->
-                <StackPanel>
-                    <TextBlock Text="NWOS Master-Menü"
-                               Foreground="#F3F4F6"
-                               FontSize="12"
-                               FontWeight="SemiBold"
-                               Margin="0,0,0,10" />
-                    <!-- Deine bestehenden Buttons / Listen -->
-                </StackPanel>
-            </Border>
+                <Image x:Name="FortressImage"
+                       Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Flyout-Festung.jpeg"
+                       Width="96"
+                       Height="64"
+                       Stretch="Uniform"
+                       IsHitTestVisible="False"
+                       RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TranslateTransform x:Name="FortressTransform" />
+                    </Image.RenderTransform>
+                </Image>
+
+                <Border x:Name="MenuPanel"
+                        Width="560"
+                        Height="520"
+                        Padding="22"
+                        Background="#E6193557"
+                        BorderBrush="#806AADE4"
+                        BorderThickness="1"
+                        CornerRadius="16"
+                        Opacity="0"
+                        IsHitTestVisible="True"
+                        RenderTransformOrigin="0.5,0">
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="MenuTransform" Y="48" />
+                    </Border.RenderTransform>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="2,0,2,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="NWOS"
+                                       Foreground="#EAF5FF"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center" />
+                            <TextBlock Text="Alle"
+                                       Grid.Column="1"
+                                       Foreground="#D5E8FA"
+                                       FontSize="13"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+                        <DockPanel Grid.Row="1" Margin="0,0,0,14">
+                            <Button Content="Suchen"
+                                    DockPanel.Dock="Right"
+                                    Click="Search_Click"
+                                    Style="{StaticResource TaskbarButtonStyle}" />
+                            <Grid Margin="0,0,8,0">
+                                <TextBox x:Name="MasterSearchBox"
+                                         Height="38"
+                                         Padding="12,6"
+                                         VerticalContentAlignment="Center"
+                                         Background="#D91A2D43"
+                                         Foreground="#F3F4F6"
+                                         CaretBrush="#38BDF8"
+                                         BorderBrush="#7089A6"
+                                         KeyDown="MasterSearchBox_KeyDown"
+                                         ToolTip="Apps und NWOS durchsuchen" />
+                                <TextBlock Text="Nach Apps und Einstellungen suchen"
+                                           Margin="13,0,0,0"
+                                           VerticalAlignment="Center"
+                                           Foreground="#AABBD0"
+                                           IsHitTestVisible="False">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=MasterSearchBox}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </DockPanel>
+
+                        <StackPanel Grid.Row="2" Margin="0,0,0,12">
+                            <TextBlock Text="Angeheftet"
+                                       Foreground="#EAF5FF"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Margin="2,0,2,8" />
+                            <UniformGrid Columns="2">
+                                <Button Content="⚙  Windows-Einstellungen"
+                                        Height="62"
+                                        Margin="4"
+                                        Click="PcSettings_Click"
+                                        Style="{StaticResource TaskbarButtonStyle}" />
+                                <Button Content="✦  NWOS-Einstellungen"
+                                        Height="62"
+                                        Margin="4"
+                                        Click="NwosSettings_Click"
+                                        Style="{StaticResource TaskbarButtonStyle}" />
+                                <Button Content="🔋  Energieeinstellungen"
+                                        Height="62"
+                                        Margin="4"
+                                        Click="PowerSettings_Click"
+                                        Style="{StaticResource TaskbarButtonStyle}" />
+                            </UniformGrid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3">
+                            <Separator Margin="2,0,2,10" />
+                            <UniformGrid Columns="2">
+                                <Button Content="↻  Neu starten"
+                                        Height="54"
+                                        Margin="4"
+                                        Click="Restart_Click"
+                                        Style="{StaticResource TaskbarButtonStyle}" />
+                                <Button Content="⏻  Herunterfahren"
+                                        Height="54"
+                                        Margin="4"
+                                        Click="Shutdown_Click"
+                                        Style="{StaticResource TaskbarButtonStyle}" />
+                            </UniformGrid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Canvas>
         </Popup>
     </Grid>
 </UserControl>

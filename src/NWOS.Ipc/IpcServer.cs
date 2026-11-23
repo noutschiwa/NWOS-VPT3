@@ -1,6 +1,5 @@
 using System.IO.Pipes;
 using System.Runtime.Versioning;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -18,10 +17,12 @@ public static class IpcDefaults
 [SupportedOSPlatform("windows")]
 public class IpcServer
 {
+    private const int MaxConcurrentClients = 16;
     private readonly IModuleMessenger? _messenger;
     private readonly TaskRouter? _taskRouter;
     private readonly string _pipeName;
     private readonly ILogger<IpcServer>? _logger;
+    private readonly SemaphoreSlim _clientSlots = new(MaxConcurrentClients, MaxConcurrentClients);
 
     private IModuleMessenger ActiveMessenger => _taskRouter != null ? (IModuleMessenger)(object)_taskRouter : (_messenger ?? throw new InvalidOperationException("Kein Messenger konfiguriert."));
 
@@ -41,37 +42,70 @@ public class IpcServer
 
     public async Task RunAsync(CancellationToken cancellationToken)
     {
+        var clients = new List<Task>();
         while (!cancellationToken.IsCancellationRequested)
         {
             NamedPipeServerStream? serverStream = null;
+            var slotAcquired = false;
             try
             {
+                await _clientSlots.WaitAsync(cancellationToken);
+                slotAcquired = true;
                 serverStream = new NamedPipeServerStream(
                     _pipeName,
                     PipeDirection.InOut,
-                    1,
+                    MaxConcurrentClients,
                     PipeTransmissionMode.Message,
                     PipeOptions.Asynchronous);
 
                 await serverStream.WaitForConnectionAsync(cancellationToken);
 
-                await HandleClientAsync(serverStream, cancellationToken);
+                var connectedStream = serverStream;
+                serverStream = null;
+                slotAcquired = false;
+                clients.Add(HandleClientAndReleaseSlotAsync(connectedStream, cancellationToken));
+                clients.RemoveAll(task => task.IsCompleted);
             }
             catch (OperationCanceledException)
             {
-                serverStream?.Dispose();
                 break;
             }
             catch (Exception ex)
             {
                 _logger?.LogError(ex, "Fehler im IPC-Server-Loop.");
-                serverStream?.Dispose();
-                try { await Task.Delay(10, cancellationToken); } catch { }
+                try
+                {
+                    await Task.Delay(10, cancellationToken);
+                }
+                catch (OperationCanceledException)
+                {
+                    break;
+                }
             }
             finally
             {
                 serverStream?.Dispose();
+                if (slotAcquired)
+                {
+                    _clientSlots.Release();
+                }
             }
+        }
+
+        await Task.WhenAll(clients);
+    }
+
+    private async Task HandleClientAndReleaseSlotAsync(
+        NamedPipeServerStream stream,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await HandleClientAsync(stream, cancellationToken);
+        }
+        finally
+        {
+            _clientSlots.Release();
         }
     }
 
@@ -79,17 +113,23 @@ public class IpcServer
     {
         try
         {
-            var request = await JsonSerializer.DeserializeAsync<ModuleMessage>(stream, cancellationToken: cancellationToken);
-            if (request == null) return;
+            var request = await PipeFraming.ReadJsonAsync<ModuleMessage>(stream, cancellationToken);
 
-            var result = await ActiveMessenger.SendAsync(request, cancellationToken);
+            var externalRequest = request with { SourceModuleId = IpcDefaults.ExternalCallerIdentity };
+            var result = await ActiveMessenger.SendAsync(externalRequest, cancellationToken);
 
-            await JsonSerializer.SerializeAsync(stream, result, cancellationToken: cancellationToken);
-            await stream.FlushAsync(cancellationToken);
+            await PipeFraming.WriteJsonAsync(stream, result, cancellationToken);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
         }
         catch (Exception ex)
         {
             _logger?.LogError(ex, "Fehler beim Verarbeiten einer IPC-Client-Verbindung.");
+        }
+        finally
+        {
+            await stream.DisposeAsync();
         }
     }
 }

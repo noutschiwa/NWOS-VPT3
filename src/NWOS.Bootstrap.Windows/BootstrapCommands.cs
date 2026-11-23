@@ -49,6 +49,7 @@ public static class BootstrapCommands
             return 0;
         }
 
+        BackgroundWallpaper.Apply();
         var windowsExtensions = new WindowsExtensions(
             StatusProvider: new WmiSystemStatusProvider(),
             AutostartManager: new RegistryAutostartManager());

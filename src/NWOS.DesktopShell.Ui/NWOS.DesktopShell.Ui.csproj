@@ -16,6 +16,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Resource Include="..\..\CGUI\Bilder-NWOS\Master button\Button Logo.jpeg"
+              Link="Assets\MasterButton\Button Logo.jpeg" />
+    <Resource Include="..\..\CGUI\Bilder-NWOS\Master button\Flyout-Festung.jpeg"
+              Link="Assets\MasterButton\Flyout-Festung.jpeg" />
+    <Resource Include="..\..\CGUI\Bilder-NWOS\Master button\Master-Background.jpeg"
+              Link="Assets\MasterButton\Master-Background.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NWOS.ConfigSetup\NWOS.ConfigSetup.csproj" />
     <ProjectReference Include="..\NWOS.Contracts\NWOS.Contracts.csproj" />
     <ProjectReference Include="..\NWOS.Ipc\NWOS.Ipc.csproj" />
     <ProjectReference Include="..\NWOS.DesktopShell\NWOS.DesktopShell.csproj" />

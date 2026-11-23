@@ -143,6 +143,8 @@ namespace NWOS.DesktopShell.Ui
         private readonly ObservableCollection<IconViewModel> _icons = new();
         private readonly ObservableCollection<BoxViewModel> _boxes = new();
         private readonly ObservableCollection<WidgetViewModel> _widgets = new();
+        private readonly ObservableCollection<AppIconItem> _leftAppIcons = new();
+        private readonly ObservableCollection<AppIconItem> _rightAppIcons = new();
 
         private readonly DispatcherTimer _widgetRefreshTimer = new() { Interval = TimeSpan.FromSeconds(1) };
         private readonly DispatcherTimer _appStateTimer = new() { Interval = TimeSpan.FromMilliseconds(1500) };
@@ -177,12 +179,18 @@ namespace NWOS.DesktopShell.Ui
 
             // App-Hub Standard-Icons laden und Prozess-Überwachung starten
             InitializeAppHub();
+            AppIcons.CollectionChanged += (_, _) => RefreshAppHubHalves();
+            CenterMasterFlyout.SearchRequested += query =>
+            {
+                SearchBox.Text = query;
+                SearchBox.Focus();
+                SearchBox.CaretIndex = SearchBox.Text.Length;
+            };
             _appStateTimer.Tick += (_, _) => UpdateRunningAppsState();
             _appStateTimer.Start();
             UpdateRunningAppsState();
 
             // Weitere ItemsSources zuweisen
-            BoxesItemsControl.ItemsSource = _boxes;
             WidgetsItemsControl.ItemsSource = _widgets;
 
             _widgetRefreshTimer.Tick += async (_, _) => await RefreshWidgetsAsync();
@@ -262,7 +270,20 @@ namespace NWOS.DesktopShell.Ui
                 SaveAppHubState();
             }
 
-            AppHubItemsControl.ItemsSource = AppIcons;
+            AppHubLeftItemsControl.ItemsSource = _leftAppIcons;
+            AppHubRightItemsControl.ItemsSource = _rightAppIcons;
+            RefreshAppHubHalves();
+        }
+
+        private void RefreshAppHubHalves()
+        {
+            _leftAppIcons.Clear();
+            _rightAppIcons.Clear();
+            var splitIndex = (AppIcons.Count + 1) / 2;
+            for (var index = 0; index < AppIcons.Count; index++)
+            {
+                (index < splitIndex ? _leftAppIcons : _rightAppIcons).Add(AppIcons[index]);
+            }
         }
 
         private void SaveAppHubState()

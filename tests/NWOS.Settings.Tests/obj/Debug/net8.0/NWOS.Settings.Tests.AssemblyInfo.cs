@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Settings.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37b82b5c9aafb84659b86b81abf2cae326a159af")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad79af7ef92a7638ca66980315eb61ca0deb4db0")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Settings.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Settings.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

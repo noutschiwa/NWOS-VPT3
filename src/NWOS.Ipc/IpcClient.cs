@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO.Pipes;
 using NWOS.Contracts;
 
@@ -21,31 +22,121 @@ public sealed class IpcClient : IModuleMessenger
     private readonly string _serverName;
     private readonly string _pipeName;
     private readonly TimeSpan _connectTimeout;
+    private readonly TimeSpan _requestTimeout;
 
-    public IpcClient(string? serverName = null, string? pipeName = null, TimeSpan? connectTimeout = null)
+    private static readonly TimeSpan ConnectAttemptInterval = TimeSpan.FromMilliseconds(500);
+    private static readonly TimeSpan ConnectRetryDelay = TimeSpan.FromMilliseconds(100);
+
+    public IpcClient(
+        string? serverName = null,
+        string? pipeName = null,
+        TimeSpan? connectTimeout = null,
+        TimeSpan? requestTimeout = null)
     {
         _serverName = serverName ?? ".";
         _pipeName = pipeName ?? IpcDefaults.CardinalPipeName;
-        _connectTimeout = connectTimeout ?? TimeSpan.FromSeconds(5);
+        _connectTimeout = connectTimeout ?? TimeSpan.FromSeconds(30);
+        _requestTimeout = requestTimeout ?? TimeSpan.FromSeconds(60);
+        if (_connectTimeout <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(connectTimeout));
+        }
+
+        if (_requestTimeout <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(requestTimeout));
+        }
     }
 
-    public async Task<ModuleMessageResult> SendAsync(ModuleMessage message, CancellationToken cancellationToken)
-    {
-        await using var pipeClient = new NamedPipeClientStream(
-            _serverName, _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+    public Task<ModuleMessageResult> SendAsync(ModuleMessage message, CancellationToken cancellationToken) =>
+        SendAsync(message, cancellationToken, _requestTimeout);
 
+    public async Task<ModuleMessageResult> SendAsync(
+        ModuleMessage message,
+        CancellationToken cancellationToken,
+        TimeSpan requestTimeout)
+    {
+        if (requestTimeout <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(requestTimeout));
+        }
+
+        using var requestCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        requestCts.CancelAfter(requestTimeout);
+        NamedPipeClientStream? pipeClient;
         try
         {
-            await pipeClient.ConnectAsync((int)_connectTimeout.TotalMilliseconds, cancellationToken);
+            pipeClient = await ConnectAsync(requestCts.Token);
         }
-        catch (TimeoutException)
+        catch (OperationCanceledException) when (
+            requestCts.IsCancellationRequested && !cancellationToken.IsCancellationRequested)
+        {
+            return RequestTimedOut(message, requestTimeout);
+        }
+
+        if (pipeClient is null)
         {
             return new ModuleMessageResult(
                 ModuleMessageOutcome.ModuleFailure, null,
-                $"Konnte innerhalb von {_connectTimeout.TotalSeconds}s keine Verbindung zu Cardinal (Pipe '{_pipeName}') herstellen - läuft der NWOS-Prozess?");
+                $"Konnte innerhalb von {_connectTimeout.TotalSeconds}s keine Verbindung zu Cardinal (Pipe '{_pipeName}') herstellen. Prüfen Sie, ob NWOS/Cardinal läuft.");
         }
 
-        await PipeFraming.WriteJsonAsync(pipeClient, message, cancellationToken);
-        return await PipeFraming.ReadJsonAsync<ModuleMessageResult>(pipeClient, cancellationToken);
+        await using (pipeClient)
+        {
+            try
+            {
+                await PipeFraming.WriteJsonAsync(pipeClient, message, requestCts.Token);
+                return await PipeFraming.ReadJsonAsync<ModuleMessageResult>(pipeClient, requestCts.Token);
+            }
+            catch (OperationCanceledException) when (
+                requestCts.IsCancellationRequested && !cancellationToken.IsCancellationRequested)
+            {
+                return RequestTimedOut(message, requestTimeout);
+            }
+        }
     }
+
+    private async Task<NamedPipeClientStream?> ConnectAsync(CancellationToken cancellationToken)
+    {
+        var stopwatch = Stopwatch.StartNew();
+        while (stopwatch.Elapsed < _connectTimeout)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var remaining = _connectTimeout - stopwatch.Elapsed;
+            var attemptTimeout = remaining < ConnectAttemptInterval ? remaining : ConnectAttemptInterval;
+            var pipeClient = new NamedPipeClientStream(
+                _serverName, _pipeName, PipeDirection.InOut, PipeOptions.Asynchronous);
+            try
+            {
+                await pipeClient.ConnectAsync(
+                    Math.Max(1, (int)Math.Ceiling(attemptTimeout.TotalMilliseconds)),
+                    cancellationToken);
+                return pipeClient;
+            }
+            catch (TimeoutException)
+            {
+                await pipeClient.DisposeAsync();
+            }
+            catch
+            {
+                await pipeClient.DisposeAsync();
+                throw;
+            }
+
+            remaining = _connectTimeout - stopwatch.Elapsed;
+            if (remaining > TimeSpan.Zero)
+            {
+                await Task.Delay(
+                    remaining < ConnectRetryDelay ? remaining : ConnectRetryDelay,
+                    cancellationToken);
+            }
+        }
+
+        return null;
+    }
+
+    private static ModuleMessageResult RequestTimedOut(ModuleMessage message, TimeSpan requestTimeout) =>
+        new(
+            ModuleMessageOutcome.ModuleFailure, null,
+            $"Die IPC-Anfrage an '{message.TargetModuleId}' wurde nach {requestTimeout.TotalSeconds}s wegen Zeitüberschreitung abgebrochen.");
 }

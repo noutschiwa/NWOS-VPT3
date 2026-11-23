@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using NWOS.Contracts;
 
@@ -14,6 +15,7 @@ public sealed class TaskRouter
     private readonly ModuleRegistry _registry;
     private readonly PermissionManager _permissions;
     private readonly ILogger<TaskRouter> _logger;
+    private readonly ConcurrentDictionary<string, SemaphoreSlim> _moduleGates = new(StringComparer.Ordinal);
 
     public TaskRouter(ModuleRegistry registry, PermissionManager permissions, ILogger<TaskRouter> logger)
     {
@@ -61,8 +63,17 @@ public sealed class TaskRouter
 
         try
         {
-            var response = await targetModule.HandleMessageAsync(message, cancellationToken);
-            return RoutingResult.Delivered(response);
+            var gate = _moduleGates.GetOrAdd(message.TargetModuleId, static _ => new SemaphoreSlim(1, 1));
+            await gate.WaitAsync(cancellationToken);
+            try
+            {
+                var response = await targetModule.HandleMessageAsync(message, cancellationToken);
+                return RoutingResult.Delivered(response);
+            }
+            finally
+            {
+                gate.Release();
+            }
         }
         catch (Exception ex)
         {

@@ -9,7 +9,9 @@
     <OutputType>Exe</OutputType>
     <PublishAot>false</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <PublishTrimmed>true</PublishTrimmed>
+    <!-- The bootstrap loads the executable NWOS.Host project through composition.
+         Preserve project-reference runtime assets in the installed deps manifest. -->
+    <PublishTrimmed>false</PublishTrimmed>
     <!--
       Das ist der einzige Einstiegspunkt, der tatsächlich alle Windows-
       spezifischen Fähigkeiten von NWOS zusammenführt: WMI-Systemstatus,

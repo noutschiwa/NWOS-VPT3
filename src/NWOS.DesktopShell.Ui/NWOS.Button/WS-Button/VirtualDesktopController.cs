@@ -41,27 +41,11 @@ internal static class VirtualDesktopController
         };
 
         uint sent = SendInput((uint)inputs.Length, inputs, Marshal.SizeOf<Input>());
-        if (sent == 0)
-        {
-            SendShortcutWithKeybdEvent(key);
-            return;
-        }
-
         if (sent != inputs.Length)
         {
             throw new Win32Exception(Marshal.GetLastWin32Error(),
                 "Windows konnte die Aktion für virtuelle Desktops nicht ausführen.");
         }
-    }
-
-    private static void SendShortcutWithKeybdEvent(ushort key)
-    {
-        KeybdEvent(VirtualKeyLeftWindows, 0, 0, UIntPtr.Zero);
-        KeybdEvent(VirtualKeyControl, 0, 0, UIntPtr.Zero);
-        KeybdEvent(key, 0, 0, UIntPtr.Zero);
-        KeybdEvent(key, 0, KeyEventKeyUp, UIntPtr.Zero);
-        KeybdEvent(VirtualKeyControl, 0, KeyEventKeyUp, UIntPtr.Zero);
-        KeybdEvent(VirtualKeyLeftWindows, 0, KeyEventKeyUp, UIntPtr.Zero);
     }
 
     private static Input KeyDown(ushort key) => new()
@@ -79,9 +63,6 @@ internal static class VirtualDesktopController
     [DllImport("user32.dll", SetLastError = true)]
     private static extern uint SendInput(uint inputCount, Input[] inputs, int inputSize);
 
-    [DllImport("user32.dll")]
-    private static extern void KeybdEvent(ushort virtualKey, ushort scanCode, uint flags, UIntPtr extraInfo);
-
     [StructLayout(LayoutKind.Sequential)]
     private struct Input
     {
@@ -93,7 +74,24 @@ internal static class VirtualDesktopController
     private struct InputUnion
     {
         [FieldOffset(0)]
+        public MouseInput Mouse;
+
+        [FieldOffset(0)]
         public KeyboardInput Keyboard;
+
+        [FieldOffset(0)]
+        public HardwareInput Hardware;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MouseInput
+    {
+        public int Dx;
+        public int Dy;
+        public uint MouseData;
+        public uint Flags;
+        public uint Time;
+        public UIntPtr ExtraInfo;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -103,6 +101,14 @@ internal static class VirtualDesktopController
         public ushort ScanCode;
         public uint Flags;
         public uint Time;
-        public IntPtr ExtraInfo;
+        public UIntPtr ExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct HardwareInput
+    {
+        public uint Message;
+        public ushort ParameterLow;
+        public ushort ParameterHigh;
     }
 }

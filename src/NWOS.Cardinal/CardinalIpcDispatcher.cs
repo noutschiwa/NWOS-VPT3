@@ -214,102 +214,64 @@ namespace NWOS.Cardinal
         }
 
         private static string ExecuteAliceSearch(string query)
+        {
+            string lower = query.ToLowerInvariant();
+            AliceSearchResponse response;
+
+            if (lower.Contains("scan") || lower.Contains("sicherheit") || lower.Contains("security"))
+            {
+                response = new AliceSearchResponse(
+                    "Quick-Scan verfügbar: Systemverzeichnisse auf Auffälligkeiten prüfen.",
+                    new[]
+                    {
+                        new AliceSuggestedAction("🛡️ Quick-Scan starten", "nwos.alice",
+                            "security.quickscan", "{}", "")
+                    });
+            }
+            else if (lower.Contains("update") || lower.Contains("log") || lower.Contains("kernel"))
+            {
+                response = new AliceSearchResponse(
+                    "NWOS System Update-Log (v3.0) verfügbar.",
+                    new[]
+                    {
+                        new AliceSuggestedAction("📜 Update-Log anzeigen", "nwos.alya",
+                            "system.updatelog", "{}", "")
+                    });
+            }
+            else if (lower.Contains("monitor") || lower.Contains("cpu") || lower.Contains("ram") || lower.Contains("task"))
+            {
+                response = new AliceSearchResponse(
+                    "Systemauslastung und laufende Prozesse abrufbar.",
+                    new[]
+                    {
+                        new AliceSuggestedAction("📊 Task-Manager öffnen", "", "", "", "taskmgr.exe")
+                    });
+            }
+            else if (lower.Contains("einstellung") || lower.Contains("settings") || lower.Contains("audio"))
+            {
+                response = new AliceSearchResponse(
+                    "Systemeinstellungen für NWOS / Windows verfügbar.",
+                    new[]
+                    {
+                        new AliceSuggestedAction("⚙️ Einstellungen öffnen", "", "", "", "ms-settings:")
+                    });
+            }
+            else
+            {
+                var appActions = FindStartMenuShortcutActions(query);
+                string message = appActions.Count > 0
+                    ? $"Alice hat {appActions.Count} passende Anwendung(en) für \"{query}\" gefunden:"
+                    : $"Alice-Suche für \"{query}\": Keine passende App im Startmenü gefunden.";
+
+                response = new AliceSearchResponse(message, appActions);
+            }
+
+            return JsonSerializer.Serialize(response, CardinalJsonContext.Default.AliceSearchResponse);
+        }
+
+                private static System.Collections.Generic.List<AliceSuggestedAction> FindStartMenuShortcutActions(string query, int maxResults = 3)
                 {
-                    string lower = query.ToLowerInvariant();
-                    object responseObj;
-
-                    if (lower.Contains("scan") || lower.Contains("sicherheit") || lower.Contains("security"))
-                    {
-                        responseObj = new
-                        {
-                            message = "Quick-Scan verfügbar: Systemverzeichnisse auf Auffälligkeiten prüfen.",
-                            actions = new[]
-                            {
-                                new
-                                {
-                                    label = "🛡️ Quick-Scan starten",
-                                    target = "nwos.alice",
-                                    action = "security.quickscan",
-                                    payload = "{}",
-                                    launchPath = ""
-                                }
-                            }
-                        };
-                    }
-                    else if (lower.Contains("update") || lower.Contains("log") || lower.Contains("kernel"))
-                    {
-                        responseObj = new
-                        {
-                            message = "NWOS System Update-Log (v3.0) verfügbar.",
-                            actions = new[]
-                            {
-                                new
-                                {
-                                    label = "📜 Update-Log anzeigen",
-                                    target = "nwos.alya",
-                                    action = "system.updatelog",
-                                    payload = "{}",
-                                    launchPath = ""
-                                }
-                            }
-                        };
-                    }
-                    else if (lower.Contains("monitor") || lower.Contains("cpu") || lower.Contains("ram") || lower.Contains("task"))
-                    {
-                        responseObj = new
-                        {
-                            message = "Systemauslastung und laufende Prozesse abrufbar.",
-                            actions = new[]
-                            {
-                                new
-                                {
-                                    label = "📊 Task-Manager öffnen",
-                                    target = "",
-                                    action = "",
-                                    payload = "",
-                                    launchPath = "taskmgr.exe"
-                                }
-                            }
-                        };
-                    }
-                    else if (lower.Contains("einstellung") || lower.Contains("settings") || lower.Contains("audio"))
-                    {
-                        responseObj = new
-                        {
-                            message = "Systemeinstellungen für NWOS / Windows verfügbar.",
-                            actions = new[]
-                            {
-                                new
-                                {
-                                    label = "⚙️ Einstellungen öffnen",
-                                    target = "",
-                                    action = "",
-                                    payload = "",
-                                    launchPath = "ms-settings:"
-                                }
-                            }
-                        };
-                    }
-                    else
-                    {
-                        var appActions = FindStartMenuShortcutActions(query);
-                        string msg = appActions.Count > 0
-                            ? $"Alice hat {appActions.Count} passende Anwendung(en) für \"{query}\" gefunden:"
-                            : $"Alice-Suche für \"{query}\": Keine passende App im Startmenü gefunden.";
-
-                        responseObj = new
-                        {
-                            message = msg,
-                            actions = appActions
-                        };
-                    }
-
-                    return JsonSerializer.Serialize(responseObj);
-                }
-
-                private static System.Collections.Generic.List<object> FindStartMenuShortcutActions(string query, int maxResults = 3)
-                {
-                    var actions = new System.Collections.Generic.List<object>();
+                    var actions = new System.Collections.Generic.List<AliceSuggestedAction>();
                     if (string.IsNullOrWhiteSpace(query)) return actions;
 
                     var folders = new[]
@@ -348,14 +310,8 @@ namespace NWOS.Cardinal
                         .ThenBy(m => m.Name.Length)
                         .Take(maxResults))
                     {
-                        actions.Add(new
-                        {
-                            label = $"🚀 {match.Name} starten",
-                            target = "",
-                            action = "",
-                            payload = "",
-                            launchPath = match.FullPath
-                        });
+                        actions.Add(new AliceSuggestedAction(
+                            $"🚀 {match.Name} starten", "", "", "", match.FullPath));
                     }
 
                     return actions;

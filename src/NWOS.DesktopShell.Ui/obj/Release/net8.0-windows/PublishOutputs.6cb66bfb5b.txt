@@ -33,12 +33,14 @@ C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\Microsoft.Extensions.Primitives.dl
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Alice.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Alya.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Cardinal.dll
+C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.ConfigSetup.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Contracts.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Core.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.DesktopShell.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Ipc.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Marc.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Settings.dll
+C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.ConfigSetup.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Contracts.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Ipc.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.DesktopShell.pdb

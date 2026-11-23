@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace NWOS.Cardinal.Ipc
 {
+    [SupportedOSPlatform("windows")]
     public sealed class CardinalIpcServer
     {
         private const string PipeName = "NWOS.Cardinal.Pipe";

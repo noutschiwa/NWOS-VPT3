@@ -131,3 +131,7 @@ C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\Mas
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Button\WS-Button\WorkspaceFlyout.g.cs
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.DesktopShell.Ui_MarkupCompile.lref
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Release\net8.0-windows\NWOS.ConfigSetup.dll
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Release\net8.0-windows\NWOS.ConfigSetup.pdb
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NwosSettingsWindow.baml
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NwosSettingsWindow.g.cs
