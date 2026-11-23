@@ -16,6 +16,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using NWOS.Contracts;
+using NWOS.DesktopShell.Ui.Button;
 using NWOS.DesktopShell.Ui.ViewModels;
 
 namespace NWOS.DesktopShell.Ui
@@ -186,6 +187,7 @@ namespace NWOS.DesktopShell.Ui
                 SearchBox.Focus();
                 SearchBox.CaretIndex = SearchBox.Text.Length;
             };
+            CenterMasterFlyout.ConsoleActionRequested = ExecuteWhitelistedConsoleActionAsync;
             _appStateTimer.Tick += (_, _) => UpdateRunningAppsState();
             _appStateTimer.Start();
             UpdateRunningAppsState();
@@ -201,6 +203,62 @@ namespace NWOS.DesktopShell.Ui
             };
 
             Loaded += async (_, _) => await InitializeAsync();
+        }
+
+        private async Task ExecuteWhitelistedConsoleActionAsync(AllowedConsoleAction action)
+        {
+            string target;
+            string messageType;
+            object payload;
+            string description;
+
+            switch (action)
+            {
+                case AllowedConsoleAction.AlyaStatus:
+                    target = "nwos.alya";
+                    messageType = "chat.status";
+                    payload = new { };
+                    description = "Alya-Status";
+                    break;
+                case AllowedConsoleAction.AliceEvents:
+                    target = "nwos.alice";
+                    messageType = "alice.getRecentEvents";
+                    payload = new { count = 10 };
+                    description = "Alice-Ereignisse";
+                    break;
+                case AllowedConsoleAction.AliceScan:
+                    target = "nwos.alice";
+                    messageType = "alice.manualScan";
+                    payload = new { };
+                    description = "Alice-Sicherheits-Scan";
+                    break;
+                default:
+                    CenterMasterFlyout.AddConsoleMessage(
+                        "Konsole",
+                        "Diese Aktion ist nicht freigegeben. Erlaubt: status, events, scan, hide.");
+                    return;
+            }
+
+            CenterMasterFlyout.AddConsoleMessage("Konsole", $"Rufe {description} ab...");
+            try
+            {
+                using var response = await _cardinal.CallAsync(
+                    target,
+                    messageType,
+                    payload,
+                    PermissionScope.FileSystemRead);
+
+                CenterMasterFlyout.AddConsoleMessage(
+                    action == AllowedConsoleAction.AlyaStatus ? "Alya" : "Alice",
+                    response?.RootElement.ToString()
+                        ?? $"Keine Antwort erhalten: {_cardinal.LastError ?? "IPC-Kanal nicht verfügbar"}.");
+            }
+            catch (Exception ex)
+            {
+                CenterMasterFlyout.AddConsoleMessage(
+                    "Konsole",
+                    $"{description} fehlgeschlagen: {ex.Message}");
+            }
         }
 
         #region App-Hub Initialisierung, Persistenz & Prozess-Tracking

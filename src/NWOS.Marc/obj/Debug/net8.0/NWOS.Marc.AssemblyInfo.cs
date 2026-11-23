@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Marc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad79af7ef92a7638ca66980315eb61ca0deb4db0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2d7149cbe2df7e645e238af37d43d025a937005")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Marc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Marc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
