@@ -311,3 +311,5 @@ C:\NWOS\NWOS\tests\NWOS.Alya.Tests\obj\Debug\net8.0\refint\NWOS.Alya.Tests.dll
 C:\NWOS\NWOS\tests\NWOS.Alya.Tests\obj\Debug\net8.0\NWOS.Alya.Tests.pdb
 C:\NWOS\NWOS\tests\NWOS.Alya.Tests\obj\Debug\net8.0\NWOS.Alya.Tests.genruntimeconfig.cache
 C:\NWOS\NWOS\tests\NWOS.Alya.Tests\obj\Debug\net8.0\ref\NWOS.Alya.Tests.dll
+C:\NWOS\NWOS\tests\NWOS.Alya.Tests\bin\Debug\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\tests\NWOS.Alya.Tests\bin\Debug\net8.0\NWOS.AI.pdb

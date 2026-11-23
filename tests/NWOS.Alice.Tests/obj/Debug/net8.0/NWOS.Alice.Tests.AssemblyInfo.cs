@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Alice.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2d7149cbe2df7e645e238af37d43d025a937005")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+797e0a3920aa9dd77170a16fe259363c637a2775")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Alice.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Alice.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,7 +1,7 @@
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.exe
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.exe
-C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.deps.json
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.runtimeconfig.json
+C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\Bilder-NWOS\Hintergrund-Wasserzeichen\NWOS-Logo-Standart Hintergund.png
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.deps.json
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.runtimeconfig.json
@@ -39,11 +39,13 @@ C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\System.Management.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\runtimes\win\lib\net8.0\System.Management.dll
+C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.AI.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Alice.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Alya.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Cardinal.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.ConfigSetup.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Contracts.dll
+C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Core.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.DesktopShell.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Ipc.dll
@@ -56,6 +58,8 @@ C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.WindowsIntegration.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Host.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.SystemCenter.Windows.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.WindowsIntegration.pdb
+C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Core.pdb
+C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.AI.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Alice.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Alya.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Cardinal.pdb

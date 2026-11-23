@@ -8,11 +8,11 @@
     ".NETCoreApp,Version=v8.0": {
       "NWOS.DesktopShell.Ui/1.0.0": {
         "dependencies": {
+          "NWOS.ConfigSetup": "1.0.0",
           "NWOS.Contracts": "1.0.0",
           "NWOS.Core": "1.0.0",
           "NWOS.DesktopShell": "1.0.0",
-          "NWOS.Ipc": "1.0.0",
-          "NWOS.ConfigSetup": "1.0.0.0"
+          "NWOS.Ipc": "1.0.0"
         },
         "runtime": {
           "NWOS.DesktopShell.Ui.dll": {}
@@ -376,8 +376,17 @@
           }
         }
       },
+      "NWOS.AI/1.0.0": {
+        "runtime": {
+          "NWOS.AI.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "NWOS.Alice/1.0.0": {
         "dependencies": {
+          "NWOS.AI": "1.0.0",
           "NWOS.Contracts": "1.0.0"
         },
         "runtime": {
@@ -389,6 +398,7 @@
       },
       "NWOS.Alya/1.0.0": {
         "dependencies": {
+          "NWOS.AI": "1.0.0",
           "NWOS.Contracts": "1.0.0",
           "NWOS.Settings": "1.0.0"
         },
@@ -410,6 +420,17 @@
         },
         "runtime": {
           "NWOS.Cardinal.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NWOS.ConfigSetup/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.ConfigSetup.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -474,14 +495,6 @@
       "NWOS.Settings/1.0.0": {
         "runtime": {
           "NWOS.Settings.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "NWOS.ConfigSetup/1.0.0.0": {
-        "runtime": {
-          "NWOS.ConfigSetup.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -684,6 +697,11 @@
       "path": "microsoft.extensions.primitives/8.0.0",
       "hashPath": "microsoft.extensions.primitives.8.0.0.nupkg.sha512"
     },
+    "NWOS.AI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "NWOS.Alice/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -695,6 +713,11 @@
       "sha512": ""
     },
     "NWOS.Cardinal/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.ConfigSetup/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -726,11 +749,6 @@
     },
     "NWOS.Settings/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "NWOS.ConfigSetup/1.0.0.0": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

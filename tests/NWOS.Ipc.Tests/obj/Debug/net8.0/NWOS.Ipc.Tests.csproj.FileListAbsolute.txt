@@ -425,3 +425,5 @@ C:\NWOS\NWOS\tests\NWOS.Ipc.Tests\obj\Debug\net8.0\refint\NWOS.Ipc.Tests.dll
 C:\NWOS\NWOS\tests\NWOS.Ipc.Tests\obj\Debug\net8.0\NWOS.Ipc.Tests.pdb
 C:\NWOS\NWOS\tests\NWOS.Ipc.Tests\obj\Debug\net8.0\NWOS.Ipc.Tests.genruntimeconfig.cache
 C:\NWOS\NWOS\tests\NWOS.Ipc.Tests\obj\Debug\net8.0\ref\NWOS.Ipc.Tests.dll
+C:\NWOS\NWOS\tests\NWOS.Ipc.Tests\bin\Debug\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\tests\NWOS.Ipc.Tests\bin\Debug\net8.0\NWOS.AI.pdb

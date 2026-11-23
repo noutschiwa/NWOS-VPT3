@@ -12,6 +12,8 @@ public static class MessageScopePolicy
 {
     public static PermissionScope MinimumScopeFor(string messageType) => messageType switch
     {
+        "alya.chat" or "alice.chat" => PermissionScope.NetworkGeneral,
+
         "icon.toggleVisibility" or "box.create" or "box.addItem" or "search.rebuildIndex"
             => PermissionScope.FileSystemWrite,
         "icon.listStates" or "box.list" or "box.search" or "search.global"

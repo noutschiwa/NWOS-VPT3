@@ -210,3 +210,5 @@ C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Debug\net8.0-windows\NwosSettingsWindo
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Debug\net8.0-windows\NwosSettingsWindow.g.cs
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Debug\net8.0-windows\NWOS.ConfigSetup.dll
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Debug\net8.0-windows\NWOS.ConfigSetup.pdb
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Debug\net8.0-windows\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Debug\net8.0-windows\NWOS.AI.pdb

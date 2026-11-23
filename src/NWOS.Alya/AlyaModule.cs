@@ -1,4 +1,5 @@
 using System.Text.Json;
+using NWOS.AI;
 using NWOS.Contracts;
 using NWOS.Settings;
 
@@ -15,6 +16,7 @@ namespace NWOS.Alya;
 ///   - "alya.statusReport"   (kein Payload nötig, Abschnitt 12)
 ///   - "alya.setTone"        { "tone": "Sachlich" | "Freundlich" }
 ///   - "alya.getTone"        (kein Payload nötig)
+///   - "alya.chat"           { "messages": [{ "role": "user|assistant", "content": "..." }] }
 /// </summary>
 public sealed class AlyaModule : IModule
 {
@@ -22,14 +24,19 @@ public sealed class AlyaModule : IModule
     public string DisplayName => "Alya";
 
     private readonly SettingsStore _settings;
+    private readonly OpenAiChatClient _chatClient;
     private readonly GreetingBuilder _greetingBuilder = new();
     private readonly StatusReportBuilder _statusReportBuilder;
 
     private bool _started;
 
-    public AlyaModule(SettingsStore settings, IModuleMessenger? messenger = null)
+    public AlyaModule(
+        SettingsStore settings,
+        IModuleMessenger? messenger = null,
+        OpenAiChatClient? chatClient = null)
     {
         _settings = settings;
+        _chatClient = chatClient ?? new OpenAiChatClient();
         _statusReportBuilder = new StatusReportBuilder(messenger, ModuleId);
     }
 
@@ -56,6 +63,15 @@ public sealed class AlyaModule : IModule
             "alya.statusReport" => await _statusReportBuilder.BuildAsync(cancellationToken),
             "alya.setTone" => HandleSetTone(message.PayloadJson),
             "alya.getTone" => new { tone = CurrentTone().ToString() },
+            "alya.chat" => new
+            {
+                reply = await _chatClient.CompleteAsync(
+                    "Du bist Alya, die hilfreiche Benutzerkontakt-KI von NWOS. Antworte auf Deutsch, freundlich und klar. " +
+                    "Du hast keinen Zugriff auf den Computer und kannst keine Aktionen ausführen. Behaupte niemals, " +
+                    "Systemeinstellungen geändert oder Befehle ausgeführt zu haben.",
+                    ReadChatMessages(message.PayloadJson),
+                    cancellationToken),
+            },
             _ => throw new NotSupportedException($"Unbekannter MessageType '{message.MessageType}' für {ModuleId}."),
         };
 
@@ -67,6 +83,22 @@ public sealed class AlyaModule : IModule
             MessageType = $"{message.MessageType}.result",
             PayloadJson = JsonSerializer.Serialize(result, NwosJson.ResponseOptions),
         };
+    }
+
+    private static IReadOnlyList<OpenAiChatMessage> ReadChatMessages(string payloadJson)
+    {
+        using var document = JsonDocument.Parse(payloadJson);
+        if (!document.RootElement.TryGetProperty("messages", out var messages)
+            || messages.ValueKind != JsonValueKind.Array)
+        {
+            throw new ArgumentException("Chat-Payload muss ein messages-Array enthalten.");
+        }
+
+        return messages.EnumerateArray()
+            .Select(item => new OpenAiChatMessage(
+                item.GetProperty("role").GetString() ?? string.Empty,
+                item.GetProperty("content").GetString() ?? string.Empty))
+            .ToArray();
     }
 
     private AlyaTone CurrentTone()

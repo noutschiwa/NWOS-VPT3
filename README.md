@@ -71,6 +71,22 @@ Starte die Desktop-Shell über das UI- oder Host-Projekt:
 
 dotnet run --project src/NWOS.DesktopShell.Ui/NWOS.DesktopShell.Ui.csproj
 
+OpenAI-Chat konfigurieren
+
+Für den Chat im Master-Menü muss `OPENAI_API_KEY` als Benutzer- oder
+Systemumgebungsvariable gesetzt werden. Optional kann `OPENAI_MODEL` gesetzt
+werden; Standard ist `gpt-4o-mini`. Danach NWOS/den Cardinal-Host neu starten.
+Den API-Key niemals in Quellcode, Konfigurationsdateien oder Commits speichern.
+Chatnachrichten werden zur Verarbeitung an die OpenAI-API gesendet; dabei können
+je nach OpenAI-Konto Kosten anfallen.
+
+Im Admin-Funktionskanal `/call "Alya"` oder `/call "Alice"` eingeben, um den
+jeweiligen Chat zu wählen. Ohne API-Key bleiben die lokalen Alice-Funktionen
+(Ereignisse und Scan) verfügbar, der KI-Chat meldet die fehlende Konfiguration.
+Chatnachrichten werden je KI getrennt und auf die letzten zehn Nachrichten
+begrenzt; der Client beschränkt zusätzlich die gesamte Eingabegröße. Die UI
+erhält den erforderlichen Netzwerkzugriff nur für `alya.chat` und `alice.chat`.
+
 
 ⚠️ Bekannte Architektur-Hinweise (WPF)
 

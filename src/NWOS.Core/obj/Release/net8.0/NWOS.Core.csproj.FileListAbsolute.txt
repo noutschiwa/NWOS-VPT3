@@ -26,3 +26,5 @@ C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Alya.pdb
 C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Cardinal.pdb
 C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Marc.pdb
 C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Settings.pdb
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.AI.pdb

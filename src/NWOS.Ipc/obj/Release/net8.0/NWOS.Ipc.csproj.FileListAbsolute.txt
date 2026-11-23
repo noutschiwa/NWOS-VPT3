@@ -41,3 +41,5 @@ C:\NWOS\NWOS\src\NWOS.Ipc\obj\Release\net8.0\NWOS.Ipc.dll
 C:\NWOS\NWOS\src\NWOS.Ipc\obj\Release\net8.0\refint\NWOS.Ipc.dll
 C:\NWOS\NWOS\src\NWOS.Ipc\obj\Release\net8.0\NWOS.Ipc.pdb
 C:\NWOS\NWOS\src\NWOS.Ipc\obj\Release\net8.0\ref\NWOS.Ipc.dll
+C:\NWOS\NWOS\src\NWOS.Ipc\bin\Release\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.Ipc\bin\Release\net8.0\NWOS.AI.pdb

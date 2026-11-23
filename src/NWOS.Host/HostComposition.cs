@@ -86,14 +86,20 @@ public static class HostComposition
         var cardinal = host.Services.GetRequiredService<CardinalService>();
 
         // Externe Prozesse (z. B. die Desktop-UI) erscheinen für Cardinal immer
-        // als "external.ipc" (siehe IpcServer). Bewusst NUR Datei lesen/schreiben
-        // - dieselben Rechte wie Desktop-Shell und Widgets. Kein ProcessControl,
-        // kein SystemChange, kein Netzwerk: selbst ein manipulierter Client
-        // kann über die Pipe weder Prozesse steuern noch Quarantäne/Autostart
-        // ändern (Abschnitt 9/41).
+        // als "external.ipc" (siehe IpcServer). Grundsätzlich nur Datei lesen/
+        // schreiben. Netzwerkzugriff kommt ausschließlich hinzu, wenn der
+        // Nutzer einen OpenAI-Key konfiguriert hat; MessageScopePolicy begrenzt
+        // ihn auf Alya-/Alice-Chat. ProcessControl und SystemChange bleiben aus.
+        var externalScopes =
+            NWOS.Contracts.PermissionScope.FileSystemRead | NWOS.Contracts.PermissionScope.FileSystemWrite;
+        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OPENAI_API_KEY")))
+        {
+            externalScopes |= NWOS.Contracts.PermissionScope.NetworkGeneral;
+        }
+
         host.Services.GetRequiredService<ModuleRegistry>().GrantExternalScope(
             NWOS.Ipc.IpcDefaults.ExternalCallerIdentity,
-            NWOS.Contracts.PermissionScope.FileSystemRead | NWOS.Contracts.PermissionScope.FileSystemWrite);
+            externalScopes);
 
         if (configuration.EnableDesktopShell)
         {

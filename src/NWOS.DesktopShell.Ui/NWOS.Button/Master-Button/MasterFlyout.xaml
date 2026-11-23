@@ -194,7 +194,8 @@
                                                    FontSize="11"
                                                    FontWeight="Bold"
                                                    VerticalAlignment="Center" />
-                                        <TextBlock Text="Nur freigegebene Aktionen"
+                                        <TextBlock x:Name="ConsoleChatTargetTextBlock"
+                                                   Text="Befehle oder /call Alya|Alice"
                                                    DockPanel.Dock="Right"
                                                    Foreground="#9CA3AF"
                                                    FontSize="10"
@@ -207,7 +208,7 @@
                                             CornerRadius="6"
                                             Padding="8">
                                         <ScrollViewer x:Name="CardinalConsoleScrollViewer"
-                                                      MaxHeight="112"
+                                                      Height="320"
                                                       VerticalScrollBarVisibility="Auto">
                                             <ItemsControl x:Name="CardinalConsoleMessagesControl">
                                                 <ItemsControl.ItemTemplate>
@@ -248,7 +249,7 @@
                                                  CaretBrush="#60A5FA"
                                                  BorderBrush="#334155"
                                                  KeyDown="CardinalCommandInputBox_KeyDown"
-                                                 ToolTip="Erlaubt: status, events, scan, hide" />
+                                                 ToolTip="Chat-Nachricht senden oder Befehl: status, events, scan, hide" />
                                         <Button Grid.Column="1"
                                                 Content="Ausführen"
                                                 Margin="6,0,0,0"

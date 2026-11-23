@@ -305,3 +305,5 @@ C:\NWOS\NWOS\tests\NWOS.Alice.Tests\obj\Debug\net8.0\refint\NWOS.Alice.Tests.dll
 C:\NWOS\NWOS\tests\NWOS.Alice.Tests\obj\Debug\net8.0\NWOS.Alice.Tests.pdb
 C:\NWOS\NWOS\tests\NWOS.Alice.Tests\obj\Debug\net8.0\NWOS.Alice.Tests.genruntimeconfig.cache
 C:\NWOS\NWOS\tests\NWOS.Alice.Tests\obj\Debug\net8.0\ref\NWOS.Alice.Tests.dll
+C:\NWOS\NWOS\tests\NWOS.Alice.Tests\bin\Debug\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\tests\NWOS.Alice.Tests\bin\Debug\net8.0\NWOS.AI.pdb

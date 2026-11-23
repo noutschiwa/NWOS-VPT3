@@ -37,3 +37,5 @@ C:\NWOS\NWOS\src\NWOS.Cardinal\obj\Release\net8.0\NWOS.Cardinal.dll
 C:\NWOS\NWOS\src\NWOS.Cardinal\obj\Release\net8.0\refint\NWOS.Cardinal.dll
 C:\NWOS\NWOS\src\NWOS.Cardinal\obj\Release\net8.0\NWOS.Cardinal.pdb
 C:\NWOS\NWOS\src\NWOS.Cardinal\obj\Release\net8.0\ref\NWOS.Cardinal.dll
+C:\NWOS\NWOS\src\NWOS.Cardinal\bin\Release\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.Cardinal\bin\Release\net8.0\NWOS.AI.pdb

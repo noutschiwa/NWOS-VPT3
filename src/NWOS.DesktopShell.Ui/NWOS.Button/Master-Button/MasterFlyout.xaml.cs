@@ -5,6 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Interop;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
 
 namespace NWOS.DesktopShell.Ui.Button;
 
@@ -19,6 +22,19 @@ public enum AllowedConsoleAction
 
 public partial class MasterFlyout : UserControl
 {
+    [StructLayout(LayoutKind.Sequential)]
+    private struct NativeRect
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetWindowRect(IntPtr hWnd, out NativeRect rect);
+
     private const string AdminAccessCode = "135798642";
     private static readonly TimeSpan OpenDuration = TimeSpan.FromMilliseconds(850);
     private static readonly TimeSpan CloseDuration = TimeSpan.FromMilliseconds(600);
@@ -31,8 +47,11 @@ public partial class MasterFlyout : UserControl
 
     public event Action<string>? SearchRequested;
     public Func<AllowedConsoleAction, Task>? ConsoleActionRequested { get; set; }
+    public Func<string, bool>? ConsoleTextCommandRequested { get; set; }
+    public Func<string, string, Task<string>>? ChatMessageRequested { get; set; }
 
     private sealed record ConsoleEntry(string Sender, string Message);
+    private string? _activeChatTarget;
 
     public MasterFlyout()
     {
@@ -56,7 +75,19 @@ public partial class MasterFlyout : UserControl
         _isClosing = false;
         RemoveAnimations();
         var screenWidth = SystemParameters.PrimaryScreenWidth;
-        var screenHeight = Math.Max(0, SystemParameters.PrimaryScreenHeight - Height);
+        var taskbarWindow = Window.GetWindow(this);
+        if (taskbarWindow is null)
+        {
+            throw new InvalidOperationException("Das Master-Menü ist keinem Taskleistenfenster zugeordnet.");
+        }
+
+        var taskbarHandle = new WindowInteropHelper(taskbarWindow).Handle;
+        if (taskbarHandle == IntPtr.Zero || !GetWindowRect(taskbarHandle, out var taskbarBounds))
+        {
+            throw new Win32Exception(Marshal.GetLastWin32Error(), "Taskleistenposition konnte nicht ermittelt werden.");
+        }
+
+        var screenHeight = Math.Max(0, taskbarBounds.Top);
         OverlayRoot.Width = screenWidth;
         OverlayRoot.Height = screenHeight;
 
@@ -68,13 +99,14 @@ public partial class MasterFlyout : UserControl
         }
 
         var menuLeft = Math.Clamp(anchorPoint.X - MenuPanel.Width / 2, 12, screenWidth - MenuPanel.Width - 12);
-        var menuTop = Math.Max(12, screenHeight - MenuPanel.Height - 12);
+        var menuTop = FortressImage.Height + 24;
+        MenuPanel.Height = Math.Max(0, screenHeight - menuTop);
         Canvas.SetLeft(MenuPanel, menuLeft);
         Canvas.SetTop(MenuPanel, menuTop);
 
         MasterBackgroundImage.Width = MenuPanel.Width + 44;
-        MasterBackgroundImage.Height = MenuPanel.Height + FortressImage.Height + 64;
-        _hiddenBackgroundRect = new Rect(0, MasterBackgroundImage.Height, MasterBackgroundImage.Width, 0);
+        MasterBackgroundImage.Height = screenHeight;
+        _hiddenBackgroundRect = new Rect(0, 0, MasterBackgroundImage.Width, 0);
         _visibleBackgroundRect = new Rect(0, 0, MasterBackgroundImage.Width, MasterBackgroundImage.Height);
         const double backgroundOpacity = 0.48;
         var backgroundClip = new RectangleGeometry(_hiddenBackgroundRect);
@@ -84,13 +116,13 @@ public partial class MasterFlyout : UserControl
         var menuCenterX = menuLeft + MenuPanel.Width / 2;
         Canvas.SetLeft(FortressImage, menuCenterX - FortressImage.Width / 2);
         var fortressStartTop = screenHeight - FortressImage.Height + 64;
-        var fortressTargetTop = Math.Max(12, menuTop - FortressImage.Height - 14);
+        var fortressTargetTop = Math.Max(8, menuTop - FortressImage.Height - 12);
         Canvas.SetTop(FortressImage, fortressStartTop);
         _fortressRise = fortressTargetTop - fortressStartTop;
-        FortressTransform.Y = _fortressRise;
+        FortressTransform.Y = 0;
 
         Canvas.SetLeft(MasterBackgroundImage, menuCenterX - MasterBackgroundImage.Width / 2);
-        Canvas.SetTop(MasterBackgroundImage, fortressTargetTop - 24);
+        Canvas.SetTop(MasterBackgroundImage, 0);
         MenuTransform.Y = 0;
         MenuPanel.Opacity = 1;
 
@@ -241,7 +273,14 @@ public partial class MasterFlyout : UserControl
                 MasterSearchBox.Clear();
                 CommandHelpPanel.Visibility = Visibility.Collapsed;
                 CommandHelpStatus.Visibility = Visibility.Collapsed;
-                ShowConsole();
+                if (CardinalAdminConsolePanel.Visibility == Visibility.Visible)
+                {
+                    HideConsole();
+                }
+                else
+                {
+                    ShowConsole();
+                }
                 return;
             }
 
@@ -274,6 +313,13 @@ public partial class MasterFlyout : UserControl
         PinnedActionsPanel.Visibility = Visibility.Collapsed;
         CardinalAdminConsolePanel.Visibility = Visibility.Visible;
         CardinalCommandInputBox.Focus();
+    }
+
+    public void SetActiveChatTarget(string target)
+    {
+        _activeChatTarget = target;
+        ConsoleChatTargetTextBlock.Text = $"Chat mit {target}";
+        AddConsoleMessage("Konsole", $"Chat mit {target} bereit. Schreibe deine Nachricht.");
     }
 
     private void HideConsole()
@@ -318,6 +364,13 @@ public partial class MasterFlyout : UserControl
             return;
         }
 
+        if (input.TrimStart().StartsWith("/call", StringComparison.OrdinalIgnoreCase)
+            && ConsoleTextCommandRequested?.Invoke(input) == true)
+        {
+            CardinalConsoleScrollViewer.ScrollToEnd();
+            return;
+        }
+
         var action = ResolveAllowedAction(input);
         if (action == AllowedConsoleAction.HideConsole)
         {
@@ -327,10 +380,29 @@ public partial class MasterFlyout : UserControl
 
         if (action == AllowedConsoleAction.None)
         {
-            _consoleMessages.Add(new ConsoleEntry(
-                "Konsole",
-                "Unbekannter Eintrag. Erlaubt sind nur: status, events, scan, hide."));
-            CardinalConsoleScrollViewer.ScrollToEnd();
+            if (input.TrimStart().StartsWith("/", StringComparison.Ordinal))
+            {
+                AddConsoleMessage("Konsole", "Unbekannter Befehl. Erlaubt: /call \"Alya\", /call \"Alice\", status, events, scan, hide.");
+                return;
+            }
+
+            if (_activeChatTarget is null || ChatMessageRequested is null)
+            {
+                AddConsoleMessage("Konsole", "Öffne zuerst einen Chat mit /call \"Alya\" oder /call \"Alice\".");
+                return;
+            }
+
+            AddConsoleMessage("Du", input.Trim());
+            try
+            {
+                var reply = await ChatMessageRequested(_activeChatTarget, input.Trim());
+                AddConsoleMessage(_activeChatTarget, reply);
+            }
+            catch (Exception ex)
+            {
+                AddConsoleMessage("Chat-Fehler", ex.Message);
+            }
+
             return;
         }
 

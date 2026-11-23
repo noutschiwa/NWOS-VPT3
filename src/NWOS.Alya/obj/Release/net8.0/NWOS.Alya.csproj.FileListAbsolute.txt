@@ -33,3 +33,5 @@ C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.dll
 C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\refint\NWOS.Alya.dll
 C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\NWOS.Alya.pdb
 C:\NWOS\NWOS\src\NWOS.Alya\obj\Release\net8.0\ref\NWOS.Alya.dll
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.Alya\bin\Release\net8.0\NWOS.AI.pdb

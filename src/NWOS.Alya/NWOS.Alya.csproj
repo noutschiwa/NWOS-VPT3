@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NWOS.Contracts\NWOS.Contracts.csproj" />
     <ProjectReference Include="..\NWOS.Settings\NWOS.Settings.csproj" />
+    <ProjectReference Include="..\NWOS.AI\NWOS.AI.csproj" />
   </ItemGroup>
 
 </Project>

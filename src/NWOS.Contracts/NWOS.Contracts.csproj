@@ -7,4 +7,8 @@
     <RootNamespace>NWOS.Contracts</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.6" />
+  </ItemGroup>
+
 </Project>

@@ -146,6 +146,7 @@ namespace NWOS.DesktopShell.Ui
         private readonly ObservableCollection<WidgetViewModel> _widgets = new();
         private readonly ObservableCollection<AppIconItem> _leftAppIcons = new();
         private readonly ObservableCollection<AppIconItem> _rightAppIcons = new();
+        private readonly Dictionary<string, List<ConsoleChatTurn>> _consoleChatHistory = new(StringComparer.OrdinalIgnoreCase);
 
         private readonly DispatcherTimer _widgetRefreshTimer = new() { Interval = TimeSpan.FromSeconds(1) };
         private readonly DispatcherTimer _appStateTimer = new() { Interval = TimeSpan.FromMilliseconds(1500) };
@@ -159,6 +160,7 @@ namespace NWOS.DesktopShell.Ui
 
         // Zone-2 Such-Cache
         private List<SearchResultItem>? _cachedStartMenuApps;
+        private sealed record ConsoleChatTurn(string Role, string Content);
 
         // 1. Parameterloser Konstruktor für den automatischen Start durch WPF (StartupUri)
         public MainWindow() : this(new CardinalClient())
@@ -188,6 +190,8 @@ namespace NWOS.DesktopShell.Ui
                 SearchBox.CaretIndex = SearchBox.Text.Length;
             };
             CenterMasterFlyout.ConsoleActionRequested = ExecuteWhitelistedConsoleActionAsync;
+            CenterMasterFlyout.ConsoleTextCommandRequested = TryHandleCallChatCommand;
+            CenterMasterFlyout.ChatMessageRequested = SendConsoleChatMessageAsync;
             _appStateTimer.Tick += (_, _) => UpdateRunningAppsState();
             _appStateTimer.Start();
             UpdateRunningAppsState();
@@ -203,6 +207,96 @@ namespace NWOS.DesktopShell.Ui
             };
 
             Loaded += async (_, _) => await InitializeAsync();
+        }
+
+        private bool TryHandleCallChatCommand(string? rawInput)
+        {
+            string text = (rawInput ?? string.Empty).Trim();
+            if (!text.StartsWith("/call", StringComparison.OrdinalIgnoreCase)
+                || (text.Length > "/call".Length && !char.IsWhiteSpace(text["/call".Length])))
+            {
+                return false;
+            }
+
+            string targetRaw = text["/call".Length..].Trim();
+            if (targetRaw.Length >= 2
+                && ((targetRaw[0] == '"' && targetRaw[^1] == '"')
+                    || (targetRaw[0] == '\'' && targetRaw[^1] == '\'')))
+            {
+                targetRaw = targetRaw[1..^1].Trim();
+            }
+
+            switch (targetRaw.ToLowerInvariant())
+            {
+                case "alya":
+                    CenterMasterFlyout.SetActiveChatTarget("Alya");
+                    break;
+                case "alice":
+                    CenterMasterFlyout.SetActiveChatTarget("Alice");
+                    break;
+                default:
+                    CenterMasterFlyout.AddConsoleMessage(
+                        "Konsole",
+                        "Unbekanntes Ziel für /call. Erlaubt sind: /call \"Alya\" oder /call \"Alice\".");
+                    break;
+            }
+
+            return true;
+        }
+
+        private async Task<string> SendConsoleChatMessageAsync(string target, string message)
+        {
+            var (moduleId, action) = target.ToLowerInvariant() switch
+            {
+                "alya" => ("nwos.alya", "alya.chat"),
+                "alice" => ("nwos.alice", "alice.chat"),
+                _ => throw new ArgumentException("Nur Alya und Alice sind als Chat-Ziel freigegeben.", nameof(target)),
+            };
+
+            if (!_consoleChatHistory.TryGetValue(target, out var history))
+            {
+                history = new List<ConsoleChatTurn>();
+                _consoleChatHistory.Add(target, history);
+            }
+
+            if (message.Length > 4000)
+            {
+                throw new ArgumentException("Nachrichten dürfen höchstens 4000 Zeichen lang sein.", nameof(message));
+            }
+
+            history.Add(new ConsoleChatTurn("user", message));
+            if (history.Count > 20)
+            {
+                history.RemoveRange(0, history.Count - 20);
+            }
+
+            using var response = await _cardinal.CallAsync(
+                moduleId,
+                action,
+                new
+                {
+                    messages = history.Select(turn => new { role = turn.Role, content = turn.Content }).ToArray(),
+                },
+                PermissionScope.NetworkGeneral);
+
+            if (response is null)
+            {
+                history.RemoveAt(history.Count - 1);
+                throw new InvalidOperationException(
+                    _cardinal.LastError ?? "OpenAI-Chat konnte nicht erreicht werden.");
+            }
+
+            if (!response.RootElement.TryGetProperty("reply", out var replyElement)
+                || replyElement.ValueKind != JsonValueKind.String
+                || string.IsNullOrWhiteSpace(replyElement.GetString()))
+            {
+                history.RemoveAt(history.Count - 1);
+                throw new InvalidDataException("Die KI-Antwort enthält keinen Nachrichtentext.");
+            }
+
+            var reply = replyElement.GetString()!;
+            history.Add(new ConsoleChatTurn("assistant", reply));
+            return reply;
         }
 
         private async Task ExecuteWhitelistedConsoleActionAsync(AllowedConsoleAction action)

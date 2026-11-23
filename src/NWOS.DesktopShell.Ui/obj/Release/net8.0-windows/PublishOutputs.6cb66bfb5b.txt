@@ -30,6 +30,7 @@ C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\Microsoft.Extensions.Logging.Event
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\Microsoft.Extensions.Options.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\Microsoft.Extensions.Primitives.dll
+C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.AI.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Alice.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Alya.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Cardinal.dll
@@ -45,6 +46,7 @@ C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Contracts.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Ipc.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.DesktopShell.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Core.pdb
+C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.AI.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Alice.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Alya.pdb
 C:\Users\noahj\AppData\Local\Programs\NWOS\Ui\NWOS.Cardinal.pdb

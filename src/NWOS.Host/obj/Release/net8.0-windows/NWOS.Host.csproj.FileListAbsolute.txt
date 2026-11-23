@@ -67,3 +67,5 @@ C:\NWOS\NWOS\src\NWOS.Host\obj\Release\net8.0-windows\refint\NWOS.Host.dll
 C:\NWOS\NWOS\src\NWOS.Host\obj\Release\net8.0-windows\NWOS.Host.pdb
 C:\NWOS\NWOS\src\NWOS.Host\obj\Release\net8.0-windows\NWOS.Host.genruntimeconfig.cache
 C:\NWOS\NWOS\src\NWOS.Host\obj\Release\net8.0-windows\ref\NWOS.Host.dll
+C:\NWOS\NWOS\src\NWOS.Host\bin\Release\net8.0-windows\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.Host\bin\Release\net8.0-windows\NWOS.AI.pdb

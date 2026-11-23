@@ -1,4 +1,5 @@
 using System.Text.Json;
+using NWOS.AI;
 using NWOS.Contracts;
 
 namespace NWOS.Alice;
@@ -31,6 +32,7 @@ public sealed class AliceModule : IModule, IDisposable
     private readonly BurstDetector _burstDetector = new();
     private readonly SecurityAuditLog _auditLog;
     private readonly QuarantineService _quarantine;
+    private readonly OpenAiChatClient _chatClient;
 
     private FileSystemWatcher? _watcher;
     private bool _watcherActive;
@@ -40,11 +42,15 @@ public sealed class AliceModule : IModule, IDisposable
     // damit sie bei Bedarf (Abschnitt 8) leicht überprüft/erweitert werden kann.
     private static readonly IReadOnlySet<string> AutoQuarantineRuleIds = new HashSet<string> { "double-extension-executable" };
 
-    public AliceModule(string watchedDirectory, string stateDirectory)
+    public AliceModule(
+        string watchedDirectory,
+        string stateDirectory,
+        OpenAiChatClient? chatClient = null)
     {
         _watchedDirectory = watchedDirectory;
         _auditLog = new SecurityAuditLog(stateDirectory);
         _quarantine = new QuarantineService(stateDirectory);
+        _chatClient = chatClient ?? new OpenAiChatClient();
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
@@ -170,6 +176,17 @@ public sealed class AliceModule : IModule, IDisposable
 
             "alice.manualScan" => await RunManualScanAsync(cancellationToken),
 
+            "alice.chat" => new
+            {
+                reply = await _chatClient.CompleteAsync(
+                    "Du bist Alice, die Sicherheitsassistentin von NWOS. Antworte auf Deutsch, sachlich und umsichtig. " +
+                    "Du kannst nur allgemeine Sicherheitsfragen beantworten. Du hast keinen Zugriff auf Dateien, " +
+                    "Systemeinstellungen oder Scan-Aktionen und darfst nicht behaupten, einen Scan oder eine " +
+                    "Systemaktion ausgeführt zu haben. Für echte Scans nutze der Benutzer die separate Scan-Funktion.",
+                    ReadChatMessages(root),
+                    cancellationToken),
+            },
+
             _ => throw new NotSupportedException($"Unbekannter MessageType '{message.MessageType}' für {ModuleId}."),
         };
 
@@ -181,6 +198,21 @@ public sealed class AliceModule : IModule, IDisposable
             MessageType = $"{message.MessageType}.result",
             PayloadJson = JsonSerializer.Serialize(result, NwosJson.ResponseOptions),
         };
+    }
+
+    private static IReadOnlyList<OpenAiChatMessage> ReadChatMessages(JsonElement root)
+    {
+        if (!root.TryGetProperty("messages", out var messages)
+            || messages.ValueKind != JsonValueKind.Array)
+        {
+            throw new ArgumentException("Chat-Payload muss ein messages-Array enthalten.");
+        }
+
+        return messages.EnumerateArray()
+            .Select(item => new OpenAiChatMessage(
+                item.GetProperty("role").GetString() ?? string.Empty,
+                item.GetProperty("content").GetString() ?? string.Empty))
+            .ToArray();
     }
 
     private async Task<object> HandleRestoreAsync(JsonElement root, CancellationToken cancellationToken)

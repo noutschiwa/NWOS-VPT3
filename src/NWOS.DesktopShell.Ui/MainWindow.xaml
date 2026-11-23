@@ -131,7 +131,7 @@
 
         <!-- ZONE 1: Widgets & Alya -->
         <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="8,0" VerticalAlignment="Center">
-            <Button Content="🤖 Alya" Click="AlyaButton_Click" Style="{StaticResource TaskbarButtonStyle}"/>
+            <Button x:Name="AlyaButton" Content="🤖 Alya" Click="AlyaButton_Click" Style="{StaticResource TaskbarButtonStyle}"/>
             <ItemsControl x:Name="WidgetsItemsControl" ItemsSource="{Binding Zone1ViewModel.Widgets}" Visibility="Collapsed"/>
             <ComboBox x:Name="WidgetTypeComboBox" Width="0" Height="0" Visibility="Collapsed"/>
         </StackPanel>
@@ -157,7 +157,8 @@
                              GotFocus="SearchBox_GotFocus"
                              PreviewKeyDown="SearchBox_PreviewKeyDown" />
 
-                    <Button Content="🔍 Alice"
+                    <Button x:Name="AliceSearchButton"
+                            Content="🔍 Alice"
                             Click="AliceSearchButton_Click"
                             Style="{StaticResource TaskbarButtonStyle}"
                              ToolTip="Alice-Suche; ohne Suchbegriff startet Alice einen manuellen Sicherheits-Scan"

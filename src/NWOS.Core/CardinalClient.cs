@@ -25,9 +25,12 @@ namespace NWOS.DesktopShell.Ui
                     JsonSerializer.Serialize(payload),
                     scope);
 
-                var requestTimeout = action == "alice.manualScan"
-                    ? TimeSpan.FromMinutes(10)
-                    : TimeSpan.FromSeconds(30);
+                var requestTimeout = action switch
+                {
+                    "alice.manualScan" => TimeSpan.FromMinutes(10),
+                    "alya.chat" or "alice.chat" => TimeSpan.FromMinutes(2),
+                    _ => TimeSpan.FromSeconds(30),
+                };
                 ModuleMessageResult result = await _ipcClient.SendAsync(message, cancellationToken, requestTimeout);
                 if (result.Outcome != ModuleMessageOutcome.Delivered || result.Response is null)
                 {

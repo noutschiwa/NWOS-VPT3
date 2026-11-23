@@ -1,0 +1,12 @@
+C:\NWOS\NWOS\src\NWOS.AI\bin\Debug\net8.0\NWOS.AI.deps.json
+C:\NWOS\NWOS\src\NWOS.AI\bin\Debug\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.AI\bin\Debug\net8.0\NWOS.AI.pdb
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\NWOS.AI.GeneratedMSBuildEditorConfig.editorconfig
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\NWOS.AI.AssemblyInfoInputs.cache
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\NWOS.AI.AssemblyInfo.cs
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\NWOS.AI.csproj.CoreCompileInputs.cache
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\NWOS.AI.sourcelink.json
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\refint\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\NWOS.AI.pdb
+C:\NWOS\NWOS\src\NWOS.AI\obj\Debug\net8.0\ref\NWOS.AI.dll

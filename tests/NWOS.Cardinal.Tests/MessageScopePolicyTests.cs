@@ -6,10 +6,12 @@ namespace NWOS.Cardinal.Tests;
 
 public class MessageScopePolicyTests
 {
-    private static PermissionManager CreateWithExternalUi()
+    private static PermissionManager CreateWithExternalUi(bool allowNetwork = false)
     {
         var registry = new ModuleRegistry();
         registry.GrantExternalScope("external.ipc", PermissionScope.FileSystemRead | PermissionScope.FileSystemWrite);
+        if (allowNetwork)
+            registry.GrantExternalScope("external.ipc", PermissionScope.NetworkGeneral);
         return new PermissionManager(registry, NullLogger<PermissionManager>.Instance);
     }
 
@@ -45,10 +47,24 @@ public class MessageScopePolicyTests
     }
 
     [Theory]
+    [InlineData("alya.chat")]
+    [InlineData("alice.chat")]
+    public void Chat_requires_network_scope_for_external_ui(string messageType)
+    {
+        var permissions = CreateWithExternalUi();
+        var message = ModuleMessage.Create("external.ipc", "nwos.alya", messageType, "{}", PermissionScope.None);
+
+        Assert.False(permissions.Evaluate(message).Allowed);
+        Assert.True(CreateWithExternalUi(allowNetwork: true).Evaluate(message).Allowed);
+        Assert.Equal(PermissionScope.NetworkGeneral, MessageScopePolicy.MinimumScopeFor(messageType));
+    }
+
+    [Theory]
     [InlineData("box.create", PermissionScope.FileSystemWrite)]
     [InlineData("marc.closeApp", PermissionScope.ProcessControl)]
     [InlineData("alice.restore", PermissionScope.SystemChange)]
     [InlineData("alya.greet", PermissionScope.None)]
+    [InlineData("alice.scan", PermissionScope.None)]
     [InlineData("unbekannt.typ", PermissionScope.None)]
     public void Policy_returns_expected_minimum(string messageType, PermissionScope expected)
     {

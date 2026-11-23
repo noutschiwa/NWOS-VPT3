@@ -406,8 +406,17 @@
           }
         }
       },
+      "NWOS.AI/1.0.0": {
+        "runtime": {
+          "NWOS.AI.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "NWOS.Alice/1.0.0": {
         "dependencies": {
+          "NWOS.AI": "1.0.0",
           "NWOS.Contracts": "1.0.0"
         },
         "runtime": {
@@ -419,6 +428,7 @@
       },
       "NWOS.Alya/1.0.0": {
         "dependencies": {
+          "NWOS.AI": "1.0.0",
           "NWOS.Contracts": "1.0.0",
           "NWOS.Settings": "1.0.0"
         },
@@ -433,7 +443,10 @@
         "dependencies": {
           "Microsoft.Extensions.Hosting": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
-          "NWOS.Contracts": "1.0.0"
+          "NWOS.Alice": "1.0.0",
+          "NWOS.Alya": "1.0.0",
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.Marc": "1.0.0"
         },
         "runtime": {
           "NWOS.Cardinal.dll": {
@@ -731,6 +744,11 @@
       "sha512": "sha512-fdYxcRjQqTTacKId/2IECojlDSFvp7LP5N78+0z/xH7v/Tuw5ZAxu23Y6PTCRinqyu2ePx+Gn1098NC6jM6d+A==",
       "path": "system.diagnostics.eventlog/8.0.0",
       "hashPath": "system.diagnostics.eventlog.8.0.0.nupkg.sha512"
+    },
+    "NWOS.AI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "NWOS.Alice/1.0.0": {
       "type": "project",

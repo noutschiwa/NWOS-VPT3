@@ -44,3 +44,5 @@ C:\NWOS\NWOS\src\NWOS.Alice\obj\Debug\net8.0\NWOS.Alice.dll
 C:\NWOS\NWOS\src\NWOS.Alice\obj\Debug\net8.0\refint\NWOS.Alice.dll
 C:\NWOS\NWOS\src\NWOS.Alice\obj\Debug\net8.0\NWOS.Alice.pdb
 C:\NWOS\NWOS\src\NWOS.Alice\obj\Debug\net8.0\ref\NWOS.Alice.dll
+C:\NWOS\NWOS\src\NWOS.Alice\bin\Debug\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\src\NWOS.Alice\bin\Debug\net8.0\NWOS.AI.pdb
