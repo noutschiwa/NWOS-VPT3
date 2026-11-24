@@ -1,95 +1,112 @@
-NWOS (Next-Gen Windows Operating Shell)
+# NWOS (Next-Gen Windows Operating Shell)
 
-NWOS ist eine modulare, KI-gestützte Desktop-Shell- und Systemumgebung auf Basis von .NET 8 und WPF. Sie ersetzt oder erweitert die klassische Desktop-Oberfläche durch eine moderne Taskleisten-Architektur, interaktive Schnellzugriffs-Flyouts, einen zentralen App-Hub sowie integrierte KI-Assistenten.
+NWOS ist eine modulare Desktop-Shell und Systemumgebung für Windows. Die Oberfläche basiert auf .NET 8 und WPF; Cardinal stellt die Hintergrunddienste und die IPC-Kommunikation zwischen den Modulen bereit.
 
-🚀 Aktueller Entwicklungsstand & Features
+## 1. Tutorial: installieren, bedienen und zu Windows zurückkehren
 
-1. Modulare Taskleiste (NWOS.DesktopShell.Ui)
+### Installation (empfohlener Weg)
 
-Die Taskleiste ist in fünf logische Zonen unterteilt und nutzt eigenständige WPF-UserControl-Komponenten im Namespace NWOS.DesktopShell.Ui.Button:
+1. Das **vollständige NWOS-Projekt** aus dem Repository in einen lokalen Ordner entpacken. `NWOS-Setup.bat` und `Install-NWOS.ps1` müssen neben `NWOS.sln` liegen.
+2. `NWOS-Setup.bat` starten. Das Skript benötigt Windows und das .NET 8 SDK oder neuer. Falls das SDK fehlt, bietet der Installer die Installation über `winget` an.
+3. Die Fragen im Installer beantworten. Standardmäßig werden NWOS für den aktuellen Benutzer nach `%LOCALAPPDATA%\Programs\NWOS` installiert, der Cardinal-Kern bei der Anmeldung gestartet und NWOS anschließend gestartet. Administratorrechte sind für die normale Installation nicht erforderlich.
+4. NWOS später über die Desktop-Verknüpfung **NWOS** oder über das Startmenü starten. Die installierte Startdatei lautet `%LOCALAPPDATA%\Programs\NWOS\Start-NWOS.bat`.
 
-Workspace-Flyout (WorkspaceFlyout): Schneller Wechsel zwischen virtuellen Desktops (WS1) sowie Erstellung neuer Arbeitsbereiche direkt über ein Hover-Popup.
+Der Installer **ersetzt die Windows-Shell nicht automatisch**. NWOS läuft zunächst als normale Anwendung zusätzlich zum Windows-Desktop. Das ist der empfohlene Einstieg. Erst wenn die Oberfläche getestet wurde und ein Rückweg bereitsteht, sollte die optionale Shell-Registrierung erwogen werden.
 
-Master Control Center (MasterFlyout): Zentrales System-Dashboard mit direktem Zugriff auf Windows-PC-Einstellungen (ms-settings:), NWOS-Konfigurationen sowie gesicherten Power-Optionen (Neustart und Herunterfahren).
+Für eine Installation mit anschließender ausdrücklicher Abfrage zur Registrierung als Windows-Shell kann im Projektordner PowerShell verwendet werden:
 
-App-Hub (Zentrum): Interaktiver Bereich für angeheftete Anwendungen mit vollständiger Drag & Drop-Unterstützung zum Neuanordnen der Icons.
+```powershell
+.\Install-NWOS.ps1 -OfferShellRegistration
+```
 
-Audio- & Gerätesteuerung (AudioFlyout): Schnellschalter für Mikrofon, Lautsprecher und Kamera sowie individuelle Lautstärkeregler für laufende Anwendungen.
+Die Registrierung betrifft nur das aktuelle Benutzerkonto. Der Installer verlangt eine getippte Bestätigung; die Umstellung wird erst bei der nächsten Windows-Anmeldung wirksam. Vorher in einer virtuellen Maschine testen.
 
-Benachrichtigungs-Center (InfoFlyout): Vertikaler Feed für System- und KI-Meldungen inklusive Funktion zum Leeren der Historie.
+### Orientierung in der NWOS-Taskleiste
 
-2. Integrierte Dienste & KI-Module
+- **Master-Button links:** Öffnet das zentrale Master-Menü. Dort findest du Windows-Einstellungen, NWOS-Einstellungen, Energieeinstellungen und die Funktionen zum Neustarten, Herunterfahren oder Zurückwechseln zu Windows.
+- **Arbeitsflächen-Button:** Öffnet per Hover die Steuerung für virtuelle Desktops; dort lassen sich Arbeitsflächen wechseln, erstellen oder schließen.
+- **Suche und Alice:** Das Suchfeld durchsucht Apps und Einstellungen. Der Alice-Button startet die Suche beziehungsweise ohne Suchbegriff einen manuellen Sicherheits-Scan.
+- **App-Hub in der Mitte:** Enthält angeheftete Apps. Apps lassen sich per Drag & Drop sortieren; Windows-Taskleisten-Verknüpfungen werden regelmäßig in den App-Hub übernommen. Über das Kontextmenü kannst du Apps starten, schließen oder aus dem Hub entfernen.
+- **Rechte Taskleistenbereiche:** Bieten Audio-/Gerätesteuerung, Benachrichtigungen sowie Uhrzeit und Kalender.
+- **Master-Menü / Funktionskanal:** Die Administrationskonsole wird über `/admin access <code>` geöffnet. Innerhalb des Kanals sind unter anderem `status`, `events` und `scan` verfügbar. Mit `/call "Alya"` oder `/call "Alice"` wählst du einen Chat.
 
-Alya & Alice (NWOS.Alya, NWOS.Alice): KI-Assistenten und semantische Desktop-Suche direkt in der Taskleiste eingebunden.
+Die Taskleiste fährt ein, wenn der Mauszeiger sie verlässt, und erscheint wieder, wenn der Zeiger den unteren Bildschirmrand berührt. Die **Windows-Taste** öffnet oder schließt das NWOS-Mastermenü; andere Windows-Tastenkombinationen wie Win+E werden weitergereicht.
 
-Marc (NWOS.Marc): Systemüberwachung und Hintergrund-Automatisierung.
+### Von NWOS zurück zu Windows wechseln
 
-Cardinal IPC (NWOS.Cardinal, NWOS.Ipc): Interprozesskommunikation (Named Pipes) zur stabilen Vernetzung zwischen Core-Diensten und der Benutzeroberfläche.
+- **Sofort zurück zum Windows-Desktop:** Master-Menü öffnen und **NWOS herunterfahren** wählen. Nach der Sicherheitsabfrage startet NWOS den Windows-Explorer und beendet die NWOS-Oberfläche. Dabei wird der PC nicht heruntergefahren.
+- **Dauerhaft wieder die Windows-Shell verwenden:** Wenn NWOS als Windows-Shell registriert wurde, bleibt diese Einstellung für die nächste Anmeldung bestehen. In Windows ein Terminal öffnen und den folgenden Befehl ausführen:
 
-📁 Projektstruktur
+  ```powershell
+  & "$env:LOCALAPPDATA\Programs\NWOS\Cardinal\NWOS.Bootstrap.Windows.exe" restore-shell
+  ```
 
+  Danach abmelden und erneut anmelden (oder Windows neu starten). Explorer ist dann wieder als Windows-Shell eingetragen. Das Zurücksetzen kann auch vor dem nächsten Login aus einer Eingabeaufforderung erfolgen.
+
+- **NWOS deinstallieren:** `NWOS-Uninstall.bat` im Projektordner starten oder in Windows unter **Einstellungen > Apps** NWOS deinstallieren. Das Deinstallationsskript stellt eine registrierte Windows-Shell zuerst auf Explorer zurück. NWOS-Daten unter `%LOCALAPPDATA%\NWOS` bleiben standardmäßig erhalten; ihre Löschung ist optional und umfasst auch die Alice-Quarantäne.
+
+### OpenAI-Chat konfigurieren
+
+Für Alyas und Alices KI-Chat `OPENAI_API_KEY` als Benutzer- oder Systemumgebungsvariable setzen und NWOS neu starten. Optional kann `OPENAI_MODEL` gesetzt werden; Standard ist `gpt-4o-mini`. Den API-Key nicht in Quellcode, Konfigurationsdateien oder Commits speichern. Chatnachrichten werden zur Verarbeitung an die OpenAI-API gesendet; abhängig vom OpenAI-Konto können Kosten entstehen. Ohne API-Key bleiben lokale Alice-Funktionen wie Ereignisse und Sicherheits-Scan verfügbar.
+
+## 2. Aktueller Funktionsumfang
+
+### Desktop-Shell und Taskleiste
+
+- WPF-Taskleiste mit modularen Bereichen für Alya, virtuelle Desktops, Suche, App-Hub, Master-Menü, Audio, Benachrichtigungen und Uhr/Kalender.
+- Auto-Hide bei inaktiver Maus und Einfahren bei Berührung des unteren Bildschirmrands.
+- Windows-Taste als Umschalter für das Master-Menü; weitere Windows-Tastenkombinationen werden weitergereicht.
+- App-Hub mit gespeicherten App-Verknüpfungen, Drag & Drop, Laufzeitindikator und Kontextmenü. Verknüpfungen aus der Windows-Taskleiste werden aus dem benutzerspezifischen TaskBar-Ordner importiert.
+- Master-Menü mit Suche, NWOS-Einstellungen, Windows- und Energieeinstellungen, Admin-Funktionskanal, Neustart, Herunterfahren und **NWOS herunterfahren** zum sofortigen Wechsel zum Windows-Desktop.
+- Shell-Registrierung und Wiederherstellung sind als explizite Bootstrap-Befehle verfügbar; die Registrierung erfolgt nicht automatisch bei der Standardinstallation.
+
+### Cardinal-Module und KI
+
+- **Cardinal:** Verwaltet Module, Berechtigungen und die Named-Pipe-IPC zwischen Diensten und UI.
+- **Alya:** Benutzerkontakt und optionaler OpenAI-Chat.
+- **Alice:** Suche, Ereignisse und manuell auslösbarer Sicherheits-Scan.
+- **Marc, Widgets und System Center:** Weitere Modul- und Systemfunktionen, abhängig von der jeweiligen Konfiguration.
+
+## 3. Entwicklung und manueller Start
+
+### Voraussetzungen
+
+- Windows 10 oder Windows 11, x64
+- .NET 8 SDK oder neuer
+- Optional: Visual Studio 2022 oder JetBrains Rider
+
+Im Projektstammverzeichnis bauen:
+
+```powershell
+dotnet build NWOS.sln
+```
+
+Die UI direkt starten:
+
+```powershell
+dotnet run --project src\NWOS.DesktopShell.Ui\NWOS.DesktopShell.Ui.csproj
+```
+
+Für den normalen installierten Betrieb den Installer beziehungsweise `Start-NWOS.bat` verwenden, damit Cardinal und UI gemeinsam gestartet werden.
+
+### Relevante Projektbereiche
+
+```text
 NWOS/
 ├── src/
-│   ├── NWOS.DesktopShell.Ui/       # WPF-Benutzeroberfläche & Taskleiste
-│   │   ├── NWOS.Button/            # Modulare Flyout-Steuerelemente (WS1, Master, Audio, Info)
-│   │   └── MainWindow.xaml         # Hauptfenster & 5-Zonen-Layout
-│   ├── NWOS.DesktopShell/          # Shell-Logik & ViewModels
-│   ├── NWOS.Core/                  # Kernkomponenten & IPC-Server
-│   ├── NWOS.Cardinal/              # IPC-Dispatcher
-│   ├── NWOS.Alya/                  # KI-Assistent Alya
-│   ├── NWOS.Alice/                 # Such- & Assistenzmodul Alice
-│   ├── NWOS.Marc/                  # System-Monitoring
+│   ├── NWOS.DesktopShell.Ui/       # WPF-Oberfläche und Taskleiste
+│   ├── NWOS.Bootstrap.Windows/     # Einstiegspunkt, Shell- und Startbefehle
+│   ├── NWOS.Host/                  # Cardinal-Host
+│   ├── NWOS.Ipc/                   # Named-Pipe-Kommunikation
+│   ├── NWOS.SystemCenter/          # System Center
 │   ├── NWOS.Settings/              # Konfigurationsverwaltung
-│   ├── NWOS.Widgets/               # Desktop-Widgets
-│   ├── NWOS.WindowsIntegration/    # Windows-API-Anbindungen
-│   └── NWOS.Host/                  # Einstiegspunkt & Prozess-Host
-└── tests/                          # Unit- und Integrationstests (xUnit)
-
-
-🛠️ Voraussetzungen & Installation
-
-Voraussetzungen
-
-Betriebssystem: Windows 10 / Windows 11 (x64)
-
-SDK: .NET 8.0 SDK (inkl. Desktop Runtime für WPF)
-
-IDE (optional): Visual Studio 2022 oder JetBrains Rider
-
-Projekt kompilieren (Build)
-
-Öffne ein Terminal (PowerShell) im Stammverzeichnis des Repositories (C:\NWOS\NWOS).
-
-Führe den Build-Befehl aus:
-
-dotnet build
-
-
-Anwendung starten
-
-Starte die Desktop-Shell über das UI- oder Host-Projekt:
-
-dotnet run --project src/NWOS.DesktopShell.Ui/NWOS.DesktopShell.Ui.csproj
-
-OpenAI-Chat konfigurieren
-
-Für den Chat im Master-Menü muss `OPENAI_API_KEY` als Benutzer- oder
-Systemumgebungsvariable gesetzt werden. Optional kann `OPENAI_MODEL` gesetzt
-werden; Standard ist `gpt-4o-mini`. Danach NWOS/den Cardinal-Host neu starten.
-Den API-Key niemals in Quellcode, Konfigurationsdateien oder Commits speichern.
-Chatnachrichten werden zur Verarbeitung an die OpenAI-API gesendet; dabei können
-je nach OpenAI-Konto Kosten anfallen.
-
-Im Admin-Funktionskanal `/call "Alya"` oder `/call "Alice"` eingeben, um den
-jeweiligen Chat zu wählen. Ohne API-Key bleiben die lokalen Alice-Funktionen
-(Ereignisse und Scan) verfügbar, der KI-Chat meldet die fehlende Konfiguration.
-Chatnachrichten werden je KI getrennt und auf die letzten zehn Nachrichten
-begrenzt; der Client beschränkt zusätzlich die gesamte Eingabegröße. Die UI
-erhält den erforderlichen Netzwerkzugriff nur für `alya.chat` und `alice.chat`.
-
-
-⚠️ Bekannte Architektur-Hinweise (WPF)
-
-Namespace-Konsistenz: Alle Flyout-Komponenten liegen physisch unter src/NWOS.DesktopShell.Ui/NWOS.Button/, verwenden jedoch den bereinigten Namespace NWOS.DesktopShell.Ui.Button, um doppelte Namensraum-Verschachtelungen (CS0234) zu vermeiden.
-
-XAML-Struktur: Jedes Flyout ist als eigenständiges UserControl mit genau einem umschließenden <Grid>-Root-Container aufgebaut.
+│   └── NWOS.WindowsIntegration/    # Windows-Integration
+├── NWOS-KISysteme/                 # KI- und Cardinal-Projekte
+│   ├── NWOS.Cardinal/              # Modulregistrierung, Routing und Berechtigungen
+│   ├── NWOS.Alya/                  # Alya-Modul
+│   ├── NWOS.Alice/                 # Alice-Modul
+│   └── NWOS.Marc/                  # Marc-Modul
+├── tests/                           # xUnit-Unit- und Integrationstests
+├── Install-NWOS.ps1                # Installation aus dem Quellcode
+└── Uninstall-NWOS.ps1              # Deinstallation
+```
