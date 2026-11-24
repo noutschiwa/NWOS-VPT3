@@ -37,6 +37,7 @@
                 <Image x:Name="MasterBackgroundImage"
                        Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Master-Background.jpeg"
                        Stretch="UniformToFill"
+                       Visibility="Visible"
                        IsHitTestVisible="False"
                        ClipToBounds="True" />
 
@@ -44,6 +45,7 @@
                        Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Flyout-Festung.jpeg"
                        Width="96"
                        Height="64"
+                       Visibility="Visible"
                        Stretch="Uniform"
                        IsHitTestVisible="False"
                        RenderTransformOrigin="0.5,0.5">

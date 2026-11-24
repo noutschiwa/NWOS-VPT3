@@ -84,19 +84,14 @@ public partial class MasterFlyout : UserControl
         MasterPopup.IsOpen = true;
         OverlayRoot.UpdateLayout();
 
-        var popupSource = PresentationSource.FromVisual(OverlayRoot)
-            ?? throw new InvalidOperationException("Das Master-Menü-Popup konnte nicht initialisiert werden.");
-        var screenToPopup = popupSource.CompositionTarget.TransformFromDevice;
-        var taskbarTopOnScreen = taskbarWindow.PointToScreen(new Point(0, 0));
-        var taskbarTopInPopup = screenToPopup.Transform(taskbarTopOnScreen).Y;
-        _menuAvailableHeight = Math.Clamp(taskbarTopInPopup, 0, OverlayRoot.Height);
+        _menuAvailableHeight = Math.Clamp(taskbarWindow.Top, 0, screenHeight);
 
-        var anchorPoint = screenToPopup.Transform(MasterToggleButton.PointToScreen(
-            new Point(MasterToggleButton.ActualWidth / 2, MasterToggleButton.ActualHeight / 2)));
+        var anchorPoint = MasterToggleButton.TransformToAncestor(taskbarWindow).Transform(
+            new Point(MasterToggleButton.ActualWidth / 2, MasterToggleButton.ActualHeight / 2));
         _menuLeft = Math.Clamp(
-            anchorPoint.X - MenuPanel.Width / 2,
+            taskbarWindow.Left + anchorPoint.X - MenuPanel.Width / 2,
             12,
-            Math.Max(12, screenWidth - MenuPanel.Width - 12));
+            Math.Max(12, OverlayRoot.Width - MenuPanel.Width - 12));
 
         var menuTop = PositionMenuAtTaskbar(_menuAvailableHeight);
         PositionFortressAndBackground(menuTop, _menuAvailableHeight);

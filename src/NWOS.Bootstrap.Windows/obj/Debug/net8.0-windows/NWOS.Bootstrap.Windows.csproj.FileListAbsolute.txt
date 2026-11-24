@@ -193,11 +193,7 @@ C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\Microsoft.Exten
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\Microsoft.Extensions.Options.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.dll
-C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\System.CodeDom.dll
-C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\System.Management.dll
-C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
-C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Management.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Alice.dll
 C:\NWOS\NWOS\src\NWOS.Bootstrap.Windows\bin\Debug\net8.0-windows\NWOS.Alya.dll

@@ -17,6 +17,7 @@ namespace NWOS.Alya;
 ///   - "alya.setTone"        { "tone": "Sachlich" | "Freundlich" }
 ///   - "alya.getTone"        (kein Payload nötig)
 ///   - "alya.chat"           { "messages": [{ "role": "user|assistant", "content": "..." }] }
+///   - "chat.status"         (kein Payload nötig)
 /// </summary>
 public sealed class AlyaModule : IModule
 {
@@ -61,6 +62,12 @@ public sealed class AlyaModule : IModule
         {
             "alya.greet" => new { text = _greetingBuilder.BuildGreeting(CurrentTone()) },
             "alya.statusReport" => await _statusReportBuilder.BuildAsync(cancellationToken),
+            "chat.status" => new
+            {
+                status = _started ? "ready" : "not_started",
+                moduleId = ModuleId,
+                displayName = DisplayName,
+            },
             "alya.setTone" => HandleSetTone(message.PayloadJson),
             "alya.getTone" => new { tone = CurrentTone().ToString() },
             "alya.chat" => new

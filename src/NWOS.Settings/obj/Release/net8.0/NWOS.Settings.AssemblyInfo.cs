@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Settings")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73b2fb3fa1d32f4377f3f00b24fc43e15c48c342")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e71b044b0c5fb8ed04092b526d061586e49ddeb")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Settings")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Settings")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

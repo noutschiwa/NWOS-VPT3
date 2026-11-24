@@ -74,6 +74,21 @@ public class AlyaModuleTests
     }
 
     [Fact]
+    public async Task Chat_status_returns_module_readiness()
+    {
+        var module = CreateSut(out _);
+        await module.StartAsync(CancellationToken.None);
+
+        var message = ModuleMessage.Create("nwos.cardinal", module.ModuleId, "chat.status", "{}", PermissionScope.None);
+        var response = await module.HandleMessageAsync(message, CancellationToken.None);
+
+        using var doc = JsonDocument.Parse(response!.PayloadJson);
+        Assert.Equal("ready", doc.RootElement.GetProperty("status").GetString());
+        Assert.Equal(module.ModuleId, doc.RootElement.GetProperty("moduleId").GetString());
+        Assert.Equal("chat.status.result", response.MessageType);
+    }
+
+    [Fact]
     public async Task Unknown_message_type_throws()
     {
         var module = CreateSut(out _);

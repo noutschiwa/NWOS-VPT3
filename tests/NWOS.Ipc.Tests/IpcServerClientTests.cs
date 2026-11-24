@@ -2,6 +2,8 @@ using System;
 using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
+using NWOS.Cardinal;
 using NWOS.Contracts;
 using Xunit;
 
@@ -100,6 +102,39 @@ public class IpcServerClientTests
 
         serverCts.Cancel();
         await SafeAwaitAsync(serverTask);
+    }
+
+    [Fact]
+    public async Task Server_routes_through_task_router_and_returns_a_response()
+    {
+        var pipeName = UniquePipeName();
+        var registry = new ModuleRegistry();
+        registry.GrantExternalScope(IpcDefaults.ExternalCallerIdentity, PermissionScope.FileSystemRead);
+        var permissions = new PermissionManager(registry, NullLogger<PermissionManager>.Instance);
+        var router = new TaskRouter(registry, permissions, NullLogger<TaskRouter>.Instance);
+        var server = new IpcServer(router, pipeName);
+        using var serverCts = new CancellationTokenSource();
+        var serverTask = server.RunAsync(serverCts.Token);
+
+        try
+        {
+            var request = ModuleMessage.Create(
+                "test-caller",
+                "nwos.missing",
+                "test.action",
+                "{}",
+                PermissionScope.FileSystemRead);
+            var result = await new IpcClient(pipeName: pipeName)
+                .SendAsync(request, CancellationToken.None);
+
+            Assert.Equal(ModuleMessageOutcome.Denied, result.Outcome);
+            Assert.Contains("nwos.missing", result.Reason);
+        }
+        finally
+        {
+            serverCts.Cancel();
+            await SafeAwaitAsync(serverTask);
+        }
     }
 
     [Fact]

@@ -492,38 +492,43 @@ namespace NWOS.DesktopShell.Ui
             if (AppIcons.Count == 0) return;
 
             var allProcesses = Process.GetProcesses();
-            var runningProcessNames = new HashSet<string>(
-                allProcesses.Select(p => p.ProcessName),
-                StringComparer.OrdinalIgnoreCase);
-
-            // Für explorer.exe prüfen, ob tatsächlich ein sichtbares Explorer-Fenster offen ist
-            bool hasOpenExplorerWindow = allProcesses.Any(p =>
-                p.ProcessName.Equals("explorer", StringComparison.OrdinalIgnoreCase) &&
-                p.MainWindowHandle != IntPtr.Zero &&
-                !string.IsNullOrWhiteSpace(p.MainWindowTitle));
-
-            foreach (var item in AppIcons)
+            try
             {
-                string processName = Path.GetFileNameWithoutExtension(item.ExecutablePath);
-                if (string.IsNullOrWhiteSpace(processName))
-                {
-                    item.IsRunning = false;
-                    continue;
-                }
+                var runningProcessNames = new HashSet<string>(
+                    allProcesses.Select(p => p.ProcessName),
+                    StringComparer.OrdinalIgnoreCase);
 
-                if (processName.Equals("explorer", StringComparison.OrdinalIgnoreCase))
+                // Für explorer.exe prüfen, ob tatsächlich ein sichtbares Explorer-Fenster offen ist
+                bool hasOpenExplorerWindow = allProcesses.Any(p =>
+                    p.ProcessName.Equals("explorer", StringComparison.OrdinalIgnoreCase) &&
+                    p.MainWindowHandle != IntPtr.Zero &&
+                    !string.IsNullOrWhiteSpace(p.MainWindowTitle));
+
+                foreach (var item in AppIcons)
                 {
-                    item.IsRunning = hasOpenExplorerWindow;
-                }
-                else
-                {
-                    item.IsRunning = runningProcessNames.Contains(processName);
+                    string processName = Path.GetFileNameWithoutExtension(item.ExecutablePath);
+                    if (string.IsNullOrWhiteSpace(processName))
+                    {
+                        item.IsRunning = false;
+                        continue;
+                    }
+
+                    if (processName.Equals("explorer", StringComparison.OrdinalIgnoreCase))
+                    {
+                        item.IsRunning = hasOpenExplorerWindow;
+                    }
+                    else
+                    {
+                        item.IsRunning = runningProcessNames.Contains(processName);
+                    }
                 }
             }
-
-            foreach (var p in allProcesses)
+            finally
             {
-                p.Dispose();
+                foreach (var p in allProcesses)
+                {
+                    p.Dispose();
+                }
             }
         }
 
@@ -729,60 +734,6 @@ namespace NWOS.DesktopShell.Ui
             }
         }
 
-        private static List<object> FindStartMenuShortcutActions(string query, int maxResults = 3)
-        {
-            var actions = new List<object>();
-            if (string.IsNullOrWhiteSpace(query)) return actions;
-
-            var folders = new[]
-            {
-                Environment.GetFolderPath(Environment.SpecialFolder.StartMenu),
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu)
-            };
-
-            var matches = new List<(string Name, string FullPath)>();
-
-            foreach (var folder in folders.Where(Directory.Exists))
-            {
-                try
-                {
-                    foreach (var file in Directory.EnumerateFiles(folder, "*.lnk", SearchOption.AllDirectories))
-                    {
-                        string name = Path.GetFileNameWithoutExtension(file);
-                        if (string.IsNullOrWhiteSpace(name) ||
-                            name.Contains("Uninstall", StringComparison.OrdinalIgnoreCase) ||
-                            name.Contains("Deinstall", StringComparison.OrdinalIgnoreCase))
-                            continue;
-
-                        if (name.Contains(query, StringComparison.OrdinalIgnoreCase))
-                        {
-                            matches.Add((name, file));
-                        }
-                    }
-                }
-                catch { }
-            }
-
-            foreach (var match in matches
-                .GroupBy(m => m.Name, StringComparer.OrdinalIgnoreCase)
-                .Select(g => g.First())
-                .OrderByDescending(m => m.Name.StartsWith(query, StringComparison.OrdinalIgnoreCase))
-                .ThenBy(m => m.Name.Length)
-                .Take(maxResults))
-            {
-                actions.Add(new
-                {
-                    label = $"🚀 {match.Name} starten",
-                    target = "",
-                    action = "",
-                    payload = "",
-                    launchPath = match.FullPath
-                });
-            }
-
-            return actions;
-        }
-
         private static List<SearchResultItem> LoadStartMenuShortcuts()
         {
             var results = new List<SearchResultItem>();
@@ -931,7 +882,6 @@ namespace NWOS.DesktopShell.Ui
 
         private void ApplyAliceResponseElement(JsonElement root)
         {
-            // Falls CallAsync das Ergebnis in einem Wrapper-Feld (z. B. "result" oder "response") verpackt hat:
             if (root.ValueKind == JsonValueKind.Object)
             {
                 if (root.TryGetProperty("result", out var resProp) && resProp.ValueKind == JsonValueKind.String)
@@ -995,7 +945,6 @@ namespace NWOS.DesktopShell.Ui
             }
             catch (JsonException)
             {
-                // Reiner Text-Fallback für bestehende Antworten wie "security.quickscan"
                 AliceResponseTextBlock.Text = rawText;
                 AliceActionButtonsControl.ItemsSource = null;
             }

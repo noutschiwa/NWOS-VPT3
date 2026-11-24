@@ -24,8 +24,6 @@ public class IpcServer
     private readonly ILogger<IpcServer>? _logger;
     private readonly SemaphoreSlim _clientSlots = new(MaxConcurrentClients, MaxConcurrentClients);
 
-    private IModuleMessenger ActiveMessenger => _taskRouter != null ? (IModuleMessenger)(object)_taskRouter : (_messenger ?? throw new InvalidOperationException("Kein Messenger konfiguriert."));
-
     public IpcServer(TaskRouter taskRouter, string pipeName, ILogger<IpcServer>? logger = null)
     {
         _taskRouter = taskRouter;
@@ -116,7 +114,7 @@ public class IpcServer
             var request = await PipeFraming.ReadJsonAsync<ModuleMessage>(stream, cancellationToken);
 
             var externalRequest = request with { SourceModuleId = IpcDefaults.ExternalCallerIdentity };
-            var result = await ActiveMessenger.SendAsync(externalRequest, cancellationToken);
+            var result = await SendAsync(externalRequest, cancellationToken);
 
             await PipeFraming.WriteJsonAsync(stream, result, cancellationToken);
         }
@@ -131,5 +129,36 @@ public class IpcServer
         {
             await stream.DisposeAsync();
         }
+    }
+
+    private Task<ModuleMessageResult> SendAsync(
+        ModuleMessage message,
+        CancellationToken cancellationToken)
+    {
+        if (_taskRouter is { } taskRouter)
+        {
+            return SendThroughRouterAsync(taskRouter, message, cancellationToken);
+        }
+
+        return (_messenger ?? throw new InvalidOperationException("Kein Messenger konfiguriert."))
+            .SendAsync(message, cancellationToken);
+    }
+
+    private static async Task<ModuleMessageResult> SendThroughRouterAsync(
+        TaskRouter taskRouter,
+        ModuleMessage message,
+        CancellationToken cancellationToken)
+    {
+        var result = await taskRouter.RouteAsync(message, cancellationToken);
+        var outcome = result.Outcome switch
+        {
+            RoutingOutcome.Delivered => ModuleMessageOutcome.Delivered,
+            RoutingOutcome.Denied => ModuleMessageOutcome.Denied,
+            RoutingOutcome.PendingUserConfirmation => ModuleMessageOutcome.PendingUserConfirmation,
+            RoutingOutcome.ModuleFailure => ModuleMessageOutcome.ModuleFailure,
+            _ => throw new InvalidOperationException($"Unbekanntes Routing-Ergebnis: {result.Outcome}."),
+        };
+
+        return new ModuleMessageResult(outcome, result.Response, result.Reason);
     }
 }

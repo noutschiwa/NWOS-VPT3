@@ -1,7 +1,7 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using NWOS.Contracts;
-using NWOS.DesktopShell.Ui;
 
 namespace NWOS.DesktopShell.Ui.Button;
 
@@ -36,13 +36,6 @@ public partial class AlyaButton : UserControl
 
         try
         {
-            MessageBox.Show(
-                owner,
-                "Alya AI-Interface wird initialisiert...",
-                "NWOS Alya Assistant",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
-
             using var response = await _cardinalClient.CallAsync(
                 "nwos.alya",
                 "chat.status",
