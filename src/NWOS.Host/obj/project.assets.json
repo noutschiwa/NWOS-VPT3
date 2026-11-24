@@ -714,7 +714,10 @@
         },
         "runtime": {
           "bin/placeholder/NWOS.ConfigSetup.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
       },
       "NWOS.Contracts/1.0.0": {
         "type": "project",
@@ -1895,23 +1898,23 @@
     },
     "NWOS.AI/1.0.0": {
       "type": "project",
-      "path": "../NWOS.AI/NWOS.AI.csproj",
-      "msbuildProject": "../NWOS.AI/NWOS.AI.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.AI/NWOS.AI.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.AI/NWOS.AI.csproj"
     },
     "NWOS.Alice/1.0.0": {
       "type": "project",
-      "path": "../NWOS.Alice/NWOS.Alice.csproj",
-      "msbuildProject": "../NWOS.Alice/NWOS.Alice.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Alice/NWOS.Alice.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Alice/NWOS.Alice.csproj"
     },
     "NWOS.Alya/1.0.0": {
       "type": "project",
-      "path": "../NWOS.Alya/NWOS.Alya.csproj",
-      "msbuildProject": "../NWOS.Alya/NWOS.Alya.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Alya/NWOS.Alya.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Alya/NWOS.Alya.csproj"
     },
     "NWOS.Cardinal/1.0.0": {
       "type": "project",
-      "path": "../NWOS.Cardinal/NWOS.Cardinal.csproj",
-      "msbuildProject": "../NWOS.Cardinal/NWOS.Cardinal.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Cardinal/NWOS.Cardinal.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Cardinal/NWOS.Cardinal.csproj"
     },
     "NWOS.ConfigSetup/1.0.0": {
       "type": "project",
@@ -1935,8 +1938,8 @@
     },
     "NWOS.Marc/1.0.0": {
       "type": "project",
-      "path": "../NWOS.Marc/NWOS.Marc.csproj",
-      "msbuildProject": "../NWOS.Marc/NWOS.Marc.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Marc/NWOS.Marc.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Marc/NWOS.Marc.csproj"
     },
     "NWOS.Settings/1.0.0": {
       "type": "project",
@@ -1998,14 +2001,17 @@
           "framework": "net8.0-windows7.0",
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alice\\NWOS.Alice.csproj"
+            "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alice\\NWOS.Alice.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alice\\NWOS.Alice.csproj"
             },
-            "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj"
+            "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alya\\NWOS.Alya.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alya\\NWOS.Alya.csproj"
             },
-            "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj"
+            "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Cardinal\\NWOS.Cardinal.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Cardinal\\NWOS.Cardinal.csproj"
+            },
+            "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Marc\\NWOS.Marc.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Marc\\NWOS.Marc.csproj"
             },
             "C:\\NWOS\\NWOS\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj": {
               "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.ConfigSetup\\NWOS.ConfigSetup.csproj"
@@ -2018,9 +2024,6 @@
             },
             "C:\\NWOS\\NWOS\\src\\NWOS.Ipc\\NWOS.Ipc.csproj": {
               "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Ipc\\NWOS.Ipc.csproj"
-            },
-            "C:\\NWOS\\NWOS\\src\\NWOS.Marc\\NWOS.Marc.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Marc\\NWOS.Marc.csproj"
             },
             "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj": {
               "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Settings\\NWOS.Settings.csproj"

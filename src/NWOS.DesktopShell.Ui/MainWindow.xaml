@@ -131,7 +131,7 @@
 
         <!-- ZONE 1: Widgets & Alya -->
         <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="8,0" VerticalAlignment="Center">
-            <Button x:Name="AlyaButton" Content="🤖 Alya" Click="AlyaButton_Click" Style="{StaticResource TaskbarButtonStyle}"/>
+            <btn:AlyaButton x:Name="AlyaAssistantButton" />
             <ItemsControl x:Name="WidgetsItemsControl" ItemsSource="{Binding Zone1ViewModel.Widgets}" Visibility="Collapsed"/>
             <ComboBox x:Name="WidgetTypeComboBox" Width="0" Height="0" Visibility="Collapsed"/>
         </StackPanel>

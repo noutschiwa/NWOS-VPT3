@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NWOS.Contracts\NWOS.Contracts.csproj" />
-    <ProjectReference Include="..\..\src\NWOS.Marc\NWOS.Marc.csproj" />
+    <ProjectReference Include="..\..\NWOS-KISysteme\NWOS.Marc\NWOS.Marc.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP1_0_OR_GREATER;NETCOREAPP1_1_OR_GREATER;NETCOREAPP2_0_OR_GREATER;NETCOREAPP2_1_OR_GREATER;NETCOREAPP2_2_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\App.xaml
-6-655082453
+7-1425435852
 
-191818064122
+2090880412
 23619115794
-MainWindow.xaml;NWOS.Button\Audio-Button\AudioFlyout.xaml;NWOS.Button\Info-Button\InfoFlyout.xaml;NWOS.Button\Master-Button\MasterFlyout.xaml;NWOS.Button\WS-Button\WorkspaceFlyout.xaml;NwosSettingsWindow.xaml;
+MainWindow.xaml;NWOS.Buttons\Alya-Button\AlyaButton.xaml;NWOS.Buttons\Audio-Button\AudioFlyout.xaml;NWOS.Buttons\Info-Button\InfoFlyout.xaml;NWOS.Buttons\Master-Button\MasterFlyout.xaml;NWOS.Buttons\WS-Button\WorkspaceFlyout.xaml;NwosSettingsWindow.xaml;
 
 False
 

@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup Condition="'$(NWOS_IntermediateRoot)' != ''">
+    <BaseIntermediateOutputPath>$(NWOS_IntermediateRoot)\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(NWOS_IntermediateRoot)\$(MSBuildProjectName)\bin\</BaseOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);obj\**;bin\**</DefaultItemExcludes>
+  </PropertyGroup>
+</Project>

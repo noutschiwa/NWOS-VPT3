@@ -172,6 +172,7 @@ namespace NWOS.DesktopShell.Ui
         {
             InitializeComponent();
             _cardinal = cardinal;
+            AlyaAssistantButton.Configure(_cardinal);
 
             // Bildschirmposition und Größe setzen (am unteren Bildschirmrand andocken)
             Width = SystemParameters.PrimaryScreenWidth;
@@ -1037,22 +1038,6 @@ namespace NWOS.DesktopShell.Ui
             }
         }
 
-        private async void AlyaButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MessageBox.Show("Alya AI-Interface wird initialisiert...", "NWOS Alya Assistant", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                var doc = await _cardinal.CallAsync("nwos.alya", "chat.status", new { }, PermissionScope.FileSystemRead);
-                string response = doc != null ? doc.RootElement.ToString() : "Alya Kern bereit.";
-
-                MessageBox.Show($"Alya Antwort:\n{response}", "NWOS Alya", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Alya konnte nicht erreicht werden: {ex.Message}", "NWOS Alya", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
         private void MonitorButton_Click(object sender, RoutedEventArgs e)
         {
             try

@@ -58,8 +58,20 @@ function Test-DotnetSdk {
 function Publish-Project([string]$Project, [string]$OutputDir) {
     Write-Host "  Baue $Project ..."
     if (Test-Path $OutputDir) { Remove-Item -Recurse -Force $OutputDir }
-    & dotnet publish (Join-Path $SourceRoot $Project) -c Release -o $OutputDir --nologo -v quiet
-    if ($LASTEXITCODE -ne 0) { throw "dotnet publish ist fuer '$Project' fehlgeschlagen (Exit-Code $LASTEXITCODE)." }
+    $buildId = [guid]::NewGuid().ToString('N')
+    $intermediateRoot = Join-Path $env:TEMP "NWOS\Build\$buildId"
+    try {
+        & dotnet publish (Join-Path $SourceRoot $Project) -c Release -o $OutputDir --nologo -v quiet "-p:NWOS_IntermediateRoot=$intermediateRoot"
+        if ($LASTEXITCODE -ne 0) { throw "dotnet publish ist fuer '$Project' fehlgeschlagen (Exit-Code $LASTEXITCODE)." }
+    } finally {
+        if (Test-Path $intermediateRoot) {
+            try {
+                Remove-Item -Recurse -Force $intermediateRoot
+            } catch {
+                Write-Warning "Zwischenordner konnte nicht entfernt werden: $intermediateRoot ($($_.Exception.Message))"
+            }
+        }
+    }
 }
 
 function New-Shortcut([string]$Path, [string]$Target, [string]$WorkDir, [string]$Description) {

@@ -17,7 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NWOS.Contracts\NWOS.Contracts.csproj" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
-    <ProjectReference Include="..\NWOS.Cardinal\NWOS.Cardinal.csproj" />
+    <ProjectReference Include="..\..\NWOS-KISysteme\NWOS.Cardinal\NWOS.Cardinal.csproj" />
   </ItemGroup>
 
 </Project>

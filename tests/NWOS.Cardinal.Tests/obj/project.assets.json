@@ -2630,23 +2630,23 @@
     },
     "NWOS.AI/1.0.0": {
       "type": "project",
-      "path": "../../src/NWOS.AI/NWOS.AI.csproj",
-      "msbuildProject": "../../src/NWOS.AI/NWOS.AI.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.AI/NWOS.AI.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.AI/NWOS.AI.csproj"
     },
     "NWOS.Alice/1.0.0": {
       "type": "project",
-      "path": "../../src/NWOS.Alice/NWOS.Alice.csproj",
-      "msbuildProject": "../../src/NWOS.Alice/NWOS.Alice.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Alice/NWOS.Alice.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Alice/NWOS.Alice.csproj"
     },
     "NWOS.Alya/1.0.0": {
       "type": "project",
-      "path": "../../src/NWOS.Alya/NWOS.Alya.csproj",
-      "msbuildProject": "../../src/NWOS.Alya/NWOS.Alya.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Alya/NWOS.Alya.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Alya/NWOS.Alya.csproj"
     },
     "NWOS.Cardinal/1.0.0": {
       "type": "project",
-      "path": "../../src/NWOS.Cardinal/NWOS.Cardinal.csproj",
-      "msbuildProject": "../../src/NWOS.Cardinal/NWOS.Cardinal.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Cardinal/NWOS.Cardinal.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Cardinal/NWOS.Cardinal.csproj"
     },
     "NWOS.Contracts/1.0.0": {
       "type": "project",
@@ -2655,8 +2655,8 @@
     },
     "NWOS.Marc/1.0.0": {
       "type": "project",
-      "path": "../../src/NWOS.Marc/NWOS.Marc.csproj",
-      "msbuildProject": "../../src/NWOS.Marc/NWOS.Marc.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Marc/NWOS.Marc.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Marc/NWOS.Marc.csproj"
     },
     "NWOS.Settings/1.0.0": {
       "type": "project",
@@ -2701,8 +2701,8 @@
           "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj": {
-              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Cardinal\\NWOS.Cardinal.csproj"
+            "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Cardinal\\NWOS.Cardinal.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Cardinal\\NWOS.Cardinal.csproj"
             },
             "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
               "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"

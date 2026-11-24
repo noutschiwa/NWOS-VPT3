@@ -33,11 +33,7 @@ C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\Microsoft.Extensions.Logging
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\Microsoft.Extensions.Options.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\Microsoft.Extensions.Primitives.dll
-C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\System.CodeDom.dll
-C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\System.Diagnostics.EventLog.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\System.Management.dll
-C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
-C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\runtimes\win\lib\net8.0\System.Management.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.AI.dll
 C:\Users\noahj\AppData\Local\Programs\NWOS\Cardinal\NWOS.Alice.dll

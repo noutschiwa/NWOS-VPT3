@@ -18,14 +18,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NWOS.Contracts\NWOS.Contracts.csproj" />
-    <ProjectReference Include="..\NWOS.Cardinal\NWOS.Cardinal.csproj" />
+    <ProjectReference Include="..\..\NWOS-KISysteme\NWOS.Cardinal\NWOS.Cardinal.csproj" />
     <ProjectReference Include="..\NWOS.ConfigSetup\NWOS.ConfigSetup.csproj" />
     <ProjectReference Include="..\NWOS.Settings\NWOS.Settings.csproj" />
     <ProjectReference Include="..\NWOS.DesktopShell\NWOS.DesktopShell.csproj" />
     <ProjectReference Include="..\NWOS.Widgets\NWOS.Widgets.csproj" />
-    <ProjectReference Include="..\NWOS.Alice\NWOS.Alice.csproj" />
-    <ProjectReference Include="..\NWOS.Marc\NWOS.Marc.csproj" />
-    <ProjectReference Include="..\NWOS.Alya\NWOS.Alya.csproj" />
+    <ProjectReference Include="..\..\NWOS-KISysteme\NWOS.Alice\NWOS.Alice.csproj" />
+    <ProjectReference Include="..\..\NWOS-KISysteme\NWOS.Marc\NWOS.Marc.csproj" />
+    <ProjectReference Include="..\..\NWOS-KISysteme\NWOS.Alya\NWOS.Alya.csproj" />
     <ProjectReference Include="..\NWOS.SystemCenter\NWOS.SystemCenter.csproj" />
     <ProjectReference Include="..\NWOS.Ipc\NWOS.Ipc.csproj" />
   </ItemGroup>

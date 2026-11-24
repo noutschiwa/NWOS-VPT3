@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Widgets")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12d001ac3d43ba6679491bde6040589851f9d549")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44a1af6aaf16dd58bcb9a4c9ed30256d652cda97")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Widgets")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Widgets")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

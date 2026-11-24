@@ -4,14 +4,14 @@
     "C:\\NWOS\\NWOS\\tests\\NWOS.Alya.Tests\\NWOS.Alya.Tests.csproj": {}
   },
   "projects": {
-    "C:\\NWOS\\NWOS\\src\\NWOS.AI\\NWOS.AI.csproj": {
+    "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.AI\\NWOS.AI.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj",
         "projectName": "NWOS.AI",
-        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.AI\\NWOS.AI.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.AI\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -80,14 +80,14 @@
         }
       }
     },
-    "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj": {
+    "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alya\\NWOS.Alya.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj",
+        "projectUniqueName": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alya\\NWOS.Alya.csproj",
         "projectName": "NWOS.Alya",
-        "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj",
+        "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alya\\NWOS.Alya.csproj",
         "packagesPath": "C:\\Users\\noahj\\.nuget\\packages\\",
-        "outputPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\obj\\",
+        "outputPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alya\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\noahj\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -104,8 +104,8 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS\\src\\NWOS.AI\\NWOS.AI.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.AI\\NWOS.AI.csproj"
+              "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj"
               },
               "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
                 "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
@@ -348,8 +348,8 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj": {
-                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Alya\\NWOS.Alya.csproj"
+              "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alya\\NWOS.Alya.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alya\\NWOS.Alya.csproj"
               },
               "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
                 "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"

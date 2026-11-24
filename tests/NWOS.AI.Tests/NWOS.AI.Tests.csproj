@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NWOS.AI\NWOS.AI.csproj" />
+    <ProjectReference Include="..\..\NWOS-KISysteme\NWOS.AI\NWOS.AI.csproj" />
   </ItemGroup>
 
 </Project>

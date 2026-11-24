@@ -1784,23 +1784,23 @@
     },
     "NWOS.AI/1.0.0": {
       "type": "project",
-      "path": "../NWOS.AI/NWOS.AI.csproj",
-      "msbuildProject": "../NWOS.AI/NWOS.AI.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.AI/NWOS.AI.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.AI/NWOS.AI.csproj"
     },
     "NWOS.Alice/1.0.0": {
       "type": "project",
-      "path": "../NWOS.Alice/NWOS.Alice.csproj",
-      "msbuildProject": "../NWOS.Alice/NWOS.Alice.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Alice/NWOS.Alice.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Alice/NWOS.Alice.csproj"
     },
     "NWOS.Alya/1.0.0": {
       "type": "project",
-      "path": "../NWOS.Alya/NWOS.Alya.csproj",
-      "msbuildProject": "../NWOS.Alya/NWOS.Alya.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Alya/NWOS.Alya.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Alya/NWOS.Alya.csproj"
     },
     "NWOS.Cardinal/1.0.0": {
       "type": "project",
-      "path": "../NWOS.Cardinal/NWOS.Cardinal.csproj",
-      "msbuildProject": "../NWOS.Cardinal/NWOS.Cardinal.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Cardinal/NWOS.Cardinal.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Cardinal/NWOS.Cardinal.csproj"
     },
     "NWOS.Contracts/1.0.0": {
       "type": "project",
@@ -1814,8 +1814,8 @@
     },
     "NWOS.Marc/1.0.0": {
       "type": "project",
-      "path": "../NWOS.Marc/NWOS.Marc.csproj",
-      "msbuildProject": "../NWOS.Marc/NWOS.Marc.csproj"
+      "path": "../../NWOS-KISysteme/NWOS.Marc/NWOS.Marc.csproj",
+      "msbuildProject": "../../NWOS-KISysteme/NWOS.Marc/NWOS.Marc.csproj"
     },
     "NWOS.Settings/1.0.0": {
       "type": "project",
