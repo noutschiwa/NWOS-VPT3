@@ -54,6 +54,20 @@ public partial class MasterFlyout : UserControl
         }
     }
 
+    public void ToggleFromSystemKey()
+    {
+        if (MasterPopup.IsOpen)
+        {
+            MasterPopup.IsOpen = false;
+            MasterToggleButton.IsChecked = false;
+            return;
+        }
+
+        PreparePopup();
+        MasterToggleButton.IsChecked = true;
+        MasterPopup.IsOpen = true;
+    }
+
     private void PreparePopup()
     {
         var workArea = SystemParameters.WorkArea;
@@ -369,6 +383,38 @@ public partial class MasterFlyout : UserControl
     {
         MasterPopup.IsOpen = false;
         StartTarget("ms-settings:power", null, "Energieeinstellungen konnten nicht geöffnet werden.");
+    }
+
+    private void ExitToWindows_Click(object sender, RoutedEventArgs e)
+    {
+        if (MessageBox.Show(
+                Window.GetWindow(this),
+                "NWOS beenden und zum Windows-Desktop wechseln?",
+                "Zu Windows wechseln",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question) != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        try
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "explorer.exe",
+                UseShellExecute = true,
+            });
+            Application.Current.Shutdown();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                Window.GetWindow(this),
+                $"Windows konnte nicht gestartet werden.\n\n{ex.Message}",
+                "NWOS Startmenü",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+        }
     }
 
     private void NwosSettings_Click(object sender, RoutedEventArgs e)

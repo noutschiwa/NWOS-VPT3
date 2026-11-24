@@ -172,6 +172,11 @@
                                                 Margin="4"
                                                 Click="PowerSettings_Click"
                                                 Style="{StaticResource TaskbarButtonStyle}" />
+                                        <Button Content="⏻  NWOS herunterfahren"
+                                                Height="62"
+                                                Margin="4"
+                                                Click="ExitToWindows_Click"
+                                                Style="{StaticResource TaskbarButtonStyle}" />
                                     </UniformGrid>
                                 </StackPanel>
 

@@ -119,11 +119,39 @@ namespace NWOS.DesktopShell.Ui
     {
         private const string DesktopShellId = "nwos.desktopshell";
         private const string WidgetsId = "nwos.widgets";
+        private const double TaskbarHeight = 45;
+        private const double TaskbarRevealHeight = 3;
+        private const double EdgeActivationDistance = 8;
+        private static readonly TimeSpan TaskbarHideDelay = TimeSpan.FromMilliseconds(350);
+        private const int WhKeyboardLl = 13;
+        private const int WmKeyDown = 0x0100;
+        private const int WmKeyUp = 0x0101;
+        private const int WmSysKeyDown = 0x0104;
+        private const int WmSysKeyUp = 0x0105;
+        private const int VkLWin = 0x5B;
+        private const int VkRWin = 0x5C;
+        private const int VkShift = 0x10;
+        private const int VkControl = 0x11;
+        private const int VkMenu = 0x12;
+        private const int VkLShift = 0xA0;
+        private const int VkRShift = 0xA1;
+        private const int VkLControl = 0xA2;
+        private const int VkRControl = 0xA3;
+        private const int VkLMenu = 0xA4;
+        private const int VkRMenu = 0xA5;
+        private const uint LlkhfInjected = 0x10;
 
         private static readonly string AppHubStoragePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "NWOS",
             "apphub.json");
+        private static readonly string WindowsPinnedTaskbarPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "Microsoft",
+            "Internet Explorer",
+            "Quick Launch",
+            "User Pinned",
+            "TaskBar");
 
         // Win32 APIs für Fensterfokus & Wiederherstellung
         [DllImport("user32.dll")]
@@ -138,6 +166,46 @@ namespace NWOS.DesktopShell.Ui
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool IsIconic(IntPtr hWnd);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr SetWindowsHookEx(
+            int idHook,
+            LowLevelKeyboardProc callback,
+            IntPtr module,
+            uint threadId);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool UnhookWindowsHookEx(IntPtr hook);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr CallNextHookEx(IntPtr hook, int code, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetCursorPos(out NativePoint point);
+
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte virtualKey, byte scanCode, uint flags, UIntPtr extraInfo);
+
+        private delegate IntPtr LowLevelKeyboardProc(int code, IntPtr wParam, IntPtr lParam);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct NativePoint
+        {
+            public int X;
+            public int Y;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct LowLevelKeyboardData
+        {
+            public uint VirtualKey;
+            public uint ScanCode;
+            public uint Flags;
+            public uint Time;
+            public UIntPtr ExtraInfo;
+        }
+
         private const int SW_RESTORE = 9;
 
         private readonly CardinalClient _cardinal;
@@ -150,6 +218,16 @@ namespace NWOS.DesktopShell.Ui
 
         private readonly DispatcherTimer _widgetRefreshTimer = new() { Interval = TimeSpan.FromSeconds(1) };
         private readonly DispatcherTimer _appStateTimer = new() { Interval = TimeSpan.FromMilliseconds(1500) };
+        private readonly DispatcherTimer _pinnedShortcutsTimer = new() { Interval = TimeSpan.FromSeconds(15) };
+        private readonly DispatcherTimer _taskbarPointerTimer = new() { Interval = TimeSpan.FromMilliseconds(60) };
+        private readonly LowLevelKeyboardProc _keyboardHookCallback;
+        private IntPtr _keyboardHook;
+        private int _pendingWindowsKey;
+        private bool _windowsKeyPending;
+        private bool _windowsKeyForwarded;
+        private bool _taskbarVisible = true;
+        private int _openPopupCount;
+        private DateTime _lastPointerInTaskbar = DateTime.UtcNow;
         private bool _refreshingWidgets;
         private int _lastIndexCount;
 
@@ -171,15 +249,40 @@ namespace NWOS.DesktopShell.Ui
         public MainWindow(CardinalClient cardinal)
         {
             InitializeComponent();
+            _keyboardHookCallback = KeyboardHookCallback;
             _cardinal = cardinal;
             AlyaAssistantButton.Configure(_cardinal);
 
             // Bildschirmposition und Größe setzen (am unteren Bildschirmrand andocken)
             Width = SystemParameters.PrimaryScreenWidth;
-            Height = 45;
+            Height = TaskbarHeight;
             Left = 0;
             Top = SystemParameters.PrimaryScreenHeight - Height;
             WindowStartupLocation = WindowStartupLocation.Manual;
+            _taskbarPointerTimer.Tick += (_, _) => UpdateTaskbarVisibility();
+            _pinnedShortcutsTimer.Tick += (_, _) => ImportWindowsPinnedShortcuts();
+            Loaded += (_, _) =>
+            {
+                RegisterPopupTracking(this, new HashSet<DependencyObject>());
+                _keyboardHook = SetWindowsHookEx(WhKeyboardLl, _keyboardHookCallback, IntPtr.Zero, 0);
+                if (_keyboardHook == IntPtr.Zero)
+                {
+                    Debug.WriteLine($"Windows-Tasten-Hook konnte nicht eingerichtet werden: {Marshal.GetLastWin32Error()}");
+                }
+
+                _taskbarPointerTimer.Start();
+                _pinnedShortcutsTimer.Start();
+            };
+            Closed += (_, _) =>
+            {
+                _taskbarPointerTimer.Stop();
+                _pinnedShortcutsTimer.Stop();
+                if (_keyboardHook != IntPtr.Zero)
+                {
+                    UnhookWindowsHookEx(_keyboardHook);
+                    _keyboardHook = IntPtr.Zero;
+                }
+            };
 
             // App-Hub Standard-Icons laden und Prozess-Überwachung starten
             InitializeAppHub();
@@ -208,6 +311,166 @@ namespace NWOS.DesktopShell.Ui
             };
 
             Loaded += async (_, _) => await InitializeAsync();
+        }
+
+        private IntPtr KeyboardHookCallback(int code, IntPtr wParam, IntPtr lParam)
+        {
+            if (code < 0)
+            {
+                return CallNextHookEx(_keyboardHook, code, wParam, lParam);
+            }
+
+            var message = wParam.ToInt32();
+            if (message is not (WmKeyDown or WmSysKeyDown or WmKeyUp or WmSysKeyUp))
+            {
+                return CallNextHookEx(_keyboardHook, code, wParam, lParam);
+            }
+
+            var keyData = Marshal.PtrToStructure<LowLevelKeyboardData>(lParam);
+            if ((keyData.Flags & LlkhfInjected) != 0)
+            {
+                return CallNextHookEx(_keyboardHook, code, wParam, lParam);
+            }
+
+            var virtualKey = (int)keyData.VirtualKey;
+            var isKeyDown = message is WmKeyDown or WmSysKeyDown;
+            if (virtualKey is VkLWin or VkRWin)
+            {
+                if (isKeyDown)
+                {
+                    if (_windowsKeyForwarded)
+                    {
+                        return CallNextHookEx(_keyboardHook, code, wParam, lParam);
+                    }
+
+                    _windowsKeyPending = true;
+                    _pendingWindowsKey = virtualKey;
+                    return new IntPtr(1);
+                }
+
+                if (_windowsKeyForwarded)
+                {
+                    _windowsKeyForwarded = false;
+                    _windowsKeyPending = false;
+                    return CallNextHookEx(_keyboardHook, code, wParam, lParam);
+                }
+
+                if (_windowsKeyPending)
+                {
+                    _windowsKeyPending = false;
+                    _pendingWindowsKey = 0;
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        SetTaskbarVisible(true);
+                        CenterMasterFlyout.ToggleFromSystemKey();
+                    });
+                    return new IntPtr(1);
+                }
+            }
+            else if (isKeyDown && _windowsKeyPending && !IsModifierKey(virtualKey))
+            {
+                keybd_event((byte)_pendingWindowsKey, 0, 0, UIntPtr.Zero);
+                _windowsKeyPending = false;
+                _windowsKeyForwarded = true;
+            }
+
+            return CallNextHookEx(_keyboardHook, code, wParam, lParam);
+        }
+
+        private static bool IsModifierKey(int virtualKey) =>
+            virtualKey is VkShift or VkControl or VkMenu
+                or VkLShift or VkRShift or VkLControl or VkRControl or VkLMenu or VkRMenu;
+
+        private void UpdateTaskbarVisibility()
+        {
+            if (_openPopupCount > 0)
+            {
+                _lastPointerInTaskbar = DateTime.UtcNow;
+                SetTaskbarVisible(true);
+                return;
+            }
+
+            if (!GetCursorPos(out var cursorPosition))
+            {
+                return;
+            }
+
+            var transform = PresentationSource.FromVisual(this)?.CompositionTarget?.TransformFromDevice;
+            if (!transform.HasValue)
+            {
+                return;
+            }
+
+            var cursor = transform.Value.Transform(new Point(cursorPosition.X, cursorPosition.Y));
+            var screenBottom = SystemParameters.PrimaryScreenHeight;
+            var inTaskbarHorizontalRange = cursor.X >= Left && cursor.X <= Left + ActualWidth;
+            var atRevealEdge = inTaskbarHorizontalRange && cursor.Y >= screenBottom - EdgeActivationDistance;
+
+            if (atRevealEdge)
+            {
+                _lastPointerInTaskbar = DateTime.UtcNow;
+                SetTaskbarVisible(true);
+                return;
+            }
+
+            var insideVisibleTaskbar = _taskbarVisible
+                && inTaskbarHorizontalRange
+                && cursor.Y >= Top
+                && cursor.Y <= screenBottom;
+            if (insideVisibleTaskbar)
+            {
+                _lastPointerInTaskbar = DateTime.UtcNow;
+                return;
+            }
+
+            if (_taskbarVisible && DateTime.UtcNow - _lastPointerInTaskbar >= TaskbarHideDelay)
+            {
+                SetTaskbarVisible(false);
+            }
+        }
+
+        private void SetTaskbarVisible(bool visible)
+        {
+            if (_taskbarVisible == visible)
+            {
+                return;
+            }
+
+            _taskbarVisible = visible;
+            Top = SystemParameters.PrimaryScreenHeight
+                - (visible ? Height : TaskbarRevealHeight);
+        }
+
+        private void RegisterPopupTracking(DependencyObject element, HashSet<DependencyObject> visited)
+        {
+            if (!visited.Add(element))
+            {
+                return;
+            }
+
+            if (element is System.Windows.Controls.Primitives.Popup popup)
+            {
+                if (popup.IsOpen)
+                {
+                    _openPopupCount++;
+                }
+
+                popup.Opened += (_, _) => _openPopupCount++;
+                popup.Closed += (_, _) => _openPopupCount = Math.Max(0, _openPopupCount - 1);
+            }
+
+            if (element is Visual)
+            {
+                for (var index = 0; index < VisualTreeHelper.GetChildrenCount(element); index++)
+                {
+                    RegisterPopupTracking(VisualTreeHelper.GetChild(element, index), visited);
+                }
+            }
+
+            foreach (var child in LogicalTreeHelper.GetChildren(element).OfType<DependencyObject>())
+            {
+                RegisterPopupTracking(child, visited);
+            }
         }
 
         private bool TryHandleCallChatCommand(string? rawInput)
@@ -412,7 +675,9 @@ namespace NWOS.DesktopShell.Ui
 
         private void InitializeAppHub()
         {
-            if (!LoadAppHubState())
+            var hasSavedState = LoadAppHubState();
+            var importedPins = ImportWindowsPinnedShortcuts();
+            if (!hasSavedState && importedPins == 0)
             {
                 // Standard-Apps nur beim allerersten Start anlegen
                 AppIcons.Add(new AppIconItem { Name = "📁", FullName = "Explorer", ExecutablePath = "explorer.exe" });
@@ -426,6 +691,55 @@ namespace NWOS.DesktopShell.Ui
             AppHubLeftItemsControl.ItemsSource = _leftAppIcons;
             AppHubRightItemsControl.ItemsSource = _rightAppIcons;
             RefreshAppHubHalves();
+        }
+
+        private int ImportWindowsPinnedShortcuts()
+        {
+            if (!Directory.Exists(WindowsPinnedTaskbarPath))
+            {
+                return 0;
+            }
+
+            var importedCount = 0;
+            try
+            {
+                foreach (var shortcutPath in Directory.EnumerateFiles(
+                             WindowsPinnedTaskbarPath,
+                             "*.lnk",
+                             SearchOption.TopDirectoryOnly)
+                         .OrderBy(Path.GetFileName, StringComparer.OrdinalIgnoreCase))
+                {
+                    var appName = Path.GetFileNameWithoutExtension(shortcutPath);
+                    if (string.IsNullOrWhiteSpace(appName)
+                        || AppIcons.Any(app =>
+                            app.ExecutablePath.Equals(shortcutPath, StringComparison.OrdinalIgnoreCase)
+                            || app.FullName.Equals(appName, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        continue;
+                    }
+
+                    AppIcons.Add(new AppIconItem
+                    {
+                        Name = appName.Length >= 2 ? appName[..2].ToUpperInvariant() : appName.ToUpperInvariant(),
+                        FullName = appName,
+                        ExecutablePath = shortcutPath,
+                    });
+                    importedCount++;
+                }
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                Debug.WriteLine($"Windows-Taskleistenverknüpfungen konnten nicht eingelesen werden: {ex.Message}");
+                return 0;
+            }
+
+            if (importedCount > 0)
+            {
+                SaveAppHubState();
+                UpdateRunningAppsState();
+            }
+
+            return importedCount;
         }
 
         private void RefreshAppHubHalves()
