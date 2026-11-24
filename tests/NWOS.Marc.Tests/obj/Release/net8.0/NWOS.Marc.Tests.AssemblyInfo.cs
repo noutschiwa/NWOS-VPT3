@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Marc.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12d001ac3d43ba6679491bde6040589851f9d549")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Marc.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Marc.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -332,8 +332,17 @@
           }
         }
       },
+      "NWOS.AI/1.0.0": {
+        "runtime": {
+          "NWOS.AI.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "NWOS.Alice/1.0.0": {
         "dependencies": {
+          "NWOS.AI": "1.0.0",
           "NWOS.Contracts": "1.0.0"
         },
         "runtime": {
@@ -435,6 +444,11 @@
       "sha512": "sha512-bjY+crT1jOyxKagFjCMdEVzoenO2v66ru8+CK/0UaXvyG4U9Q3UTieJkbQXbi7/1yZIK1sGh01l5/jh2CwLJtQ==",
       "path": "xunit.extensibility.execution/2.7.0",
       "hashPath": "xunit.extensibility.execution.2.7.0.nupkg.sha512"
+    },
+    "NWOS.AI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "NWOS.Alice/1.0.0": {
       "type": "project",
