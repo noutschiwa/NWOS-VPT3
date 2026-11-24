@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.DesktopShell.Ui")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44a1af6aaf16dd58bcb9a4c9ed30256d652cda97")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73b2fb3fa1d32f4377f3f00b24fc43e15c48c342")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.DesktopShell.Ui")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.DesktopShell.Ui")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
