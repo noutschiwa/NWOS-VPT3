@@ -6,8 +6,8 @@
              mc:Ignorable="d"
              Width="64"
              Height="45"
-             d:DesignHeight="45"
-             d:DesignWidth="64">
+             d:DesignWidth="64"
+             d:DesignHeight="45">
     <Grid>
         <ToggleButton x:Name="MasterToggleButton"
                       Width="64"
@@ -24,144 +24,133 @@
         </ToggleButton>
 
         <Popup x:Name="MasterPopup"
-               Placement="Absolute"
-               HorizontalOffset="0"
-               VerticalOffset="0"
-               StaysOpen="True"
+               Placement="Top"
+               PlacementTarget="{Binding ElementName=MasterToggleButton}"
+               VerticalOffset="-8"
                AllowsTransparency="True"
-               PopupAnimation="None">
-            <Canvas x:Name="OverlayRoot"
-                    Background="Transparent"
-                    ClipToBounds="False"
-                    PreviewKeyDown="OverlayRoot_PreviewKeyDown">
-                <Image x:Name="MasterBackgroundImage"
-                       Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Master-Background.jpeg"
-                       Stretch="UniformToFill"
-                       Visibility="Visible"
-                       IsHitTestVisible="False"
-                       ClipToBounds="True" />
-
-                <Image x:Name="FortressImage"
-                       Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Flyout-Festung.jpeg"
-                       Width="96"
-                       Height="64"
-                       Visibility="Visible"
-                       Stretch="Uniform"
-                       IsHitTestVisible="False"
-                       RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TranslateTransform x:Name="FortressTransform" />
-                    </Image.RenderTransform>
-                </Image>
-
+               StaysOpen="False"
+               PopupAnimation="None"
+               Opened="MasterPopup_Opened"
+               Closed="MasterPopup_Closed">
+            <Grid x:Name="PopupRoot"
+                  Width="560"
+                  MaxHeight="760"
+                  ClipToBounds="True"
+                  PreviewKeyDown="PopupRoot_PreviewKeyDown">
                 <Border x:Name="MenuPanel"
                         Width="560"
-                        MaxHeight="660"
-                        Padding="22"
-                        Background="#E6193557"
+                        MaxHeight="760"
+                        Background="#E6192335"
                         BorderBrush="#806AADE4"
                         BorderThickness="1"
                         CornerRadius="16"
-                        Opacity="0"
-                        IsHitTestVisible="True"
+                        Opacity="1"
                         RenderTransformOrigin="0.5,1">
                     <Border.RenderTransform>
-                        <TranslateTransform x:Name="MenuTransform" Y="24" />
+                        <TranslateTransform x:Name="MenuTransform" />
                     </Border.RenderTransform>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Disabled">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                    <Grid>
+                        <Image Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Master-Background.jpeg"
+                               Stretch="UniformToFill"
+                               Opacity="0.32"
+                               IsHitTestVisible="False" />
+                        <ScrollViewer x:Name="MenuScrollViewer"
+                                      MaxHeight="760"
+                                      Padding="20,18"
+                                      VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel>
+                                <Grid Margin="2,0,2,14">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="NWOS"
+                                               Foreground="#EAF5FF"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="Alle"
+                                               Grid.Column="1"
+                                               Foreground="#D5E8FA"
+                                               FontSize="13"
+                                               VerticalAlignment="Center" />
+                                    <Image x:Name="FortressImage"
+                                           Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Flyout-Festung.jpeg"
+                                           Width="76"
+                                           Height="52"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Stretch="Uniform"
+                                           IsHitTestVisible="False" />
+                                </Grid>
 
-                            <Grid Grid.Row="0" Margin="2,0,2,14">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="NWOS"
-                                           Foreground="#EAF5FF"
-                                           FontSize="20"
-                                           FontWeight="SemiBold"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Text="Alle"
-                                           Grid.Column="1"
-                                           Foreground="#D5E8FA"
-                                           FontSize="13"
-                                           VerticalAlignment="Center" />
-                            </Grid>
+                                <StackPanel Margin="0,0,0,14">
+                                    <DockPanel>
+                                        <Button Content="Suchen"
+                                                DockPanel.Dock="Right"
+                                                Click="Search_Click"
+                                                Style="{StaticResource TaskbarButtonStyle}" />
+                                        <Grid Margin="0,0,8,0">
+                                            <TextBox x:Name="MasterSearchBox"
+                                                     Height="38"
+                                                     Padding="12,6"
+                                                     VerticalContentAlignment="Center"
+                                                     Background="#D91A2D43"
+                                                     Foreground="#F3F4F6"
+                                                     CaretBrush="#38BDF8"
+                                                     BorderBrush="#7089A6"
+                                                     TextChanged="MasterSearchBox_TextChanged"
+                                                     KeyDown="MasterSearchBox_KeyDown"
+                                                     ToolTip="Apps und NWOS durchsuchen" />
+                                            <TextBlock Text="Nach Apps und Einstellungen suchen"
+                                                       Margin="13,0,0,0"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="#AABBD0"
+                                                       IsHitTestVisible="False">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Text, ElementName=MasterSearchBox}" Value="">
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </DockPanel>
 
-                            <StackPanel Grid.Row="1" Margin="0,0,0,14">
-                                <DockPanel>
-                                    <Button Content="Suchen"
-                                            DockPanel.Dock="Right"
-                                            Click="Search_Click"
-                                            Style="{StaticResource TaskbarButtonStyle}" />
-                                    <Grid Margin="0,0,8,0">
-                                        <TextBox x:Name="MasterSearchBox"
-                                                 Height="38"
-                                                 Padding="12,6"
-                                                 VerticalContentAlignment="Center"
-                                                 Background="#D91A2D43"
-                                                 Foreground="#F3F4F6"
-                                                 CaretBrush="#38BDF8"
-                                                 BorderBrush="#7089A6"
-                                                 TextChanged="MasterSearchBox_TextChanged"
-                                                 KeyDown="MasterSearchBox_KeyDown"
-                                                 ToolTip="Apps und NWOS durchsuchen" />
-                                        <TextBlock Text="Nach Apps und Einstellungen suchen"
-                                                   Margin="13,0,0,0"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="#AABBD0"
-                                                   IsHitTestVisible="False">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=MasterSearchBox}" Value="">
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </Grid>
-                                </DockPanel>
+                                    <Border x:Name="CommandHelpPanel"
+                                            Visibility="Collapsed"
+                                            Margin="0,8,0,0"
+                                            Padding="10,8"
+                                            Background="#F0192434"
+                                            BorderBrush="#506AADE4"
+                                            BorderThickness="1"
+                                            CornerRadius="8">
+                                        <StackPanel>
+                                            <TextBlock Text="Befehle"
+                                                       Foreground="#EAF5FF"
+                                                       FontSize="12"
+                                                       FontWeight="SemiBold"
+                                                       Margin="0,0,0,5" />
+                                            <TextBlock Text="/help  —  Befehlsübersicht&#x0a;/admin access &lt;code&gt;  —  Funktionskanal öffnen&#x0a;Im Funktionskanal: status · events · scan · hide"
+                                                       Foreground="#C5D5E8"
+                                                       FontSize="11"
+                                                       TextWrapping="Wrap" />
+                                            <TextBlock x:Name="CommandHelpStatus"
+                                                       Foreground="#FCA5A5"
+                                                       FontSize="10"
+                                                       Margin="0,5,0,0"
+                                                       TextWrapping="Wrap"
+                                                       Visibility="Collapsed" />
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
 
-                                <Border x:Name="CommandHelpPanel"
-                                        Visibility="Collapsed"
-                                        Margin="0,8,0,0"
-                                        Padding="10,8"
-                                        Background="#F0192434"
-                                        BorderBrush="#506AADE4"
-                                        BorderThickness="1"
-                                        CornerRadius="8">
-                                    <StackPanel>
-                                        <TextBlock Text="Befehle"
-                                                   Foreground="#EAF5FF"
-                                                   FontSize="12"
-                                                   FontWeight="SemiBold"
-                                                   Margin="0,0,0,5" />
-                                        <TextBlock Text="/help  —  Befehlsübersicht&#x0a;/admin access &lt;code&gt;  —  Funktionskanal öffnen&#x0a;Im Funktionskanal: status · events · scan · hide"
-                                                   Foreground="#C5D5E8"
-                                                   FontSize="11"
-                                                   TextWrapping="Wrap" />
-                                        <TextBlock x:Name="CommandHelpStatus"
-                                                   Foreground="#FCA5A5"
-                                                   FontSize="10"
-                                                   Margin="0,5,0,0"
-                                                   TextWrapping="Wrap"
-                                                   Visibility="Collapsed" />
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
-
-                            <StackPanel Grid.Row="2" Margin="0,0,0,12">
-                                <StackPanel x:Name="PinnedActionsPanel">
+                                <StackPanel x:Name="PinnedActionsPanel" Margin="0,0,0,12">
                                     <TextBlock Text="Angeheftet"
                                                Foreground="#EAF5FF"
                                                FontSize="14"
@@ -188,9 +177,9 @@
 
                                 <Border x:Name="CardinalAdminConsolePanel"
                                         Visibility="Collapsed"
-                                        Margin="0,4,0,0"
+                                        Margin="0,4,0,12"
                                         Padding="10"
-                                        Background="#141821"
+                                        Background="#E6141821"
                                         BorderBrush="#2E3A52"
                                         BorderThickness="1"
                                         CornerRadius="8">
@@ -215,7 +204,7 @@
                                                 CornerRadius="6"
                                                 Padding="8">
                                             <ScrollViewer x:Name="CardinalConsoleScrollViewer"
-                                                          Height="320"
+                                                          Height="220"
                                                           VerticalScrollBarVisibility="Auto">
                                                 <ItemsControl x:Name="CardinalConsoleMessagesControl">
                                                     <ItemsControl.ItemTemplate>
@@ -282,9 +271,7 @@
                                         </UniformGrid>
                                     </StackPanel>
                                 </Border>
-                            </StackPanel>
 
-                            <StackPanel Grid.Row="3">
                                 <Separator Margin="2,0,2,10" />
                                 <UniformGrid Columns="2">
                                     <Button Content="↻  Neu starten"
@@ -299,10 +286,10 @@
                                             Style="{StaticResource TaskbarButtonStyle}" />
                                 </UniformGrid>
                             </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
+                        </ScrollViewer>
+                    </Grid>
                 </Border>
-            </Canvas>
+            </Grid>
         </Popup>
     </Grid>
 </UserControl>

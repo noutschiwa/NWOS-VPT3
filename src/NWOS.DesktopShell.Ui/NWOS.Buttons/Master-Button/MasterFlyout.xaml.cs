@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 
 namespace NWOS.DesktopShell.Ui.Button;
 
@@ -21,17 +20,10 @@ public enum AllowedConsoleAction
 public partial class MasterFlyout : UserControl
 {
     private const string AdminAccessCode = "135798642";
-    private const double TaskbarGap = 8;
-    private const double BackgroundTargetOpacity = 0.48;
-    private static readonly TimeSpan OpenDuration = TimeSpan.FromMilliseconds(850);
-    private static readonly TimeSpan CloseDuration = TimeSpan.FromMilliseconds(600);
+    private const double MenuWidth = 560;
+    private const double MenuHeightLimit = 760;
+    private const double ScreenMargin = 12;
 
-    private Rect _hiddenBackgroundRect;
-    private Rect _visibleBackgroundRect;
-    private double _fortressRise;
-    private double _menuLeft;
-    private double _menuAvailableHeight;
-    private bool _isClosing;
     private readonly ObservableCollection<ConsoleEntry> _consoleMessages = new();
     private bool _consoleInitialized;
     private string? _activeChatTarget;
@@ -46,257 +38,93 @@ public partial class MasterFlyout : UserControl
     public MasterFlyout()
     {
         InitializeComponent();
-        OverlayRoot.SizeChanged += OverlayRoot_SizeChanged;
+        CardinalConsoleMessagesControl.ItemsSource = _consoleMessages;
     }
 
     private void MasterToggleButton_Click(object sender, RoutedEventArgs e)
     {
         if (MasterToggleButton.IsChecked == true)
         {
-            OpenMenu();
+            PreparePopup();
+            MasterPopup.IsOpen = true;
         }
         else
         {
-            CloseMenu();
-        }
-    }
-
-    private void OpenMenu()
-    {
-        _isClosing = false;
-        RemoveAnimations();
-
-        var taskbarWindow = Window.GetWindow(this)
-            ?? throw new InvalidOperationException("Das Master-Menü ist keinem Taskleistenfenster zugeordnet.");
-
-        var screenWidth = SystemParameters.PrimaryScreenWidth;
-        var screenHeight = SystemParameters.PrimaryScreenHeight;
-        if (screenWidth <= 0 || screenHeight <= 0 || !double.IsFinite(taskbarWindow.Top))
-        {
-            throw new InvalidOperationException("Bildschirm- oder Taskleistenposition konnte nicht ermittelt werden.");
-        }
-
-        MasterPopup.HorizontalOffset = 0;
-        MasterPopup.VerticalOffset = 0;
-        OverlayRoot.Width = screenWidth;
-        OverlayRoot.Height = screenHeight;
-
-        MasterPopup.IsOpen = true;
-        OverlayRoot.UpdateLayout();
-
-        _menuAvailableHeight = Math.Clamp(taskbarWindow.Top, 0, screenHeight);
-
-        var anchorPoint = MasterToggleButton.TransformToAncestor(taskbarWindow).Transform(
-            new Point(MasterToggleButton.ActualWidth / 2, MasterToggleButton.ActualHeight / 2));
-        _menuLeft = Math.Clamp(
-            taskbarWindow.Left + anchorPoint.X - MenuPanel.Width / 2,
-            12,
-            Math.Max(12, OverlayRoot.Width - MenuPanel.Width - 12));
-
-        var menuTop = PositionMenuAtTaskbar(_menuAvailableHeight);
-        PositionFortressAndBackground(menuTop, _menuAvailableHeight);
-
-        var backgroundClip = new RectangleGeometry(_hiddenBackgroundRect);
-        MasterBackgroundImage.Clip = backgroundClip;
-        MasterBackgroundImage.Opacity = 0;
-        FortressTransform.Y = 0;
-        MenuTransform.Y = 24;
-        MenuPanel.Opacity = 0;
-
-        Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
-        {
-            if (!MasterPopup.IsOpen || _isClosing)
-            {
-                return;
-            }
-
-            AnimateRect(backgroundClip, _hiddenBackgroundRect, _visibleBackgroundRect, OpenDuration);
-            AnimateDouble(MasterBackgroundImage, UIElement.OpacityProperty, 0, BackgroundTargetOpacity, OpenDuration);
-            AnimateDouble(FortressTransform, TranslateTransform.YProperty, 0, _fortressRise, OpenDuration);
-            AnimateDouble(MenuTransform, TranslateTransform.YProperty, 24, 0, OpenDuration);
-            AnimateDouble(MenuPanel, UIElement.OpacityProperty, 0, 1, OpenDuration);
-        }));
-    }
-
-    private void CloseMenu()
-    {
-        if (!MasterPopup.IsOpen || _isClosing)
-        {
-            MasterToggleButton.IsChecked = false;
-            return;
-        }
-
-        _isClosing = true;
-        MasterToggleButton.IsChecked = false;
-
-        var currentFortressY = FortressTransform.Y;
-        var currentMenuY = MenuTransform.Y;
-        var currentMenuOpacity = MenuPanel.Opacity;
-        var currentBgOpacity = MasterBackgroundImage.Opacity;
-
-        RemoveAnimations();
-
-        FortressTransform.Y = currentFortressY;
-        MenuTransform.Y = currentMenuY;
-        MenuPanel.Opacity = currentMenuOpacity;
-        MasterBackgroundImage.Opacity = currentBgOpacity;
-
-        var backgroundClip = MasterBackgroundImage.Clip as RectangleGeometry;
-        if (backgroundClip is null)
-        {
             MasterPopup.IsOpen = false;
-            _isClosing = false;
-            return;
         }
-
-        AnimateRect(backgroundClip, _visibleBackgroundRect, _hiddenBackgroundRect, CloseDuration, () =>
-        {
-            MasterPopup.IsOpen = false;
-            _isClosing = false;
-            RemoveAnimations();
-        });
-
-        AnimateDouble(MasterBackgroundImage, UIElement.OpacityProperty, currentBgOpacity, 0, CloseDuration);
-        AnimateDouble(MenuTransform, TranslateTransform.YProperty, currentMenuY, 24, CloseDuration);
-        AnimateDouble(MenuPanel, UIElement.OpacityProperty, currentMenuOpacity, 0, CloseDuration);
     }
 
-    private void RemoveAnimations()
+    private void PreparePopup()
     {
-        MasterBackgroundImage.BeginAnimation(UIElement.OpacityProperty, null);
-        MasterBackgroundImage.Clip?.BeginAnimation(RectangleGeometry.RectProperty, null);
-        FortressTransform.BeginAnimation(TranslateTransform.YProperty, null);
-        MenuTransform.BeginAnimation(TranslateTransform.YProperty, null);
+        var workArea = SystemParameters.WorkArea;
+        var maxWidth = Math.Max(240, workArea.Width - 2 * ScreenMargin);
+        var width = Math.Min(MenuWidth, maxWidth);
+        var maxHeight = Math.Min(MenuHeightLimit, Math.Max(160, workArea.Height - 2 * ScreenMargin));
+        var availableAbove = GetAvailableHeightAboveButton(workArea);
+        var height = Math.Min(maxHeight, Math.Max(160, availableAbove));
+
+        PopupRoot.Width = width;
+        PopupRoot.MaxHeight = height;
+        MenuPanel.Width = width;
+        MenuPanel.MaxHeight = height;
+        MenuScrollViewer.MaxHeight = height;
+        MasterPopup.HorizontalOffset = (MasterToggleButton.ActualWidth - width) / 2;
+        MasterPopup.VerticalOffset = -8;
+    }
+
+    private double GetAvailableHeightAboveButton(Rect workArea)
+    {
+        var source = PresentationSource.FromVisual(MasterToggleButton);
+        var transform = source?.CompositionTarget?.TransformFromDevice;
+        if (!transform.HasValue)
+        {
+            return Math.Min(MenuHeightLimit, workArea.Height - 2 * ScreenMargin);
+        }
+
+        var buttonTop = transform.Value.Transform(MasterToggleButton.PointToScreen(new Point(0, 0))).Y;
+        return buttonTop - workArea.Top - ScreenMargin;
+    }
+
+    private void MasterPopup_Opened(object? sender, EventArgs e)
+    {
         MenuPanel.BeginAnimation(UIElement.OpacityProperty, null);
+        MenuTransform.BeginAnimation(TranslateTransform.YProperty, null);
+        MenuPanel.Opacity = 0;
+        MenuTransform.Y = 12;
+
+        var duration = TimeSpan.FromMilliseconds(180);
+        var easing = new CubicEase { EasingMode = EasingMode.EaseOut };
+        MenuPanel.BeginAnimation(
+            UIElement.OpacityProperty,
+            new DoubleAnimation(0, 1, duration) { EasingFunction = easing });
+        MenuTransform.BeginAnimation(
+            TranslateTransform.YProperty,
+            new DoubleAnimation(12, 0, duration) { EasingFunction = easing });
+    }
+
+    private void MasterPopup_Closed(object? sender, EventArgs e)
+    {
+        MasterToggleButton.IsChecked = false;
+        MenuPanel.BeginAnimation(UIElement.OpacityProperty, null);
+        MenuTransform.BeginAnimation(TranslateTransform.YProperty, null);
+        MenuPanel.Opacity = 1;
+        MenuTransform.Y = 0;
     }
 
     public void RefreshMenuLayout()
     {
-        if (!MasterPopup.IsOpen || _isClosing)
+        if (MasterPopup.IsOpen)
         {
-            return;
+            PreparePopup();
         }
-
-        Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
-        {
-            if (!MasterPopup.IsOpen || _isClosing)
-            {
-                return;
-            }
-
-            var menuTop = PositionMenuAtTaskbar(_menuAvailableHeight);
-            PositionFortressAndBackground(menuTop, _menuAvailableHeight);
-        }));
     }
 
-    private double PositionMenuAtTaskbar(double overlayHeight)
-    {
-        if (overlayHeight <= 0)
-        {
-            return 0;
-        }
-
-        MenuPanel.MaxHeight = Math.Min(660, Math.Max(0, overlayHeight - TaskbarGap));
-        MenuPanel.Measure(new Size(
-            Math.Max(0, OverlayRoot.ActualWidth > 0 ? OverlayRoot.ActualWidth : OverlayRoot.Width),
-            MenuPanel.MaxHeight));
-
-        var panelWidth = MenuPanel.DesiredSize.Width > 0
-            ? MenuPanel.DesiredSize.Width
-            : (MenuPanel.ActualWidth > 0 ? MenuPanel.ActualWidth : MenuPanel.Width);
-        var panelHeight = MenuPanel.DesiredSize.Height > 0
-            ? MenuPanel.DesiredSize.Height
-            : (MenuPanel.ActualHeight > 0 ? MenuPanel.ActualHeight : MenuPanel.MaxHeight);
-
-        var containerWidth = OverlayRoot.ActualWidth > 0 ? OverlayRoot.ActualWidth : OverlayRoot.Width;
-        _menuLeft = Math.Clamp(_menuLeft, 12, Math.Max(12, containerWidth - panelWidth - 12));
-        var menuTop = Math.Max(0, overlayHeight - panelHeight - TaskbarGap);
-
-        Canvas.SetLeft(MenuPanel, _menuLeft);
-        Canvas.SetTop(MenuPanel, menuTop);
-        return menuTop;
-    }
-
-    private void PositionFortressAndBackground(double menuTop, double overlayHeight)
-    {
-        var panelWidth = MenuPanel.DesiredSize.Width > 0
-            ? MenuPanel.DesiredSize.Width
-            : (MenuPanel.ActualWidth > 0 ? MenuPanel.ActualWidth : MenuPanel.Width);
-        var menuCenterX = _menuLeft + panelWidth / 2;
-
-        var fortressWidth = FortressImage.ActualWidth > 0 ? FortressImage.ActualWidth : FortressImage.Width;
-        var fortressHeight = FortressImage.ActualHeight > 0 ? FortressImage.ActualHeight : FortressImage.Height;
-        Canvas.SetLeft(FortressImage, menuCenterX - fortressWidth / 2);
-
-        var fortressStartTop = overlayHeight - fortressHeight + 64;
-        var fortressTargetTop = Math.Max(8, menuTop - fortressHeight - 12);
-        Canvas.SetTop(FortressImage, fortressStartTop);
-        _fortressRise = fortressTargetTop - fortressStartTop;
-
-        MasterBackgroundImage.Width = panelWidth + 44;
-        MasterBackgroundImage.Height = overlayHeight;
-        Canvas.SetLeft(MasterBackgroundImage, menuCenterX - MasterBackgroundImage.Width / 2);
-        Canvas.SetTop(MasterBackgroundImage, 0);
-
-        _hiddenBackgroundRect = new Rect(0, overlayHeight, MasterBackgroundImage.Width, 0);
-        _visibleBackgroundRect = new Rect(0, 0, MasterBackgroundImage.Width, overlayHeight);
-    }
-
-    private void OverlayRoot_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (!MasterPopup.IsOpen || _isClosing)
-        {
-            return;
-        }
-
-        var menuTop = PositionMenuAtTaskbar(_menuAvailableHeight);
-        PositionFortressAndBackground(menuTop, _menuAvailableHeight);
-    }
-
-    private static void AnimateDouble(
-        IAnimatable target,
-        DependencyProperty property,
-        double from,
-        double to,
-        TimeSpan duration)
-    {
-        var easingMode = duration == OpenDuration ? EasingMode.EaseOut : EasingMode.EaseIn;
-        var animation = new DoubleAnimation(from, to, duration)
-        {
-            EasingFunction = new CubicEase { EasingMode = easingMode },
-            FillBehavior = FillBehavior.HoldEnd,
-        };
-
-        target.BeginAnimation(property, animation, HandoffBehavior.SnapshotAndReplace);
-    }
-
-    private static void AnimateRect(
-        RectangleGeometry target,
-        Rect from,
-        Rect to,
-        TimeSpan duration,
-        Action? completed = null)
-    {
-        var easingMode = duration == OpenDuration ? EasingMode.EaseOut : EasingMode.EaseIn;
-        var animation = new RectAnimation(from, to, duration)
-        {
-            EasingFunction = new CubicEase { EasingMode = easingMode },
-            FillBehavior = FillBehavior.HoldEnd,
-        };
-        if (completed is not null)
-        {
-            animation.Completed += (_, _) => completed();
-        }
-
-        target.BeginAnimation(RectangleGeometry.RectProperty, animation, HandoffBehavior.SnapshotAndReplace);
-    }
-
-    private void OverlayRoot_PreviewKeyDown(object sender, KeyEventArgs e)
+    private void PopupRoot_PreviewKeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Escape)
         {
             e.Handled = true;
-            CloseMenu();
+            MasterPopup.IsOpen = false;
         }
     }
 
@@ -316,16 +144,10 @@ public partial class MasterFlyout : UserControl
     private void MasterSearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         var isSlashCommand = MasterSearchBox.Text.TrimStart().StartsWith("/", StringComparison.Ordinal);
-        var newVisibility = isSlashCommand ? Visibility.Visible : Visibility.Collapsed;
-        if (CommandHelpPanel.Visibility != newVisibility)
+        CommandHelpPanel.Visibility = isSlashCommand ? Visibility.Visible : Visibility.Collapsed;
+        if (!isSlashCommand)
         {
-            CommandHelpPanel.Visibility = newVisibility;
-            if (!isSlashCommand)
-            {
-                CommandHelpStatus.Visibility = Visibility.Collapsed;
-            }
-
-            RefreshMenuLayout();
+            CommandHelpStatus.Visibility = Visibility.Collapsed;
         }
     }
 
@@ -345,7 +167,6 @@ public partial class MasterFlyout : UserControl
                 MasterSearchBox.Clear();
                 CommandHelpPanel.Visibility = Visibility.Visible;
                 CommandHelpStatus.Visibility = Visibility.Collapsed;
-                RefreshMenuLayout();
                 return;
             }
 
@@ -362,19 +183,18 @@ public partial class MasterFlyout : UserControl
                 {
                     ShowConsole();
                 }
+
                 return;
             }
 
             CommandHelpPanel.Visibility = Visibility.Visible;
             CommandHelpStatus.Text = "Code ungültig oder Befehl unbekannt. Verwende /help für die Übersicht.";
             CommandHelpStatus.Visibility = Visibility.Visible;
-            RefreshMenuLayout();
             return;
         }
 
         CommandHelpPanel.Visibility = Visibility.Collapsed;
-        RefreshMenuLayout();
-        CloseMenu();
+        MasterPopup.IsOpen = false;
         SearchRequested?.Invoke(query);
     }
 
@@ -421,7 +241,6 @@ public partial class MasterFlyout : UserControl
         }
 
         _consoleInitialized = true;
-        CardinalConsoleMessagesControl.ItemsSource = _consoleMessages;
         _consoleMessages.Add(new ConsoleEntry(
             "Cardinal",
             "Funktionskanal bereit. Erlaubt: status, events, scan, hide."));
@@ -468,7 +287,9 @@ public partial class MasterFlyout : UserControl
         {
             if (input.TrimStart().StartsWith("/", StringComparison.Ordinal))
             {
-                AddConsoleMessage("Konsole", "Unbekannter Befehl. Erlaubt: /call \"Alya\", /call \"Alice\", status, events, scan, hide.");
+                AddConsoleMessage(
+                    "Konsole",
+                    "Unbekannter Befehl. Erlaubt: /call \"Alya\", /call \"Alice\", status, events, scan, hide.");
                 return;
             }
 
@@ -492,13 +313,10 @@ public partial class MasterFlyout : UserControl
             return;
         }
 
-        _consoleMessages.Add(new ConsoleEntry("Du", input.Trim()));
-        CardinalConsoleScrollViewer.ScrollToEnd();
-
+        AddConsoleMessage("Du", input.Trim());
         if (ConsoleActionRequested is null)
         {
-            _consoleMessages.Add(new ConsoleEntry("Konsole", "Die NWOS-Funktionsschnittstelle ist nicht verfügbar."));
-            CardinalConsoleScrollViewer.ScrollToEnd();
+            AddConsoleMessage("Konsole", "Die NWOS-Funktionsschnittstelle ist nicht verfügbar.");
             return;
         }
 
@@ -543,19 +361,19 @@ public partial class MasterFlyout : UserControl
 
     private void PcSettings_Click(object sender, RoutedEventArgs e)
     {
-        CloseMenu();
+        MasterPopup.IsOpen = false;
         StartTarget("ms-settings:", null, "Windows-Einstellungen konnten nicht geöffnet werden.");
     }
 
     private void PowerSettings_Click(object sender, RoutedEventArgs e)
     {
-        CloseMenu();
+        MasterPopup.IsOpen = false;
         StartTarget("ms-settings:power", null, "Energieeinstellungen konnten nicht geöffnet werden.");
     }
 
     private void NwosSettings_Click(object sender, RoutedEventArgs e)
     {
-        CloseMenu();
+        MasterPopup.IsOpen = false;
         var settingsWindow = new NwosSettingsWindow
         {
             Owner = Window.GetWindow(this),
@@ -570,7 +388,7 @@ public partial class MasterFlyout : UserControl
             StartTarget("shutdown.exe", "/r /t 0", "Der PC konnte nicht neu gestartet werden.");
         }
 
-        CloseMenu();
+        MasterPopup.IsOpen = false;
     }
 
     private void Shutdown_Click(object sender, RoutedEventArgs e)
@@ -580,7 +398,7 @@ public partial class MasterFlyout : UserControl
             StartTarget("shutdown.exe", "/s /t 0", "Der PC konnte nicht heruntergefahren werden.");
         }
 
-        CloseMenu();
+        MasterPopup.IsOpen = false;
     }
 
     private bool ConfirmPowerAction(string message, string title) =>
@@ -600,8 +418,12 @@ public partial class MasterFlyout : UserControl
         }
         catch (Exception ex)
         {
-            MessageBox.Show(Window.GetWindow(this), $"{errorMessage}\n\n{ex.Message}",
-                "NWOS Startmenü", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(
+                Window.GetWindow(this),
+                $"{errorMessage}\n\n{ex.Message}",
+                "NWOS Startmenü",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
         }
     }
 }
