@@ -28,7 +28,8 @@ Die Registrierung betrifft nur das aktuelle Benutzerkonto. Der Installer verlang
 - **Suche und Alice:** Das Suchfeld durchsucht Apps und Einstellungen. Der Alice-Button startet die Suche beziehungsweise ohne Suchbegriff einen manuellen Sicherheits-Scan.
 - **App-Hub in der Mitte:** Enthält angeheftete Apps. Apps lassen sich per Drag & Drop sortieren; Windows-Taskleisten-Verknüpfungen werden regelmäßig in den App-Hub übernommen. Über das Kontextmenü kannst du Apps starten, schließen oder aus dem Hub entfernen.
 - **Rechte Taskleistenbereiche:** Bieten Audio-/Gerätesteuerung, Benachrichtigungen sowie Uhrzeit und Kalender.
-- **Master-Menü / Funktionskanal:** Die Administrationskonsole wird über `/admin access <code>` geöffnet. Innerhalb des Kanals sind unter anderem `status`, `events` und `scan` verfügbar. Mit `/call "Alya"` oder `/call "Alice"` wählst du einen Chat.
+- **Master-Menü / Funktionskanal:** Die Administrationskonsole wird über `/admin access <code>` geöffnet. Innerhalb des Kanals sind unter anderem `status`, `events` und `scan` verfügbar. Mit `/call "Alya"`, `/call "Alice"` oder `/call "Cardinal"` wählst du einen Chat.
+- **Cardinal-Code-Agent:** Im Funktionskanal `/call "Cardinal"` eingeben. Mit `/workspace auto` sucht Cardinal begrenzt in üblichen NWOS-Projektordnern nach dem NWOS-Quellcode (einschließlich `NWOS.sln` und Cardinal-/Host-Projektdatei) und speichert den gefundenen Ordner als Workspace. Alternativ lässt sich der Pfad manuell mit `/workspace "C:\Pfad\zum\NWOS"` setzen. Danach kann Cardinal passende NWOS-Quelldateien lesen und Änderungsvorschläge vorbereiten. Prüfe den Vorschlag mit `/review <ID>`; erst `ANWENDEN <ID>` schreibt ihn. `/abbrechen <ID>` verwirft ihn. Änderungen sind auf Text-/Quelldateien innerhalb des NWOS-Projektordners beschränkt; Cardinal führt keine Befehle, Builds oder Tests aus. Vorschläge, Diffs und Status bleiben im lokalen Review-Verzeichnis `%LOCALAPPDATA%\NWOS\cardinal-code-review` dauerhaft einsehbar. Passende Quelltextausschnitte und die Aufgabenbeschreibung werden zur Erstellung des Vorschlags an OpenAI gesendet; wahrscheinliche Schlüssel und Secrets werden vorher redigiert. Für den Chat muss `OPENAI_API_KEY` im Cardinal-Prozess verfügbar sein.
 
 Die Taskleiste fährt ein, wenn der Mauszeiger sie verlässt, und erscheint wieder, wenn der Zeiger den unteren Bildschirmrand berührt. Die **Windows-Taste** öffnet oder schließt das NWOS-Mastermenü; andere Windows-Tastenkombinationen wie Win+E werden weitergereicht.
 
@@ -47,7 +48,7 @@ Die Taskleiste fährt ein, wenn der Mauszeiger sie verlässt, und erscheint wied
 
 ### OpenAI-Chat konfigurieren
 
-Für Alyas und Alices KI-Chat `OPENAI_API_KEY` als Benutzer- oder Systemumgebungsvariable setzen und NWOS neu starten. Optional kann `OPENAI_MODEL` gesetzt werden; Standard ist `gpt-4o-mini`. Den API-Key nicht in Quellcode, Konfigurationsdateien oder Commits speichern. Chatnachrichten werden zur Verarbeitung an die OpenAI-API gesendet; abhängig vom OpenAI-Konto können Kosten entstehen. Ohne API-Key bleiben lokale Alice-Funktionen wie Ereignisse und Sicherheits-Scan verfügbar.
+Für die KI-Chats von Alya, Alice und Cardinal `OPENAI_API_KEY` als Benutzer- oder Systemumgebungsvariable setzen und NWOS neu starten. Optional kann `OPENAI_MODEL` gesetzt werden; Standard ist `gpt-4o-mini`. Den API-Key nicht in Quellcode, Konfigurationsdateien oder Commits speichern. Chatnachrichten werden zur Verarbeitung an die OpenAI-API gesendet; abhängig vom OpenAI-Konto können Kosten entstehen. Cardinal sendet zur Codeaufgabe ausgewählte NWOS-Dateiausschnitte und die Aufgabenbeschreibung an die API. Ohne API-Key bleiben lokale Alice-Funktionen wie Ereignisse und Sicherheits-Scan verfügbar.
 
 ## 2. Aktueller Funktionsumfang
 
@@ -63,6 +64,7 @@ Für Alyas und Alices KI-Chat `OPENAI_API_KEY` als Benutzer- oder Systemumgebung
 ### Cardinal-Module und KI
 
 - **Cardinal:** Verwaltet Module, Berechtigungen und die Named-Pipe-IPC zwischen Diensten und UI.
+- **Cardinal-Code-Agent:** Liest relevante Text-/Quelldateien nur aus dem ausdrücklich gesetzten NWOS-Arbeitsbereich und erstellt Vorschläge mit exakter Ersetzung. Keine Dateiänderung erfolgt ohne explizites `ANWENDEN <ID>`. Ein dauerhaftes lokales Review speichert Aufgabe, Patch, Prüfschritte, Status und Hashes. Keine Prozessausführung oder automatischen Tests.
 - **Alya:** Benutzerkontakt und optionaler OpenAI-Chat.
 - **Alice:** Suche, Ereignisse und manuell auslösbarer Sicherheits-Scan.
 - **Marc, Widgets und System Center:** Weitere Modul- und Systemfunktionen, abhängig von der jeweiligen Konfiguration.

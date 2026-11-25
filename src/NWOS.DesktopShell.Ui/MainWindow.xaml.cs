@@ -498,10 +498,13 @@ namespace NWOS.DesktopShell.Ui
                 case "alice":
                     CenterMasterFlyout.SetActiveChatTarget("Alice");
                     break;
+                case "cardinal":
+                    CenterMasterFlyout.SetActiveChatTarget("Cardinal");
+                    break;
                 default:
                     CenterMasterFlyout.AddConsoleMessage(
                         "Konsole",
-                        "Unbekanntes Ziel für /call. Erlaubt sind: /call \"Alya\" oder /call \"Alice\".");
+                        "Unbekanntes Ziel für /call. Erlaubt sind: /call \"Alya\", /call \"Alice\" oder /call \"Cardinal\".");
                     break;
             }
 
@@ -510,11 +513,12 @@ namespace NWOS.DesktopShell.Ui
 
         private async Task<string> SendConsoleChatMessageAsync(string target, string message)
         {
-            var (moduleId, action) = target.ToLowerInvariant() switch
+            var (moduleId, action, requiredScope) = target.ToLowerInvariant() switch
             {
-                "alya" => ("nwos.alya", "alya.chat"),
-                "alice" => ("nwos.alice", "alice.chat"),
-                _ => throw new ArgumentException("Nur Alya und Alice sind als Chat-Ziel freigegeben.", nameof(target)),
+                "alya" => ("nwos.alya", "alya.chat", PermissionScope.NetworkGeneral),
+                "alice" => ("nwos.alice", "alice.chat", PermissionScope.NetworkGeneral),
+                "cardinal" => ("nwos.cardinal", "cardinal.chat", PermissionScope.None),
+                _ => throw new ArgumentException("Nur Alya, Alice und Cardinal sind als Chat-Ziel freigegeben.", nameof(target)),
             };
 
             if (!_consoleChatHistory.TryGetValue(target, out var history))
@@ -541,7 +545,7 @@ namespace NWOS.DesktopShell.Ui
                 {
                     messages = history.Select(turn => new { role = turn.Role, content = turn.Content }).ToArray(),
                 },
-                PermissionScope.NetworkGeneral);
+                requiredScope);
 
             if (response is null)
             {

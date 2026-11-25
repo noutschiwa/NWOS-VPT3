@@ -59,6 +59,21 @@ public class MessageScopePolicyTests
         Assert.Equal(PermissionScope.NetworkGeneral, MessageScopePolicy.MinimumScopeFor(messageType));
     }
 
+    [Fact]
+    public void Cardinal_chat_can_be_requested_without_granting_network_to_external_ui()
+    {
+        var permissions = CreateWithExternalUi();
+        var message = ModuleMessage.Create(
+            "external.ipc",
+            "nwos.cardinal",
+            "cardinal.chat",
+            "{}",
+            PermissionScope.None);
+
+        Assert.True(permissions.Evaluate(message).Allowed);
+        Assert.Equal(PermissionScope.None, MessageScopePolicy.MinimumScopeFor("cardinal.chat"));
+    }
+
     [Theory]
     [InlineData("box.create", PermissionScope.FileSystemWrite)]
     [InlineData("marc.closeApp", PermissionScope.ProcessControl)]

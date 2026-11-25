@@ -136,7 +136,7 @@
                                                        FontSize="12"
                                                        FontWeight="SemiBold"
                                                        Margin="0,0,0,5" />
-                                            <TextBlock Text="/help  —  Befehlsübersicht&#x0a;/admin access &lt;code&gt;  —  Funktionskanal öffnen&#x0a;Im Funktionskanal: status · events · scan · hide"
+                                            <TextBlock Text="/help  —  Befehlsübersicht&#x0a;/admin access &lt;code&gt;  —  Funktionskanal öffnen&#x0a;Cardinal: /workspace auto · /review &lt;ID&gt; · ANWENDEN &lt;ID&gt;"
                                                        Foreground="#C5D5E8"
                                                        FontSize="11"
                                                        TextWrapping="Wrap" />
@@ -196,7 +196,7 @@
                                                        FontWeight="Bold"
                                                        VerticalAlignment="Center" />
                                             <TextBlock x:Name="ConsoleChatTargetTextBlock"
-                                                       Text="Befehle oder /call Alya|Alice"
+                                                       Text="Befehle oder /call Alya|Alice|Cardinal"
                                                        DockPanel.Dock="Right"
                                                        Foreground="#9CA3AF"
                                                        FontSize="10"

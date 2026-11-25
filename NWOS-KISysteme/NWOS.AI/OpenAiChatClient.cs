@@ -39,6 +39,30 @@ public sealed class OpenAiChatClient
         string systemPrompt,
         IReadOnlyList<OpenAiChatMessage> messages,
         CancellationToken cancellationToken)
+        => await CompleteAsync(
+            systemPrompt,
+            messages,
+            maxMessageLength: 4000,
+            maxConversationLength: 16000,
+            cancellationToken);
+
+    public async Task<string> CompleteWithContextAsync(
+        string systemPrompt,
+        string userMessage,
+        CancellationToken cancellationToken)
+        => await CompleteAsync(
+            systemPrompt,
+            new[] { new OpenAiChatMessage("user", userMessage) },
+            maxMessageLength: 90000,
+            maxConversationLength: 90000,
+            cancellationToken);
+
+    private async Task<string> CompleteAsync(
+        string systemPrompt,
+        IReadOnlyList<OpenAiChatMessage> messages,
+        int maxMessageLength,
+        int maxConversationLength,
+        CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(_apiKey))
         {
@@ -51,8 +75,8 @@ public sealed class OpenAiChatClient
             throw new ArgumentOutOfRangeException(nameof(messages), "Der Chat muss 1 bis 20 Nachrichten enthalten.");
         }
 
-        if (messages.Any(message => message.Content.Length > 4000)
-            || messages.Sum(message => (long)message.Content.Length) > 16000)
+        if (messages.Any(message => message.Content.Length > maxMessageLength)
+            || messages.Sum(message => (long)message.Content.Length) > maxConversationLength)
         {
             throw new ArgumentException("Der Chat-Verlauf überschreitet das erlaubte Größenlimit.", nameof(messages));
         }

@@ -84,12 +84,20 @@ public static class HostComposition
         await settingsStore.LoadAsync(CancellationToken.None);
 
         var cardinal = host.Services.GetRequiredService<CardinalService>();
+        var codingAssistant = new CardinalCodingAssistantModule(stateDirectory: configDirectory);
+        cardinal.RegisterModule(codingAssistant, NWOS.Contracts.PermissionScope.NetworkGeneral);
+        logger.LogInformation("Modul {Module} registriert (NWOS-Dateizugriff nur im freigegebenen Arbeitsbereich, ohne Prozesszugriff).",
+            codingAssistant.ModuleId);
+        if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OPENAI_API_KEY")))
+        {
+            logger.LogWarning("OPENAI_API_KEY ist für diesen Cardinal-Prozess nicht gesetzt. KI-Chats sind nicht verfügbar.");
+        }
 
         // Externe Prozesse (z. B. die Desktop-UI) erscheinen für Cardinal immer
         // als "external.ipc" (siehe IpcServer). Grundsätzlich nur Datei lesen/
         // schreiben. Netzwerkzugriff kommt ausschließlich hinzu, wenn der
         // Nutzer einen OpenAI-Key konfiguriert hat; MessageScopePolicy begrenzt
-        // ihn auf Alya-/Alice-Chat. ProcessControl und SystemChange bleiben aus.
+        // ihn auf freigegebene KI-Chats. ProcessControl und SystemChange bleiben aus.
         var externalScopes =
             NWOS.Contracts.PermissionScope.FileSystemRead | NWOS.Contracts.PermissionScope.FileSystemWrite;
         if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OPENAI_API_KEY")))

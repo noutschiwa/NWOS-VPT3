@@ -257,7 +257,7 @@ public partial class MasterFlyout : UserControl
         _consoleInitialized = true;
         _consoleMessages.Add(new ConsoleEntry(
             "Cardinal",
-            "Funktionskanal bereit. Erlaubt: status, events, scan, hide."));
+            "Funktionskanal bereit. Erlaubt: status, events, scan, hide und /call \"Alya\", /call \"Alice\" oder /call \"Cardinal\"."));
     }
 
     private static AllowedConsoleAction ResolveAllowedAction(string? input)
@@ -299,17 +299,22 @@ public partial class MasterFlyout : UserControl
 
         if (action == AllowedConsoleAction.None)
         {
-            if (input.TrimStart().StartsWith("/", StringComparison.Ordinal))
+            var isCardinalAgentCommand = string.Equals(
+                    _activeChatTarget,
+                    "Cardinal",
+                    StringComparison.OrdinalIgnoreCase)
+                && IsCardinalAgentCommand(input);
+            if (input.TrimStart().StartsWith("/", StringComparison.Ordinal) && !isCardinalAgentCommand)
             {
                 AddConsoleMessage(
                     "Konsole",
-                    "Unbekannter Befehl. Erlaubt: /call \"Alya\", /call \"Alice\", status, events, scan, hide.");
+                    "Unbekannter Befehl. Erlaubt: /call \"Alya\", /call \"Alice\", /call \"Cardinal\", status, events, scan, hide.");
                 return;
             }
 
             if (_activeChatTarget is null || ChatMessageRequested is null)
             {
-                AddConsoleMessage("Konsole", "Öffne zuerst einen Chat mit /call \"Alya\" oder /call \"Alice\".");
+                AddConsoleMessage("Konsole", "Öffne zuerst einen Chat mit /call \"Alya\", /call \"Alice\" oder /call \"Cardinal\".");
                 return;
             }
 
@@ -336,6 +341,15 @@ public partial class MasterFlyout : UserControl
 
         await ConsoleActionRequested(action);
         CardinalConsoleScrollViewer.ScrollToEnd();
+    }
+
+    private static bool IsCardinalAgentCommand(string input)
+    {
+        var command = input.TrimStart();
+        return command.Equals("/workspace", StringComparison.OrdinalIgnoreCase)
+            || command.StartsWith("/workspace ", StringComparison.OrdinalIgnoreCase)
+            || command.StartsWith("/review ", StringComparison.OrdinalIgnoreCase)
+            || command.StartsWith("/abbrechen ", StringComparison.OrdinalIgnoreCase);
     }
 
     public void AddConsoleMessage(string sender, string message)
