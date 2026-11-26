@@ -137,3 +137,7 @@ C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Buttons\Au
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Buttons\Info-Button\InfoFlyout.g.cs
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Buttons\Master-Button\MasterFlyout.g.cs
 C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\NWOS.Buttons\WS-Button\WorkspaceFlyout.g.cs
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\AlyaChatWindow.baml
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\obj\Release\net8.0-windows\AlyaChatWindow.g.cs
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Release\net8.0-windows\NWOS.SystemCenter.dll
+C:\NWOS\NWOS\src\NWOS.DesktopShell.Ui\bin\Release\net8.0-windows\NWOS.SystemCenter.pdb

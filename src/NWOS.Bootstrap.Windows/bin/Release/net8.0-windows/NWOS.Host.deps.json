@@ -394,7 +394,8 @@
       "NWOS.Alice/1.0.0": {
         "dependencies": {
           "NWOS.AI": "1.0.0",
-          "NWOS.Contracts": "1.0.0"
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.SystemCenter": "1.0.0"
         },
         "runtime": {
           "NWOS.Alice.dll": {
@@ -420,6 +421,7 @@
         "dependencies": {
           "Microsoft.Extensions.Hosting": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
+          "NWOS.AI": "1.0.0",
           "NWOS.Alice": "1.0.0",
           "NWOS.Alya": "1.0.0",
           "NWOS.Contracts": "1.0.0",
@@ -478,6 +480,7 @@
       },
       "NWOS.Marc/1.0.0": {
         "dependencies": {
+          "NWOS.AI": "1.0.0",
           "NWOS.Contracts": "1.0.0"
         },
         "runtime": {

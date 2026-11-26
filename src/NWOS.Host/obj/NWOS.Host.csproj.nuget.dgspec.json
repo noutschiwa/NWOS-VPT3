@@ -109,6 +109,9 @@
               },
               "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
                 "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+              },
+              "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj"
               }
             }
           }
@@ -273,6 +276,9 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
+              "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj"
+              },
               "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alice\\NWOS.Alice.csproj": {
                 "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.Alice\\NWOS.Alice.csproj"
               },
@@ -388,6 +394,9 @@
             "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
+              "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj": {
+                "projectPath": "C:\\NWOS\\NWOS\\NWOS-KISysteme\\NWOS.AI\\NWOS.AI.csproj"
+              },
               "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
                 "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
               }

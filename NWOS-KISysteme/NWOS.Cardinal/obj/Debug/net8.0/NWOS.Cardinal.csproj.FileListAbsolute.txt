@@ -96,3 +96,5 @@ C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\obj\Debug\net8.0\NWOS.Cardinal.dll
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\obj\Debug\net8.0\refint\NWOS.Cardinal.dll
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\obj\Debug\net8.0\NWOS.Cardinal.pdb
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\obj\Debug\net8.0\ref\NWOS.Cardinal.dll
+C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\bin\Debug\net8.0\NWOS.SystemCenter.dll
+C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\bin\Debug\net8.0\NWOS.SystemCenter.pdb

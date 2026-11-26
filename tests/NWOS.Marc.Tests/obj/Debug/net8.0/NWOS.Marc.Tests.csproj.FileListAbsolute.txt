@@ -305,3 +305,5 @@ C:\NWOS\NWOS\tests\NWOS.Marc.Tests\obj\Debug\net8.0\refint\NWOS.Marc.Tests.dll
 C:\NWOS\NWOS\tests\NWOS.Marc.Tests\obj\Debug\net8.0\NWOS.Marc.Tests.pdb
 C:\NWOS\NWOS\tests\NWOS.Marc.Tests\obj\Debug\net8.0\NWOS.Marc.Tests.genruntimeconfig.cache
 C:\NWOS\NWOS\tests\NWOS.Marc.Tests\obj\Debug\net8.0\ref\NWOS.Marc.Tests.dll
+C:\NWOS\NWOS\tests\NWOS.Marc.Tests\bin\Debug\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\tests\NWOS.Marc.Tests\bin\Debug\net8.0\NWOS.AI.pdb

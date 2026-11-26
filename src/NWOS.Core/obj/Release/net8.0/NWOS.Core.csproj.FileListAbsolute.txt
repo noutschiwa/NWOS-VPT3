@@ -28,3 +28,5 @@ C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Marc.pdb
 C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.Settings.pdb
 C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.AI.dll
 C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.AI.pdb
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.SystemCenter.dll
+C:\NWOS\NWOS\src\NWOS.Core\bin\Release\net8.0\NWOS.SystemCenter.pdb

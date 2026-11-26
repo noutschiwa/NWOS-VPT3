@@ -1,6 +1,8 @@
 using System.Text.Json;
+using System.Diagnostics;
 using NWOS.AI;
 using NWOS.Contracts;
+using NWOS.SystemCenter;
 
 namespace NWOS.Alice;
 
@@ -21,6 +23,7 @@ namespace NWOS.Alice;
 ///   - "alice.restore"          { "quarantineId": string }
 ///   - "alice.listQuarantined"  (kein Payload nötig)
 ///   - "alice.manualScan"       (manueller Scan des überwachten Ordners)
+///   - "alice.systemCheck"      (lesende Windows-, Laufwerks-, Prozess- und Verzeichnisdiagnose)
 /// </summary>
 public sealed class AliceModule : IModule, IDisposable
 {
@@ -33,6 +36,7 @@ public sealed class AliceModule : IModule, IDisposable
     private readonly SecurityAuditLog _auditLog;
     private readonly QuarantineService _quarantine;
     private readonly OpenAiChatClient _chatClient;
+    private readonly ISystemStatusProvider? _systemStatusProvider;
 
     private FileSystemWatcher? _watcher;
     private bool _watcherActive;
@@ -45,12 +49,14 @@ public sealed class AliceModule : IModule, IDisposable
     public AliceModule(
         string watchedDirectory,
         string stateDirectory,
-        OpenAiChatClient? chatClient = null)
+        OpenAiChatClient? chatClient = null,
+        ISystemStatusProvider? systemStatusProvider = null)
     {
         _watchedDirectory = watchedDirectory;
         _auditLog = new SecurityAuditLog(stateDirectory);
         _quarantine = new QuarantineService(stateDirectory);
         _chatClient = chatClient ?? new OpenAiChatClient();
+        _systemStatusProvider = systemStatusProvider;
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
@@ -176,6 +182,8 @@ public sealed class AliceModule : IModule, IDisposable
 
             "alice.manualScan" => await RunManualScanAsync(cancellationToken),
 
+            "alice.systemCheck" => await RunSystemCheckAsync(cancellationToken),
+
             "alice.chat" => new
             {
                 reply = await _chatClient.CompleteAsync(
@@ -265,7 +273,221 @@ public sealed class AliceModule : IModule, IDisposable
         };
     }
 
-    private static IEnumerable<string> EnumerateFilesSafe(string rootDirectory)
+    private async Task<object> RunSystemCheckAsync(CancellationToken cancellationToken)
+    {
+        var warnings = new List<string>();
+        SystemStatusSnapshot? status = null;
+        if (_systemStatusProvider is null)
+        {
+            warnings.Add("Windows-Systemmetriken sind nicht verfügbar: kein Windows-Statusanbieter konfiguriert.");
+        }
+        else
+        {
+            try
+            {
+                status = await _systemStatusProvider.CaptureAsync(cancellationToken);
+                if (status.CpuUsagePercent is null)
+                {
+                    warnings.Add("CPU-Auslastung konnte nicht über die konfigurierte Windows-Datenquelle ermittelt werden.");
+                }
+
+                if (status.TotalMemoryBytes is null || status.AvailableMemoryBytes is null)
+                {
+                    warnings.Add("RAM-Werte konnten nicht über die konfigurierte Windows-Datenquelle ermittelt werden.");
+                }
+
+                if (status.ActiveProcessCount is null)
+                {
+                    warnings.Add("Prozessanzahl konnte nicht ermittelt werden.");
+                }
+
+                if (status.Disks is null)
+                {
+                    warnings.Add("WMI-Laufwerksdaten nicht verfügbar; Laufwerke werden separat über DriveInfo geprüft.");
+                }
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                warnings.Add($"Windows-Systemmetriken konnten nicht gelesen werden: {ex.Message}");
+            }
+        }
+
+        var volumes = new List<object>();
+        IEnumerable<DriveInfo> drives;
+        try
+        {
+            drives = DriveInfo.GetDrives();
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException)
+        {
+            drives = Array.Empty<DriveInfo>();
+            warnings.Add($"Laufwerksliste konnte nicht gelesen werden: {ex.Message}");
+        }
+
+        foreach (var drive in drives)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            try
+            {
+                if (!drive.IsReady)
+                {
+                    volumes.Add(new { name = drive.Name, ready = false });
+                    continue;
+                }
+
+                volumes.Add(new
+                {
+                    name = drive.Name,
+                    ready = true,
+                    drive.DriveType,
+                    drive.DriveFormat,
+                    totalBytes = drive.TotalSize,
+                    availableBytes = drive.AvailableFreeSpace,
+                });
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException)
+            {
+                warnings.Add($"Laufwerk {drive.Name} konnte nicht vollständig gelesen werden: {ex.Message}");
+            }
+        }
+
+        var scan = await RunReadOnlyHeuristicScanAsync(cancellationToken);
+        warnings.AddRange(scan.Warnings);
+        ProcessReport? processReport = null;
+        try
+        {
+            processReport = CaptureProcesses(cancellationToken);
+        }
+        catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException or UnauthorizedAccessException)
+        {
+            warnings.Add($"Prozessliste konnte nicht gelesen werden: {ex.Message}");
+        }
+
+        if (processReport is { InaccessibleProcesses: > 0 } processDetails)
+        {
+            warnings.Add($"{processDetails.InaccessibleProcesses} Prozess(e) konnten wegen fehlender Rechte oder zwischenzeitlichem Ende nicht vollständig gelesen werden.");
+        }
+
+        return new
+        {
+            capturedAt = DateTimeOffset.UtcNow,
+            system = new
+            {
+                osDescription = Environment.OSVersion.ToString(),
+                framework = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription,
+                architecture = System.Runtime.InteropServices.RuntimeInformation.OSArchitecture.ToString(),
+                processArchitecture = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString(),
+                processorCount = Environment.ProcessorCount,
+                uptime = TimeSpan.FromMilliseconds(Environment.TickCount64).ToString("c"),
+                activeProcessCount = status?.ActiveProcessCount,
+                enumeratedProcessCount = processReport?.TotalProcesses,
+                processes = processReport?.Processes,
+                omittedProcesses = processReport?.OmittedProcesses,
+                cpuUsagePercent = status?.CpuUsagePercent,
+                totalMemoryBytes = status?.TotalMemoryBytes,
+                availableMemoryBytes = status?.AvailableMemoryBytes,
+                metricsCapturedAt = status?.CapturedAt,
+                windowsProviderDisks = status?.Disks,
+                volumes,
+            },
+            security = new
+            {
+                checkedDirectory = _watchedDirectory,
+                directoryAvailable = Directory.Exists(_watchedDirectory),
+                scanScope = "Nur Alices überwachtes Verzeichnis; transparente Dateinamens-Heuristiken, kein Antivirus- oder vollständiger Malware-Scan.",
+                scannedFiles = scan.ScannedFiles,
+                findings = scan.Findings,
+                auditEventsRecorded = scan.Findings.Count,
+                auditLogUpdated = true,
+                automaticChangesMade = false,
+                limitations = "Keine Windows-Defender-/Antivirus-Abfrage, kein vollständiger Datenträger- oder Malware-Scan.",
+            },
+            warnings,
+        };
+    }
+
+    private async Task<ReadOnlyScanResult> RunReadOnlyHeuristicScanAsync(CancellationToken cancellationToken)
+    {
+        const int maxFiles = 20000;
+        var findings = new List<ThreatEvent>();
+        var warnings = new List<string>();
+        var scannedFiles = 0;
+
+        foreach (var filePath in EnumerateFilesSafe(_watchedDirectory, warnings.Add))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (scannedFiles >= maxFiles)
+            {
+                warnings.Add($"Scan-Limit von {maxFiles} Dateien erreicht; weitere Dateien wurden nicht geprüft.");
+                break;
+            }
+
+            scannedFiles++;
+            foreach (var threatEvent in _heuristics.EvaluateFileCreatedOrChanged(filePath))
+            {
+                findings.Add(threatEvent);
+                await _auditLog.AppendAsync(threatEvent, cancellationToken);
+            }
+        }
+
+        return new ReadOnlyScanResult(scannedFiles, findings, warnings);
+    }
+
+    private sealed record ReadOnlyScanResult(
+        int ScannedFiles,
+        IReadOnlyList<ThreatEvent> Findings,
+        IReadOnlyList<string> Warnings);
+
+    private static ProcessReport CaptureProcesses(CancellationToken cancellationToken)
+    {
+        const int maxReportedProcesses = 500;
+        var processes = Process.GetProcesses();
+        var result = new List<ProcessSummary>(Math.Min(processes.Length, maxReportedProcesses));
+        var inaccessibleProcesses = 0;
+        try
+        {
+            foreach (var process in processes)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                try
+                {
+                    if (result.Count < maxReportedProcesses)
+                    {
+                        result.Add(new ProcessSummary(process.Id, process.ProcessName, process.WorkingSet64));
+                    }
+                }
+                catch (Exception ex) when (ex is InvalidOperationException or System.ComponentModel.Win32Exception or UnauthorizedAccessException)
+                {
+                    inaccessibleProcesses++;
+                }
+            }
+        }
+        finally
+        {
+            foreach (var process in processes)
+            {
+                process.Dispose();
+            }
+        }
+
+        return new ProcessReport(
+            processes.Length,
+            result,
+            Math.Max(0, processes.Length - result.Count),
+            inaccessibleProcesses);
+    }
+
+    private sealed record ProcessSummary(int ProcessId, string Name, long WorkingSetBytes);
+
+    private sealed record ProcessReport(
+        int TotalProcesses,
+        IReadOnlyList<ProcessSummary> Processes,
+        int OmittedProcesses,
+        int InaccessibleProcesses);
+
+    private static IEnumerable<string> EnumerateFilesSafe(
+        string rootDirectory,
+        Action<string>? warning = null)
     {
         if (!Directory.Exists(rootDirectory))
         {
@@ -286,23 +508,50 @@ public sealed class AliceModule : IModule, IDisposable
                 files = Directory.GetFiles(directory);
                 subdirectories = Directory.GetDirectories(directory);
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex)
             {
+                warning?.Invoke($"Zugriff auf Verzeichnis nicht möglich: {directory} ({ex.Message})");
                 continue;
             }
-            catch (IOException)
+            catch (IOException ex)
             {
+                warning?.Invoke($"Verzeichnis konnte nicht gelesen werden: {directory} ({ex.Message})");
                 continue;
             }
 
             foreach (var file in files)
             {
-                yield return file;
+                FileAttributes attributes;
+                try
+                {
+                    attributes = File.GetAttributes(file);
+                }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException)
+                {
+                    warning?.Invoke($"Datei konnte nicht geprüft werden: {file} ({ex.Message})");
+                    continue;
+                }
+
+                if ((attributes & FileAttributes.ReparsePoint) == 0)
+                {
+                    yield return file;
+                }
             }
 
             foreach (var subdirectory in subdirectories)
             {
-                pending.Push(subdirectory);
+                try
+                {
+                    if ((File.GetAttributes(subdirectory) & FileAttributes.ReparsePoint) == 0)
+                    {
+                        pending.Push(subdirectory);
+                    }
+                }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Security.SecurityException)
+                {
+                    warning?.Invoke($"Unterverzeichnis konnte nicht geprüft werden: {subdirectory} ({ex.Message})");
+                    continue;
+                }
             }
         }
     }

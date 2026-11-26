@@ -2,11 +2,11 @@ namespace NWOS.SystemCenter;
 
 /// <summary>Momentaufnahme des Systemzustands (Architekturdokument Abschnitt 24).</summary>
 public sealed record SystemStatusSnapshot(
-    double CpuUsagePercent,
-    long TotalMemoryBytes,
-    long AvailableMemoryBytes,
-    IReadOnlyList<DiskStatus> Disks,
-    int ActiveProcessCount,
+    double? CpuUsagePercent,
+    long? TotalMemoryBytes,
+    long? AvailableMemoryBytes,
+    IReadOnlyList<DiskStatus>? Disks,
+    int? ActiveProcessCount,
     DateTimeOffset CapturedAt);
 
 public sealed record DiskStatus(string DriveName, long TotalBytes, long FreeBytes);

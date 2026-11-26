@@ -25,11 +25,12 @@ Die Registrierung betrifft nur das aktuelle Benutzerkonto. Der Installer verlang
 
 - **Master-Button links:** Öffnet das zentrale Master-Menü. Dort findest du Windows-Einstellungen, NWOS-Einstellungen, Energieeinstellungen und die Funktionen zum Neustarten, Herunterfahren oder Zurückwechseln zu Windows.
 - **Arbeitsflächen-Button:** Öffnet per Hover die Steuerung für virtuelle Desktops; dort lassen sich Arbeitsflächen wechseln, erstellen oder schließen.
-- **Suche und Alice:** Das Suchfeld durchsucht Apps und Einstellungen. Der Alice-Button startet die Suche beziehungsweise ohne Suchbegriff einen manuellen Sicherheits-Scan.
+- **Suche und Alice:** Das Suchfeld durchsucht Apps und Einstellungen. Der Alice-Button startet die Suche beziehungsweise ohne Suchbegriff einen manuellen Sicherheits-Scan. Der separate **CAI**-Taskleistenknopf öffnet Alyas/Marcs Chatfenster.
 - **App-Hub in der Mitte:** Enthält angeheftete Apps. Apps lassen sich per Drag & Drop sortieren; Windows-Taskleisten-Verknüpfungen werden regelmäßig in den App-Hub übernommen. Über das Kontextmenü kannst du Apps starten, schließen oder aus dem Hub entfernen.
 - **Rechte Taskleistenbereiche:** Bieten Audio-/Gerätesteuerung, Benachrichtigungen sowie Uhrzeit und Kalender.
 - **Master-Menü / Funktionskanal:** Die Administrationskonsole wird über `/admin access <code>` geöffnet. Innerhalb des Kanals sind unter anderem `status`, `events` und `scan` verfügbar. Mit `/call "Alya"`, `/call "Alice"` oder `/call "Cardinal"` wählst du einen Chat.
 - **Cardinal-Code-Agent:** Im Funktionskanal `/call "Cardinal"` eingeben. Mit `/workspace auto` sucht Cardinal begrenzt in üblichen NWOS-Projektordnern nach dem NWOS-Quellcode (einschließlich `NWOS.sln` und Cardinal-/Host-Projektdatei) und speichert den gefundenen Ordner als Workspace. Alternativ lässt sich der Pfad manuell mit `/workspace "C:\Pfad\zum\NWOS"` setzen. Danach kann Cardinal passende NWOS-Quelldateien lesen und Änderungsvorschläge vorbereiten. Prüfe den Vorschlag mit `/review <ID>`; erst `ANWENDEN <ID>` schreibt ihn. `/abbrechen <ID>` verwirft ihn. Änderungen sind auf Text-/Quelldateien innerhalb des NWOS-Projektordners beschränkt; Cardinal führt keine Befehle, Builds oder Tests aus. Vorschläge, Diffs und Status bleiben im lokalen Review-Verzeichnis `%LOCALAPPDATA%\NWOS\cardinal-code-review` dauerhaft einsehbar. Passende Quelltextausschnitte und die Aufgabenbeschreibung werden zur Erstellung des Vorschlags an OpenAI gesendet; wahrscheinliche Schlüssel und Secrets werden vorher redigiert. Für den Chat muss `OPENAI_API_KEY` im Cardinal-Prozess verfügbar sein.
+- **CAI-Fenster:** Der Taskleistenknopf **CAI** öffnet den eigenständigen Chat außerhalb des Admin-Menüs. Links kannst du **Alya**, **Marc** oder **Alya-Marc** wählen; im Kombimodus antworten beide auf dieselbe Unterhaltung. Der Button **Alice: Systemcheck** startet einen lesenden Diagnosebericht. Alyas, Marcs und Kombi-Unterhaltungen werden getrennt unter `%LOCALAPPDATA%\NWOS\ai-memory` protokolliert und als lokales Kurzprotokoll sowie letzte Nachrichten beim Wiederaufnehmen als Kontext verwendet. Chatnachrichten und Kontext werden an den konfigurierten KI-Anbieter übertragen.
 
 Die Taskleiste fährt ein, wenn der Mauszeiger sie verlässt, und erscheint wieder, wenn der Zeiger den unteren Bildschirmrand berührt. Die **Windows-Taste** öffnet oder schließt das NWOS-Mastermenü; andere Windows-Tastenkombinationen wie Win+E werden weitergereicht.
 
@@ -48,7 +49,7 @@ Die Taskleiste fährt ein, wenn der Mauszeiger sie verlässt, und erscheint wied
 
 ### OpenAI-Chat konfigurieren
 
-Für die KI-Chats von Alya, Alice und Cardinal `OPENAI_API_KEY` als Benutzer- oder Systemumgebungsvariable setzen und NWOS neu starten. Optional kann `OPENAI_MODEL` gesetzt werden; Standard ist `gpt-4o-mini`. Den API-Key nicht in Quellcode, Konfigurationsdateien oder Commits speichern. Chatnachrichten werden zur Verarbeitung an die OpenAI-API gesendet; abhängig vom OpenAI-Konto können Kosten entstehen. Cardinal sendet zur Codeaufgabe ausgewählte NWOS-Dateiausschnitte und die Aufgabenbeschreibung an die API. Ohne API-Key bleiben lokale Alice-Funktionen wie Ereignisse und Sicherheits-Scan verfügbar.
+Für die KI-Chats von Alya, Alice, Marc und Cardinal `OPENAI_API_KEY` als Benutzer- oder Systemumgebungsvariable setzen und NWOS neu starten; alle verwenden denselben konfigurierten Schlüssel. Optional kann `OPENAI_MODEL` gesetzt werden; Standard ist `gpt-4o-mini`. Den API-Key nicht in Quellcode, Konfigurationsdateien oder Commits speichern. Chatnachrichten werden zur Verarbeitung an die OpenAI-API gesendet; abhängig vom OpenAI-Konto können Kosten entstehen. Cardinal sendet zur Codeaufgabe ausgewählte NWOS-Dateiausschnitte und die Aufgabenbeschreibung an die API. Alices Systemcheck läuft lokal und überträgt seinen Bericht nicht an den KI-Anbieter. Ohne API-Key bleiben lokale Alice-Funktionen wie Ereignisse und Sicherheits-Scan verfügbar.
 
 ## 2. Aktueller Funktionsumfang
 
@@ -66,8 +67,9 @@ Für die KI-Chats von Alya, Alice und Cardinal `OPENAI_API_KEY` als Benutzer- od
 - **Cardinal:** Verwaltet Module, Berechtigungen und die Named-Pipe-IPC zwischen Diensten und UI.
 - **Cardinal-Code-Agent:** Liest relevante Text-/Quelldateien nur aus dem ausdrücklich gesetzten NWOS-Arbeitsbereich und erstellt Vorschläge mit exakter Ersetzung. Keine Dateiänderung erfolgt ohne explizites `ANWENDEN <ID>`. Ein dauerhaftes lokales Review speichert Aufgabe, Patch, Prüfschritte, Status und Hashes. Keine Prozessausführung oder automatischen Tests.
 - **Alya:** Benutzerkontakt und optionaler OpenAI-Chat.
-- **Alice:** Suche, Ereignisse und manuell auslösbarer Sicherheits-Scan.
-- **Marc, Widgets und System Center:** Weitere Modul- und Systemfunktionen, abhängig von der jeweiligen Konfiguration.
+- **Alice:** Suche, Ereignisse, manuell auslösbarer Sicherheits-Scan und lesender Systemcheck mit verfügbaren Windows-Metriken, Laufwerken, Prozessübersicht und Datei-Heuristiken im überwachten Verzeichnis. Der Check ändert keine Nutzdateien oder Systemeinstellungen; Erkennungen werden lokal im Audit protokolliert. Die Heuristiken ersetzen kein Antivirus-Produkt und scannen nicht das gesamte System.
+- **Marc:** Lokale NWOS-Funktionen sowie separater OpenAI-Chat; Chatnachrichten führen keine Datei-, Prozess- oder Systemeinstellungen-Aktionen aus.
+- **Widgets und System Center:** Weitere Modul- und Systemfunktionen, abhängig von der jeweiligen Konfiguration.
 
 ## 3. Entwicklung und manueller Start
 

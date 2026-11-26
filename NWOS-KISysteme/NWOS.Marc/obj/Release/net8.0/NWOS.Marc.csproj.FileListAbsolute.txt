@@ -45,3 +45,5 @@ C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.dll
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Marc\obj\Release\net8.0\refint\NWOS.Marc.dll
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Marc\obj\Release\net8.0\NWOS.Marc.pdb
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Marc\obj\Release\net8.0\ref\NWOS.Marc.dll
+C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Marc\bin\Release\net8.0\NWOS.AI.dll
+C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Marc\bin\Release\net8.0\NWOS.AI.pdb

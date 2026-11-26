@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Width="Auto"
              Height="45">
-    <Button x:Name="AlyaAssistantButton"
-            Content="🤖 Alya"
-            Click="AlyaAssistantButton_Click"
+    <Button x:Name="CaiAssistantButton"
+            Content="✦ CAI"
+            ToolTip="NWOS KI-Assistenten öffnen"
+            Click="CaiAssistantButton_Click"
             Style="{StaticResource TaskbarButtonStyle}" />
 </UserControl>

@@ -1,13 +1,13 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using NWOS.Contracts;
 
 namespace NWOS.DesktopShell.Ui.Button;
 
 public partial class AlyaButton : UserControl
 {
     private CardinalClient? _cardinalClient;
+    private AlyaChatWindow? _chatWindow;
 
     public AlyaButton()
     {
@@ -19,45 +19,31 @@ public partial class AlyaButton : UserControl
         _cardinalClient = cardinalClient ?? throw new ArgumentNullException(nameof(cardinalClient));
     }
 
-    private async void AlyaAssistantButton_Click(object sender, RoutedEventArgs e)
+    private void CaiAssistantButton_Click(object sender, RoutedEventArgs e)
     {
-        var owner = Window.GetWindow(this);
-
         if (_cardinalClient is null)
         {
             MessageBox.Show(
-                owner,
-                "Der Cardinal-Dienst ist für Alya nicht konfiguriert.",
-                "NWOS Alya",
+                Window.GetWindow(this),
+                "Der Cardinal-Dienst ist für den KI-Assistenten nicht konfiguriert.",
+                "NWOS CAI",
                 MessageBoxButton.OK,
                 MessageBoxImage.Warning);
             return;
         }
 
-        try
+        if (_chatWindow is null)
         {
-            using var response = await _cardinalClient.CallAsync(
-                "nwos.alya",
-                "chat.status",
-                new { },
-                PermissionScope.FileSystemRead);
+            _chatWindow = new AlyaChatWindow(_cardinalClient);
+            _chatWindow.Closed += (_, _) => _chatWindow = null;
+        }
 
-            var message = response?.RootElement.ToString() ?? "Alya Kern bereit.";
-            MessageBox.Show(
-                owner,
-                $"Alya Antwort:\n{message}",
-                "NWOS Alya",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
-        }
-        catch (Exception ex)
+        if (_chatWindow.WindowState == WindowState.Minimized)
         {
-            MessageBox.Show(
-                owner,
-                $"Alya konnte nicht erreicht werden: {ex.Message}",
-                "NWOS Alya",
-                MessageBoxButton.OK,
-                MessageBoxImage.Warning);
+            _chatWindow.WindowState = WindowState.Normal;
         }
+
+        _chatWindow.Show();
+        _chatWindow.Activate();
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.WindowsIntegration")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+444c3b83a8c42f50fa3c447d86575f7b19095f22")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+69c5e5bd060eaec5ae5c9212eff422b896f2298e")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.WindowsIntegration")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.WindowsIntegration")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

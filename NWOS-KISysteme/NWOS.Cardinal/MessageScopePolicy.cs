@@ -17,8 +17,9 @@ public static class MessageScopePolicy
 
         "icon.toggleVisibility" or "box.create" or "box.addItem" or "search.rebuildIndex"
             => PermissionScope.FileSystemWrite,
-        "icon.listStates" or "box.list" or "box.search" or "search.global"
+        "icon.listStates" or "box.list" or "box.search" or "search.global" or "alice.systemCheck"
             => PermissionScope.FileSystemRead,
+        "marc.chat" => PermissionScope.NetworkGeneral,
 
         "widget.create" or "widget.move" or "widget.resize" or "widget.setEnabled" or "widget.remove"
             => PermissionScope.FileSystemWrite,

@@ -421,3 +421,5 @@ C:\NWOS\NWOS\tests\NWOS.Cardinal.Tests\obj\Debug\net8.0\NWOS.Cardinal.Tests.genr
 C:\NWOS\NWOS\tests\NWOS.Cardinal.Tests\obj\Debug\net8.0\ref\NWOS.Cardinal.Tests.dll
 C:\NWOS\NWOS\tests\NWOS.Cardinal.Tests\bin\Debug\net8.0\NWOS.AI.dll
 C:\NWOS\NWOS\tests\NWOS.Cardinal.Tests\bin\Debug\net8.0\NWOS.AI.pdb
+C:\NWOS\NWOS\tests\NWOS.Cardinal.Tests\bin\Debug\net8.0\NWOS.SystemCenter.dll
+C:\NWOS\NWOS\tests\NWOS.Cardinal.Tests\bin\Debug\net8.0\NWOS.SystemCenter.pdb

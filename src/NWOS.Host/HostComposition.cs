@@ -137,7 +137,10 @@ public static class HostComposition
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
             var aliceStateDirectory = Path.Combine(configDirectory, "alice");
 
-            var alice = new AliceModule(downloadsDirectory, aliceStateDirectory);
+            var alice = new AliceModule(
+                downloadsDirectory,
+                aliceStateDirectory,
+                systemStatusProvider: windowsExtensions?.StatusProvider);
             cardinal.RegisterModule(alice, configuration.ScopesFor(alice.ModuleId));
             logger.LogInformation("Modul {Module} registriert (überwacht {Directory}).", alice.ModuleId, downloadsDirectory);
         }

@@ -49,6 +49,7 @@ public class MessageScopePolicyTests
     [Theory]
     [InlineData("alya.chat")]
     [InlineData("alice.chat")]
+    [InlineData("marc.chat")]
     public void Chat_requires_network_scope_for_external_ui(string messageType)
     {
         var permissions = CreateWithExternalUi();
@@ -80,6 +81,8 @@ public class MessageScopePolicyTests
     [InlineData("alice.restore", PermissionScope.SystemChange)]
     [InlineData("alya.greet", PermissionScope.None)]
     [InlineData("alice.scan", PermissionScope.None)]
+    [InlineData("alice.systemCheck", PermissionScope.FileSystemRead)]
+    [InlineData("marc.chat", PermissionScope.NetworkGeneral)]
     [InlineData("unbekannt.typ", PermissionScope.None)]
     public void Policy_returns_expected_minimum(string messageType, PermissionScope expected)
     {

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using NWOS.Contracts;
+using NWOS.SystemCenter;
 using Xunit;
 
 namespace NWOS.Alice.Tests;
@@ -71,6 +72,30 @@ public class AliceModuleTests
         await Assert.ThrowsAsync<NotSupportedException>(() => module.HandleMessageAsync(message, CancellationToken.None));
     }
 
+    [Fact]
+    public async Task System_check_reports_real_metrics_and_does_not_quarantine_findings()
+    {
+        var watchedDir = CreateTempDir();
+        File.WriteAllText(Path.Combine(watchedDir, "invoice.pdf.exe"), "not opened by scan");
+        var module = new AliceModule(
+            watchedDir,
+            CreateTempDir(),
+            systemStatusProvider: new FakeSystemStatusProvider());
+
+        var response = await module.HandleMessageAsync(
+            ModuleMessage.Create("test", module.ModuleId, "alice.systemCheck", "{}", PermissionScope.FileSystemRead),
+            CancellationToken.None);
+
+        using var report = JsonDocument.Parse(response!.PayloadJson);
+        Assert.Equal(42.5, report.RootElement.GetProperty("system").GetProperty("cpuUsagePercent").GetDouble());
+        Assert.Equal(2, report.RootElement.GetProperty("system").GetProperty("activeProcessCount").GetInt32());
+        Assert.Equal(1, report.RootElement.GetProperty("security").GetProperty("scannedFiles").GetInt32());
+        Assert.Equal(1, report.RootElement.GetProperty("security").GetProperty("findings").GetArrayLength());
+        Assert.Equal(1, report.RootElement.GetProperty("security").GetProperty("auditEventsRecorded").GetInt32());
+        Assert.False(report.RootElement.GetProperty("security").GetProperty("automaticChangesMade").GetBoolean());
+        Assert.True(File.Exists(Path.Combine(watchedDir, "invoice.pdf.exe")));
+    }
+
     private static async Task<bool> WaitForConditionAsync(Func<Task<bool>> condition, TimeSpan timeout)
     {
         var deadline = DateTime.UtcNow + timeout;
@@ -92,5 +117,17 @@ public class AliceModuleTests
         var dir = Path.Combine(Path.GetTempPath(), "nwos-alice-module-tests-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(dir);
         return dir;
+    }
+
+    private sealed class FakeSystemStatusProvider : ISystemStatusProvider
+    {
+        public Task<SystemStatusSnapshot> CaptureAsync(CancellationToken cancellationToken) =>
+            Task.FromResult(new SystemStatusSnapshot(
+                42.5,
+                16_000_000_000,
+                8_000_000_000,
+                Array.Empty<DiskStatus>(),
+                2,
+                DateTimeOffset.UtcNow));
     }
 }

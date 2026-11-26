@@ -437,7 +437,8 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "NWOS.AI": "1.0.0",
-          "NWOS.Contracts": "1.0.0"
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.SystemCenter": "1.0.0"
         },
         "compile": {
           "bin/placeholder/NWOS.Alice.dll": {}
@@ -457,6 +458,19 @@
         },
         "runtime": {
           "bin/placeholder/NWOS.Contracts.dll": {}
+        }
+      },
+      "NWOS.SystemCenter/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/NWOS.SystemCenter.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NWOS.SystemCenter.dll": {}
         }
       }
     }
@@ -1006,6 +1020,11 @@
       "type": "project",
       "path": "../../src/NWOS.Contracts/NWOS.Contracts.csproj",
       "msbuildProject": "../../src/NWOS.Contracts/NWOS.Contracts.csproj"
+    },
+    "NWOS.SystemCenter/1.0.0": {
+      "type": "project",
+      "path": "../../src/NWOS.SystemCenter/NWOS.SystemCenter.csproj",
+      "msbuildProject": "../../src/NWOS.SystemCenter/NWOS.SystemCenter.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1013,6 +1032,7 @@
       "Microsoft.NET.Test.Sdk >= 17.9.0",
       "NWOS.Alice >= 1.0.0",
       "NWOS.Contracts >= 1.0.0",
+      "NWOS.SystemCenter >= 1.0.0",
       "xunit >= 2.7.0",
       "xunit.runner.visualstudio >= 2.5.7"
     ]
@@ -1049,6 +1069,9 @@
             },
             "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj": {
               "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.Contracts\\NWOS.Contracts.csproj"
+            },
+            "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj": {
+              "projectPath": "C:\\NWOS\\NWOS\\src\\NWOS.SystemCenter\\NWOS.SystemCenter.csproj"
             }
           }
         }

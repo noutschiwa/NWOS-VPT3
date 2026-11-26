@@ -65,3 +65,5 @@ C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\obj\Release\net8.0\NWOS.Cardinal.dll
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\obj\Release\net8.0\refint\NWOS.Cardinal.dll
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\obj\Release\net8.0\NWOS.Cardinal.pdb
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\obj\Release\net8.0\ref\NWOS.Cardinal.dll
+C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\bin\Release\net8.0\NWOS.SystemCenter.dll
+C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Cardinal\bin\Release\net8.0\NWOS.SystemCenter.pdb

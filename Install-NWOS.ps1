@@ -55,9 +55,58 @@ function Test-DotnetSdk {
     return [bool]($majors | Where-Object { $_ -ge 8 })
 }
 
+function Stop-InstalledNwosProcesses {
+    $processesToStop = @(
+        @{ Name = 'NWOS.AutoUpdate'; Directory = (Join-Path $InstallDir 'AutoUpdate') },
+        @{ Name = 'NWOS.Bootstrap.Windows'; Directory = (Join-Path $InstallDir 'Cardinal') },
+        @{ Name = 'NWOS.DesktopShell.Ui'; Directory = (Join-Path $InstallDir 'Ui') }
+    )
+
+    foreach ($entry in $processesToStop) {
+        $expectedDirectory = [IO.Path]::GetFullPath($entry.Directory).TrimEnd('\') + '\'
+        Get-Process -Name $entry.Name -ErrorAction SilentlyContinue | ForEach-Object {
+            $process = $_
+            $processPath = $null
+            try { $processPath = $process.Path } catch { }
+
+            if (-not [string]::IsNullOrWhiteSpace($processPath) -and
+                [IO.Path]::GetFullPath($processPath).StartsWith(
+                    $expectedDirectory,
+                    [StringComparison]::OrdinalIgnoreCase)) {
+                Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+                try { $process.WaitForExit(5000) } catch { }
+            }
+        }
+    }
+}
+
+function Remove-PublishOutput([string]$OutputDir) {
+    $fullOutputDir = [IO.Path]::GetFullPath($OutputDir)
+    $installRoot = [IO.Path]::GetFullPath($InstallDir).TrimEnd('\') + '\'
+    if (-not $fullOutputDir.StartsWith($installRoot, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Ausgabepfad liegt ausserhalb des Installationsordners und wird nicht geloescht: $fullOutputDir"
+    }
+
+    for ($attempt = 1; $attempt -le 5; $attempt++) {
+        try {
+            if (Test-Path -LiteralPath $fullOutputDir) {
+                Remove-Item -LiteralPath $fullOutputDir -Recurse -Force -ErrorAction Stop
+            }
+            return
+        } catch {
+            if ($attempt -eq 5) {
+                throw "Installationsdateien in '$fullOutputDir' sind weiterhin gesperrt. Bitte NWOS schliessen und den Installer erneut starten. Letzter Fehler: $($_.Exception.Message)"
+            }
+
+            Stop-InstalledNwosProcesses
+            Start-Sleep -Milliseconds 700
+        }
+    }
+}
+
 function Publish-Project([string]$Project, [string]$OutputDir) {
     Write-Host "  Baue $Project ..."
-    if (Test-Path $OutputDir) { Remove-Item -Recurse -Force $OutputDir }
+    Remove-PublishOutput $OutputDir
     $buildId = [guid]::NewGuid().ToString('N')
     $intermediateRoot = Join-Path $env:TEMP "NWOS\Build\$buildId"
     try {
@@ -120,8 +169,8 @@ if ($RunTests) {
 
 # --- 3. Laufende Instanz beenden (Update) -------------------------------------------
 Write-Step 'Beende ggf. laufende NWOS-Prozesse'
-Get-Process -Name 'NWOS.Bootstrap.Windows', 'NWOS.DesktopShell.Ui' -ErrorAction SilentlyContinue | Stop-Process -Force
-Start-Sleep -Milliseconds 500
+Stop-InstalledNwosProcesses
+Start-Sleep -Milliseconds 700
 
 # --- 4. Bauen und installieren -------------------------------------------------------
 Write-Step 'Baue und installiere NWOS (kann einige Minuten dauern)'

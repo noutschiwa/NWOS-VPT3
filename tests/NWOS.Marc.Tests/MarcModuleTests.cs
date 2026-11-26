@@ -1,4 +1,7 @@
 using System.Text.Json;
+using System.Net;
+using System.Text;
+using NWOS.AI;
 using NWOS.Contracts;
 using Xunit;
 
@@ -61,10 +64,44 @@ public class MarcModuleTests
         Assert.Equal(ModuleStatus.Unresponsive, health.Status);
     }
 
+    [Fact]
+    public async Task Chat_uses_configured_ai_client_without_running_local_actions()
+    {
+        var handler = new StubHandler((_, _) => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                """{"choices":[{"message":{"content":"Hallo vom Marc."}}]}""",
+                Encoding.UTF8,
+                "application/json"),
+        }));
+        var module = new MarcModule(new OpenAiChatClient(new HttpClient(handler), "test-key", "test-model"));
+        await module.StartAsync(CancellationToken.None);
+        var message = ModuleMessage.Create(
+            "nwos.cardinal",
+            module.ModuleId,
+            "marc.chat",
+            """{"messages":[{"role":"user","content":"Hallo"}]}""",
+            PermissionScope.None);
+
+        var response = await module.HandleMessageAsync(message, CancellationToken.None);
+
+        using var payload = JsonDocument.Parse(response!.PayloadJson);
+        Assert.Equal("Hallo vom Marc.", payload.RootElement.GetProperty("reply").GetString());
+    }
+
     private static string CreateTempDir()
     {
         var dir = Path.Combine(Path.GetTempPath(), "nwos-marc-module-tests-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(dir);
         return dir;
+    }
+
+    private sealed class StubHandler(
+        Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> send)
+        : HttpMessageHandler
+    {
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken) => send(request, cancellationToken);
     }
 }

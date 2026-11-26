@@ -26,13 +26,13 @@ public sealed class WmiSystemStatusProvider : ISystemStatusProvider
         var cpuUsage = TryGetCpuUsagePercent();
         var (totalMemory, availableMemory) = TryGetMemoryBytes();
         var disks = TryGetDisks();
-        var activeProcessCount = Process.GetProcesses().Length;
+        var activeProcessCount = TryGetActiveProcessCount();
 
         return Task.FromResult(new SystemStatusSnapshot(
             cpuUsage, totalMemory, availableMemory, disks, activeProcessCount, DateTimeOffset.UtcNow));
     }
 
-    private static double TryGetCpuUsagePercent()
+    private static double? TryGetCpuUsagePercent()
     {
         try
         {
@@ -42,17 +42,17 @@ public sealed class WmiSystemStatusProvider : ISystemStatusProvider
                 .Select(mo => Convert.ToDouble(mo["LoadPercentage"] ?? 0))
                 .ToList();
 
-            return values.Count > 0 ? values.Average() : 0;
+            return values.Count > 0 ? values.Average() : null;
         }
         catch (ManagementException)
         {
             // Abschnitt 36-Grundsatz: WMI kann z. B. per Gruppenrichtlinie
             // deaktiviert sein - dann lieber 0 zurückgeben als abstürzen.
-            return 0;
+            return null;
         }
     }
 
-    private static (long TotalBytes, long AvailableBytes) TryGetMemoryBytes()
+    private static (long? TotalBytes, long? AvailableBytes) TryGetMemoryBytes()
     {
         try
         {
@@ -71,10 +71,10 @@ public sealed class WmiSystemStatusProvider : ISystemStatusProvider
             // siehe TryGetCpuUsagePercent
         }
 
-        return (0, 0);
+        return (null, null);
     }
 
-    private static IReadOnlyList<DiskStatus> TryGetDisks()
+    private static IReadOnlyList<DiskStatus>? TryGetDisks()
     {
         try
         {
@@ -91,7 +91,30 @@ public sealed class WmiSystemStatusProvider : ISystemStatusProvider
         }
         catch (ManagementException)
         {
-            return Array.Empty<DiskStatus>();
+            return null;
+        }
+    }
+
+    private static int? TryGetActiveProcessCount()
+    {
+        try
+        {
+            var processes = Process.GetProcesses();
+            try
+            {
+                return processes.Length;
+            }
+            finally
+            {
+                foreach (var process in processes)
+                {
+                    process.Dispose();
+                }
+            }
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or System.ComponentModel.Win32Exception)
+        {
+            return null;
         }
     }
 }

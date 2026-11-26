@@ -49,3 +49,5 @@ C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.dll
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Alice\obj\Release\net8.0\refint\NWOS.Alice.dll
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Alice\obj\Release\net8.0\NWOS.Alice.pdb
 C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Alice\obj\Release\net8.0\ref\NWOS.Alice.dll
+C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Alice\bin\Release\net8.0\NWOS.SystemCenter.dll
+C:\NWOS\NWOS\NWOS-KISysteme\NWOS.Alice\bin\Release\net8.0\NWOS.SystemCenter.pdb

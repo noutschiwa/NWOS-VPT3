@@ -387,7 +387,8 @@
       "NWOS.Alice/1.0.0": {
         "dependencies": {
           "NWOS.AI": "1.0.0",
-          "NWOS.Contracts": "1.0.0"
+          "NWOS.Contracts": "1.0.0",
+          "NWOS.SystemCenter": "1.0.0"
         },
         "runtime": {
           "NWOS.Alice.dll": {
@@ -413,6 +414,7 @@
         "dependencies": {
           "Microsoft.Extensions.Hosting": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
+          "NWOS.AI": "1.0.0",
           "NWOS.Alice": "1.0.0",
           "NWOS.Alya": "1.0.0",
           "NWOS.Contracts": "1.0.0",
@@ -483,6 +485,7 @@
       },
       "NWOS.Marc/1.0.0": {
         "dependencies": {
+          "NWOS.AI": "1.0.0",
           "NWOS.Contracts": "1.0.0"
         },
         "runtime": {
@@ -495,6 +498,17 @@
       "NWOS.Settings/1.0.0": {
         "runtime": {
           "NWOS.Settings.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NWOS.SystemCenter/1.0.0": {
+        "dependencies": {
+          "NWOS.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NWOS.SystemCenter.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -748,6 +762,11 @@
       "sha512": ""
     },
     "NWOS.Settings/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NWOS.SystemCenter/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
