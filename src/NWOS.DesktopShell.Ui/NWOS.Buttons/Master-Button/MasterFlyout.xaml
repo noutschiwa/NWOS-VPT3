@@ -1,6 +1,7 @@
 <UserControl x:Class="NWOS.DesktopShell.Ui.Button.MasterFlyout"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:settings="clr-namespace:NWOS.DesktopShell.Ui;assembly=NWOS.ConfigSetup"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
@@ -50,11 +51,19 @@
                         <TranslateTransform x:Name="MenuTransform" />
                     </Border.RenderTransform>
                     <Grid>
-                        <Image Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Master-Background.jpeg"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="MenuColumn" Width="560" />
+                            <ColumnDefinition x:Name="SettingsColumn" Width="0" />
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="MenuBackgroundImage"
+                               Grid.ColumnSpan="2"
+                               Source="/NWOS.DesktopShell.Ui;component/Assets/MasterButton/Master-Background.jpeg"
                                Stretch="UniformToFill"
                                Opacity="0.32"
                                IsHitTestVisible="False" />
                         <ScrollViewer x:Name="MenuScrollViewer"
+                                      Grid.Column="0"
+                                      Width="560"
                                       MaxHeight="760"
                                       Padding="20,18"
                                       VerticalScrollBarVisibility="Auto"
@@ -292,6 +301,14 @@
                                 </UniformGrid>
                             </StackPanel>
                         </ScrollViewer>
+                        <Border x:Name="SettingsPanelHost"
+                                Grid.Column="1"
+                                Visibility="Collapsed"
+                                Background="#F0192434"
+                                BorderBrush="#506AADE4"
+                                BorderThickness="1,0,0,0">
+                            <settings:NwosSettingsPanel x:Name="NwosSettingsPanel" />
+                        </Border>
                     </Grid>
                 </Border>
             </Grid>

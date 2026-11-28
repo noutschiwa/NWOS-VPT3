@@ -1,6 +1,4 @@
 C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS.ConfigSetup.csproj.AssemblyReference.cache
-C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS-Settings\NwosSettingsWindow.baml
-C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS-Settings\NwosSettingsWindow.g.cs
 C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS.ConfigSetup_MarkupCompile.cache
 C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS.ConfigSetup.g.resources
 C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS.ConfigSetup.GeneratedMSBuildEditorConfig.editorconfig
@@ -18,3 +16,5 @@ C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS.ConfigSetup.dl
 C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\refint\NWOS.ConfigSetup.dll
 C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS.ConfigSetup.pdb
 C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\ref\NWOS.ConfigSetup.dll
+C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS-Settings\NwosSettingsPanel.baml
+C:\NWOS\NWOS\src\NWOS.ConfigSetup\obj\Release\net8.0-windows\NWOS-Settings\NwosSettingsPanel.g.cs

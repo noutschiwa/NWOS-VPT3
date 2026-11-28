@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NWOS.Contracts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+69c5e5bd060eaec5ae5c9212eff422b896f2298e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e9cf30fbcef5b0383b5d08502c71f913f96c276")]
 [assembly: System.Reflection.AssemblyProductAttribute("NWOS.Contracts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NWOS.Contracts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

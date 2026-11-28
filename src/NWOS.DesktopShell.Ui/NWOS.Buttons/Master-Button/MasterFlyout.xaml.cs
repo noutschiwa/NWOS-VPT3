@@ -21,11 +21,13 @@ public partial class MasterFlyout : UserControl
 {
     private const string AdminAccessCode = "135798642";
     private const double MenuWidth = 560;
+    private const double SettingsPanelWidth = 370;
     private const double MenuHeightLimit = 760;
     private const double ScreenMargin = 12;
 
     private readonly ObservableCollection<ConsoleEntry> _consoleMessages = new();
     private bool _consoleInitialized;
+    private bool _settingsPanelOpen;
     private string? _activeChatTarget;
 
     public event Action<string>? SearchRequested;
@@ -39,6 +41,8 @@ public partial class MasterFlyout : UserControl
     {
         InitializeComponent();
         CardinalConsoleMessagesControl.ItemsSource = _consoleMessages;
+        NwosSettingsPanel.ConfigurationChanged += ApplyFlyoutSettings;
+        NwosSettingsPanel.BackRequested += (_, _) => HideSettingsPanel();
     }
 
     private void MasterToggleButton_Click(object sender, RoutedEventArgs e)
@@ -72,7 +76,11 @@ public partial class MasterFlyout : UserControl
     {
         var workArea = SystemParameters.WorkArea;
         var maxWidth = Math.Max(240, workArea.Width - 2 * ScreenMargin);
-        var width = Math.Min(MenuWidth, maxWidth);
+        var width = Math.Min(MenuWidth + (_settingsPanelOpen ? SettingsPanelWidth : 0), maxWidth);
+        var settingsWidth = _settingsPanelOpen
+            ? Math.Min(SettingsPanelWidth, Math.Max(0, width - 240))
+            : 0;
+        var menuWidth = width - settingsWidth;
         var maxHeight = Math.Min(MenuHeightLimit, Math.Max(160, workArea.Height - 2 * ScreenMargin));
         var availableAbove = GetAvailableHeightAboveButton(workArea);
         var height = Math.Min(maxHeight, Math.Max(160, availableAbove));
@@ -81,7 +89,12 @@ public partial class MasterFlyout : UserControl
         PopupRoot.MaxHeight = height;
         MenuPanel.Width = width;
         MenuPanel.MaxHeight = height;
+        MenuColumn.Width = new GridLength(menuWidth);
+        SettingsColumn.Width = new GridLength(settingsWidth);
+        MenuScrollViewer.Width = menuWidth;
         MenuScrollViewer.MaxHeight = height;
+        SettingsPanelHost.Width = settingsWidth;
+        SettingsPanelHost.Visibility = _settingsPanelOpen ? Visibility.Visible : Visibility.Collapsed;
         MasterPopup.HorizontalOffset = (MasterToggleButton.ActualWidth - width) / 2;
         MasterPopup.VerticalOffset = -8;
     }
@@ -119,6 +132,8 @@ public partial class MasterFlyout : UserControl
     private void MasterPopup_Closed(object? sender, EventArgs e)
     {
         MasterToggleButton.IsChecked = false;
+        _settingsPanelOpen = false;
+        SettingsPanelHost.Visibility = Visibility.Collapsed;
         MenuPanel.BeginAnimation(UIElement.OpacityProperty, null);
         MenuTransform.BeginAnimation(TranslateTransform.YProperty, null);
         MenuPanel.Opacity = 1;
@@ -433,12 +448,31 @@ public partial class MasterFlyout : UserControl
 
     private void NwosSettings_Click(object sender, RoutedEventArgs e)
     {
-        MasterPopup.IsOpen = false;
-        var settingsWindow = new NwosSettingsWindow
+        _settingsPanelOpen = true;
+        PreparePopup();
+        _ = NwosSettingsPanel.LoadConfigurationAsync(forceReload: true);
+    }
+
+    private void HideSettingsPanel()
+    {
+        _settingsPanelOpen = false;
+        PreparePopup();
+    }
+
+    private void ApplyFlyoutSettings(NWOS.ConfigSetup.NwosConfiguration configuration)
+    {
+        var accent = configuration.MasterFlyoutAccent switch
         {
-            Owner = Window.GetWindow(this),
+            "Violet" => Color.FromRgb(167, 139, 250),
+            "Green" => Color.FromRgb(74, 222, 128),
+            _ => Color.FromRgb(106, 173, 228),
         };
-        settingsWindow.ShowDialog();
+        var accentBrush = new SolidColorBrush(accent);
+        MenuPanel.BorderBrush = accentBrush;
+        SettingsPanelHost.BorderBrush = accentBrush;
+        MenuBackgroundImage.Visibility = configuration.ShowMasterFlyoutBackground
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
 
     private void Restart_Click(object sender, RoutedEventArgs e)
